@@ -44,6 +44,9 @@ $_ENV['APP_SERVICES_CACHE'] = '/tmp/services.php';
 putenv('APP_DEBUG=true');
 $_ENV['APP_DEBUG'] = 'true';
 
+putenv('APP_MAINTENANCE_DRIVER=file');
+$_ENV['APP_MAINTENANCE_DRIVER'] = 'file';
+
 putenv('LOG_CHANNEL=stderr');
 $_ENV['LOG_CHANNEL'] = 'stderr';
 
