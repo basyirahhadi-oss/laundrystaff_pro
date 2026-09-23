@@ -1,6 +1,10 @@
 <?php
 
-// 1. Sediakan direktori storage yang diperlukan dalam /tmp (kerana filesystem Vercel read-only)
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+// 1. Sediakan direktori storage yang diperlukan dalam /tmp
 $storageDirs = [
     '/tmp/storage/app/public',
     '/tmp/storage/framework/cache/data',
@@ -15,9 +19,12 @@ foreach ($storageDirs as $dir) {
     }
 }
 
-// 2. Halakan lokasi storage dan cache Laravel ke /tmp
+// 2. Set environment paths
 putenv('LARAVEL_STORAGE_PATH=/tmp/storage');
 $_ENV['LARAVEL_STORAGE_PATH'] = '/tmp/storage';
+
+putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
+$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
 putenv('APP_CONFIG_CACHE=/tmp/config.php');
 $_ENV['APP_CONFIG_CACHE'] = '/tmp/config.php';
@@ -34,8 +41,19 @@ $_ENV['APP_ROUTES_CACHE'] = '/tmp/routes.php';
 putenv('APP_SERVICES_CACHE=/tmp/services.php');
 $_ENV['APP_SERVICES_CACHE'] = '/tmp/services.php';
 
-putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
-$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+putenv('APP_DEBUG=true');
+$_ENV['APP_DEBUG'] = 'true';
 
-// 3. Jalankan aplikasi Laravel melalui public/index.php
-require __DIR__ . '/../public/index.php';
+putenv('LOG_CHANNEL=stderr');
+$_ENV['LOG_CHANNEL'] = 'stderr';
+
+try {
+    require __DIR__ . '/../public/index.php';
+} catch (\Throwable $e) {
+    error_log("Exception: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+    http_response_code(500);
+    echo "<h1>Application Error</h1>";
+    echo "<p><strong>Message:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>File:</strong> " . htmlspecialchars($e->getFile()) . " (line " . $e->getLine() . ")</p>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+}
