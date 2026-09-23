@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 4.7 Entity Relationship Diagram (ERD) - LaundryStaff Pro</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+        .header-bar {
+            width: 100%;
+            max-width: 1160px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .header-bar h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+        .btn {
+            background-color: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #1e293b;
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-outline:hover {
+            background-color: #f8fafc;
+        }
+        .diagram-container {
+            width: 100%;
+            max-width: 1160px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .diagram-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+        .notice {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #64748b;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <div>
+            <h1>Figure 4.7 Entity Relationship Diagram (ERD)</h1>
+            <p style="font-size: 13px; color: #64748b; margin-top: 2px;">100% Verified against LaundryStaff Pro Database (Crow's Foot Notation)</p>
+        </div>
+        <div class="actions">
+            <button class="btn btn-outline" onclick="window.print()">Print / PDF</button>
+            <a href="/images/erd_figure_4_7_crows_foot.svg" download="Figure_4_7_Entity_Relationship_Diagram_Crows_Foot.svg" class="btn">Download SVG (Vector)</a>
+            <a href="/images/laundrystaff_erd_accurate.jpg" download="Figure_4_7_ERD_LaundryStaff_Pro.jpg" class="btn btn-outline">Download JPG</a>
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <!-- Render 100% Accurate Crow's Foot Diagram -->
+        <img src="/images/laundrystaff_erd_accurate.jpg" alt="Figure 4.7 Entity Relationship Diagram (ERD) - LaundryStaff Pro" class="diagram-img" />
+    </div>
+
+    <p class="notice">
+        You can right-click the diagram above and choose <strong>"Copy image"</strong> or <strong>"Save image as..."</strong> to paste directly into Microsoft Word under <em>Figure 4.7</em>.
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="100%" height="100%" style="background:#ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="subtle-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08" />
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#1e293b" />
+    </marker>
+  </defs>
+
+  <style>
+    .tbl-border { fill: #ffffff; stroke: #1e293b; stroke-width: 1.5; }
+    .tbl-header-bg { fill: #e2e8f0; stroke: #1e293b; stroke-width: 1.5; }
+    .tbl-header-text { font-size: 14px; font-weight: 700; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+    .tbl-divider { stroke: #cbd5e1; stroke-width: 1; }
+    .field-text { font-size: 12px; fill: #334155; dominant-baseline: middle; }
+    .key-bold { font-weight: 700; fill: #0f172a; }
+    .conn-arrow { stroke: #1e293b; stroke-width: 1.8; fill: none; }
+    .caption-title { font-size: 18px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .caption-sub { font-weight: 400; }
+  </style>
+
+  <!-- ================= ARROW RELATIONSHIP LINES ================= -->
+  <!-- 1. Users to Staff -->
+  <line x1="490" y1="100" x2="395" y2="255" class="conn-arrow" marker-end="url(#arrow)" />
+
+  <!-- 2. Users to Attendance -->
+  <line x1="600" y1="192" x2="600" y2="435" class="conn-arrow" marker-end="url(#arrow)" />
+
+  <!-- 3. Users to Leave -->
+  <line x1="710" y1="100" x2="805" y2="255" class="conn-arrow" marker-end="url(#arrow)" />
+
+  <!-- 4. Staff to Payroll -->
+  <line x1="280" y1="470" x2="280" y2="515" class="conn-arrow" marker-end="url(#arrow)" />
+
+  <!-- 5. Leave to Attendance -->
+  <line x1="810" y1="470" x2="715" y2="518" class="conn-arrow" marker-end="url(#arrow)" />
+
+  <!-- ================= 1. USERS TABLE ================= -->
+  <g transform="translate(490, 30)">
+    <rect x="0" y="0" width="220" height="162" rx="2" class="tbl-border" filter="url(#subtle-shadow)" />
+    <path d="M 0 2 A 2 2 0 0 1 2 0 L 218 0 A 2 2 0 0 1 220 2 L 220 32 L 0 32 Z" class="tbl-header-bg" />
+    <text x="110" y="16" class="tbl-header-text">Users</text>
+    <line x1="0" y1="32" x2="220" y2="32" class="tbl-border" />
+
+    <!-- Fields -->
+    <text x="12" y="45" class="field-text"><tspan class="key-bold">PK  </tspan>id</text>
+    <line x1="0" y1="58" x2="220" y2="58" class="tbl-divider" />
+
+    <text x="12" y="71" class="field-text">name</text>
+    <line x1="0" y1="84" x2="220" y2="84" class="tbl-divider" />
+
+    <text x="12" y="97" class="field-text">email</text>
+    <line x1="0" y1="110" x2="220" y2="110" class="tbl-divider" />
+
+    <text x="12" y="123" class="field-text">password</text>
+    <line x1="0" y1="136" x2="220" y2="136" class="tbl-divider" />
+
+    <text x="12" y="149" class="field-text">role</text>
+  </g>
+
+  <!-- ================= 2. STAFF TABLE ================= -->
+  <g transform="translate(170, 230)">
+    <rect x="0" y="0" width="220" height="240" rx="2" class="tbl-border" filter="url(#subtle-shadow)" />
+    <path d="M 0 2 A 2 2 0 0 1 2 0 L 218 0 A 2 2 0 0 1 220 2 L 220 32 L 0 32 Z" class="tbl-header-bg" />
+    <text x="110" y="16" class="tbl-header-text">Staff</text>
+    <line x1="0" y1="32" x2="220" y2="32" class="tbl-border" />
+
+    <!-- Fields -->
+    <text x="12" y="45" class="field-text"><tspan class="key-bold">PK  </tspan>id</text>
+    <line x1="0" y1="58" x2="220" y2="58" class="tbl-divider" />
+
+    <text x="12" y="71" class="field-text"><tspan class="key-bold">FK  </tspan>user_id</text>
+    <line x1="0" y1="84" x2="220" y2="84" class="tbl-divider" />
+
+    <text x="12" y="97" class="field-text">staff_id</text>
+    <line x1="0" y1="110" x2="220" y2="110" class="tbl-divider" />
+
+    <text x="12" y="123" class="field-text">full_name</text>
+    <line x1="0" y1="136" x2="220" y2="136" class="tbl-divider" />
+
+    <text x="12" y="149" class="field-text">position</text>
+    <line x1="0" y1="162" x2="220" y2="162" class="tbl-divider" />
+
+    <text x="12" y="175" class="field-text">phone_number</text>
+    <line x1="0" y1="188" x2="220" y2="188" class="tbl-divider" />
+
+    <text x="12" y="201" class="field-text">salary_rate</text>
+    <line x1="0" y1="214" x2="220" y2="214" class="tbl-divider" />
+
+    <text x="12" y="227" class="field-text">profile_picture</text>
+  </g>
+
+  <!-- ================= 3. PAYROLL TABLE ================= -->
+  <g transform="translate(170, 520)">
+    <rect x="0" y="0" width="220" height="292" rx="2" class="tbl-border" filter="url(#subtle-shadow)" />
+    <path d="M 0 2 A 2 2 0 0 1 2 0 L 218 0 A 2 2 0 0 1 220 2 L 220 32 L 0 32 Z" class="tbl-header-bg" />
+    <text x="110" y="16" class="tbl-header-text">Payroll</text>
+    <line x1="0" y1="32" x2="220" y2="32" class="tbl-border" />
+
+    <!-- Fields -->
+    <text x="12" y="45" class="field-text"><tspan class="key-bold">PK  </tspan>id</text>
+    <line x1="0" y1="58" x2="220" y2="58" class="tbl-divider" />
+
+    <text x="12" y="71" class="field-text">staff_id</text>
+    <line x1="0" y1="84" x2="220" y2="84" class="tbl-divider" />
+
+    <text x="12" y="97" class="field-text">month_year</text>
+    <line x1="0" y1="110" x2="220" y2="110" class="tbl-divider" />
+
+    <text x="12" y="123" class="field-text">basic_salary</text>
+    <line x1="0" y1="136" x2="220" y2="136" class="tbl-divider" />
+
+    <text x="12" y="149" class="field-text">ot_hours</text>
+    <line x1="0" y1="162" x2="220" y2="162" class="tbl-divider" />
+
+    <text x="12" y="175" class="field-text">ot_pay</text>
+    <line x1="0" y1="188" x2="220" y2="188" class="tbl-divider" />
+
+    <text x="12" y="201" class="field-text">epf_deduction</text>
+    <line x1="0" y1="214" x2="220" y2="214" class="tbl-divider" />
+
+    <text x="12" y="227" class="field-text">socso_deduction</text>
+    <line x1="0" y1="240" x2="220" y2="240" class="tbl-divider" />
+
+    <text x="12" y="253" class="field-text">eis_deduction</text>
+    <line x1="0" y1="266" x2="220" y2="266" class="tbl-divider" />
+
+    <text x="12" y="279" class="field-text">net_salary</text>
+  </g>
+
+  <!-- ================= 4. ATTENDANCE TABLE ================= -->
+  <g transform="translate(490, 440)">
+    <rect x="0" y="0" width="220" height="240" rx="2" class="tbl-border" filter="url(#subtle-shadow)" />
+    <path d="M 0 2 A 2 2 0 0 1 2 0 L 218 0 A 2 2 0 0 1 220 2 L 220 32 L 0 32 Z" class="tbl-header-bg" />
+    <text x="110" y="16" class="tbl-header-text">Attendance</text>
+    <line x1="0" y1="32" x2="220" y2="32" class="tbl-border" />
+
+    <!-- Fields -->
+    <text x="12" y="45" class="field-text"><tspan class="key-bold">PK  </tspan>id</text>
+    <line x1="0" y1="58" x2="220" y2="58" class="tbl-divider" />
+
+    <text x="12" y="71" class="field-text"><tspan class="key-bold">FK  </tspan>user_id</text>
+    <line x1="0" y1="84" x2="220" y2="84" class="tbl-divider" />
+
+    <text x="12" y="97" class="field-text">date</text>
+    <line x1="0" y1="110" x2="220" y2="110" class="tbl-divider" />
+
+    <text x="12" y="123" class="field-text">clock_in_time</text>
+    <line x1="0" y1="136" x2="220" y2="136" class="tbl-divider" />
+
+    <text x="12" y="149" class="field-text">clock_out_time</text>
+    <line x1="0" y1="162" x2="220" y2="162" class="tbl-divider" />
+
+    <text x="12" y="175" class="field-text">status</text>
+    <line x1="0" y1="188" x2="220" y2="188" class="tbl-divider" />
+
+    <text x="12" y="201" class="field-text"><tspan class="key-bold">FK  </tspan>leave_id</text>
+    <line x1="0" y1="214" x2="220" y2="214" class="tbl-divider" />
+
+    <text x="12" y="227" class="field-text">remarks</text>
+  </g>
+
+  <!-- ================= 5. LEAVE TABLE ================= -->
+  <g transform="translate(810, 230)">
+    <rect x="0" y="0" width="220" height="266" rx="2" class="tbl-border" filter="url(#subtle-shadow)" />
+    <path d="M 0 2 A 2 2 0 0 1 2 0 L 218 0 A 2 2 0 0 1 220 2 L 220 32 L 0 32 Z" class="tbl-header-bg" />
+    <text x="110" y="16" class="tbl-header-text">Leave</text>
+    <line x1="0" y1="32" x2="220" y2="32" class="tbl-border" />
+
+    <!-- Fields -->
+    <text x="12" y="45" class="field-text"><tspan class="key-bold">PK  </tspan>id</text>
+    <line x1="0" y1="58" x2="220" y2="58" class="tbl-divider" />
+
+    <text x="12" y="71" class="field-text"><tspan class="key-bold">FK  </tspan>user_id</text>
+    <line x1="0" y1="84" x2="220" y2="84" class="tbl-divider" />
+
+    <text x="12" y="97" class="field-text">leave_type</text>
+    <line x1="0" y1="110" x2="220" y2="110" class="tbl-divider" />
+
+    <text x="12" y="123" class="field-text">start_date</text>
+    <line x1="0" y1="136" x2="220" y2="136" class="tbl-divider" />
+
+    <text x="12" y="149" class="field-text">end_date</text>
+    <line x1="0" y1="162" x2="220" y2="162" class="tbl-divider" />
+
+    <text x="12" y="175" class="field-text">reason</text>
+    <line x1="0" y1="188" x2="220" y2="188" class="tbl-divider" />
+
+    <text x="12" y="201" class="field-text">attachment</text>
+    <line x1="0" y1="214" x2="220" y2="214" class="tbl-divider" />
+
+    <text x="12" y="227" class="field-text">status</text>
+    <line x1="0" y1="240" x2="220" y2="240" class="tbl-divider" />
+
+    <text x="12" y="253" class="field-text">admin_remarks</text>
+  </g>
+
+  <!-- ================= CAPTION ================= -->
+  <text x="600" y="835" class="caption-title">Figure 4.13: <tspan class="caption-sub">Entity Relationship Diagram</tspan></text>
+</svg>

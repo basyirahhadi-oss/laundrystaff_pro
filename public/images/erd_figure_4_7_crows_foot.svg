@@ -1,0 +1,360 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 680" width="100%" height="100%" style="background:#ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <style>
+    .tbl-bg { fill: #ffffff; stroke: #1e293b; stroke-width: 1.5; }
+    .header-bg { fill: #f5f2eb; stroke: #1e293b; stroke-width: 1.5; }
+    .header-title { font-size: 13px; font-weight: 700; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; letter-spacing: 0.5px; }
+    .col-divider { stroke: #1e293b; stroke-width: 1; }
+    .row-divider { stroke: #cbd5e1; stroke-width: 0.8; }
+    .key-text { font-size: 11px; font-weight: 700; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+    .attr-text { font-size: 11px; fill: #1e293b; dominant-baseline: middle; }
+    .attr-pk { font-weight: 700; text-decoration: underline; }
+    .type-text { font-size: 10.5px; fill: #334155; dominant-baseline: middle; }
+    .conn-line { stroke: #1e293b; stroke-width: 1.5; fill: none; }
+    .caption-title { font-size: 16px; font-weight: 600; fill: #0f172a; text-anchor: middle; }
+  </style>
+
+  <defs>
+    <marker id="crow-down" viewBox="0 0 20 20" refX="10" refY="15" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 3 5 L 10 15 L 17 5 M 10 0 L 10 15 M 2 15 L 18 15" stroke="#1e293b" stroke-width="1.5" fill="none" />
+    </marker>
+    <marker id="crow-right" viewBox="0 0 20 20" refX="15" refY="10" markerWidth="14" markerHeight="14" orient="auto">
+      <path d="M 5 3 L 15 10 L 5 17 M 0 10 L 15 10 M 15 2 L 15 18" stroke="#1e293b" stroke-width="1.5" fill="none" />
+    </marker>
+  </defs>
+
+  <!-- ================= CONNECTOR LINES WITH CROW'S FOOT NOTATION ================= -->
+  
+  <!-- 1. USERS to STAFF -->
+  <line x1="420" y1="120" x2="570" y2="120" class="conn-line" marker-end="url(#crow-right)" />
+  <line x1="432" y1="112" x2="432" y2="128" class="conn-line" />
+  <line x1="437" y1="112" x2="437" y2="128" class="conn-line" />
+
+  <!-- 2. USERS to ATTENDANCES and LEAVES -->
+  <line x1="310" y1="190" x2="310" y2="280" class="conn-line" />
+  <line x1="303" y1="205" x2="317" y2="205" class="conn-line" />
+  <line x1="303" y1="210" x2="317" y2="210" class="conn-line" />
+
+  <path d="M 310 280 L 140 280 L 140 348" class="conn-line" marker-end="url(#crow-down)" />
+  <path d="M 310 280 L 400 280 L 400 348" class="conn-line" marker-end="url(#crow-down)" />
+
+  <!-- 3. USERS/STAFF to PAYROLLS and AUDIT_LOGS -->
+  <path d="M 420 150 L 470 150 L 470 300 L 950 300 L 950 348" class="conn-line" marker-end="url(#crow-down)" />
+  <line x1="432" y1="143" x2="432" y2="157" class="conn-line" />
+  <line x1="437" y1="143" x2="437" y2="157" class="conn-line" />
+
+  <path d="M 680 300 L 680 348" class="conn-line" marker-end="url(#crow-down)" />
+  <line x1="680" y1="266" x2="680" y2="300" class="conn-line" />
+  <line x1="673" y1="275" x2="687" y2="275" class="conn-line" />
+
+  <!-- ================= TABLE 1: USERS ================= -->
+  <!-- X: 200, Y: 30, W: 220, H: 160 -->
+  <g transform="translate(200, 30)">
+    <rect x="0" y="0" width="220" height="160" class="tbl-bg" />
+    <rect x="0" y="0" width="220" height="28" class="header-bg" />
+    <text x="110" y="14" class="header-title">USERS</text>
+    
+    <line x1="32" y1="28" x2="32" y2="160" class="col-divider" />
+    <line x1="140" y1="28" x2="140" y2="160" class="col-divider" />
+
+    <!-- id -->
+    <line x1="0" y1="54" x2="220" y2="54" class="row-divider" />
+    <text x="16" y="41" class="key-text">PK</text>
+    <text x="38" y="41" class="attr-text attr-pk">id</text>
+    <text x="146" y="41" class="type-text">BIGINT</text>
+
+    <!-- name -->
+    <line x1="0" y1="80" x2="220" y2="80" class="row-divider" />
+    <text x="38" y="67" class="attr-text">name</text>
+    <text x="146" y="67" class="type-text">VARCHAR</text>
+
+    <!-- email -->
+    <line x1="0" y1="106" x2="220" y2="106" class="row-divider" />
+    <text x="38" y="93" class="attr-text">email</text>
+    <text x="146" y="93" class="type-text">VARCHAR</text>
+
+    <!-- password -->
+    <line x1="0" y1="132" x2="220" y2="132" class="row-divider" />
+    <text x="38" y="119" class="attr-text">password</text>
+    <text x="146" y="119" class="type-text">VARCHAR</text>
+
+    <!-- role -->
+    <text x="38" y="146" class="attr-text">role</text>
+    <text x="146" y="146" class="type-text">ENUM</text>
+  </g>
+
+  <!-- ================= TABLE 2: STAFF ================= -->
+  <!-- X: 570, Y: 30, W: 220, H: 236 -->
+  <g transform="translate(570, 30)">
+    <rect x="0" y="0" width="220" height="236" class="tbl-bg" />
+    <rect x="0" y="0" width="220" height="28" class="header-bg" />
+    <text x="110" y="14" class="header-title">STAFF</text>
+
+    <line x1="32" y1="28" x2="32" y2="236" class="col-divider" />
+    <line x1="140" y1="28" x2="140" y2="236" class="col-divider" />
+
+    <!-- id -->
+    <line x1="0" y1="54" x2="220" y2="54" class="row-divider" />
+    <text x="16" y="41" class="key-text">PK</text>
+    <text x="38" y="41" class="attr-text attr-pk">id</text>
+    <text x="146" y="41" class="type-text">BIGINT</text>
+
+    <!-- user_id -->
+    <line x1="0" y1="80" x2="220" y2="80" class="row-divider" />
+    <text x="16" y="67" class="key-text">FK</text>
+    <text x="38" y="67" class="attr-text">user_id</text>
+    <text x="146" y="67" class="type-text">BIGINT</text>
+
+    <!-- staff_id -->
+    <line x1="0" y1="106" x2="220" y2="106" class="row-divider" />
+    <text x="38" y="93" class="attr-text">staff_id</text>
+    <text x="146" y="93" class="type-text">VARCHAR</text>
+
+    <!-- full_name -->
+    <line x1="0" y1="132" x2="220" y2="132" class="row-divider" />
+    <text x="38" y="119" class="attr-text">full_name</text>
+    <text x="146" y="119" class="type-text">VARCHAR</text>
+
+    <!-- position -->
+    <line x1="0" y1="158" x2="220" y2="158" class="row-divider" />
+    <text x="38" y="145" class="attr-text">position</text>
+    <text x="146" y="145" class="type-text">VARCHAR</text>
+
+    <!-- phone_number -->
+    <line x1="0" y1="184" x2="220" y2="184" class="row-divider" />
+    <text x="38" y="171" class="attr-text">phone_number</text>
+    <text x="146" y="171" class="type-text">VARCHAR</text>
+
+    <!-- salary_rate -->
+    <line x1="0" y1="210" x2="220" y2="210" class="row-divider" />
+    <text x="38" y="197" class="attr-text">salary_rate</text>
+    <text x="146" y="197" class="type-text">DECIMAL</text>
+
+    <!-- profile_picture -->
+    <text x="38" y="223" class="attr-text">profile_picture</text>
+    <text x="146" y="223" class="type-text">VARCHAR</text>
+  </g>
+
+  <!-- ================= TABLE 3: ATTENDANCES ================= -->
+  <!-- X: 30, Y: 360, W: 220, H: 236 -->
+  <g transform="translate(30, 360)">
+    <rect x="0" y="0" width="220" height="236" class="tbl-bg" />
+    <rect x="0" y="0" width="220" height="28" class="header-bg" />
+    <text x="110" y="14" class="header-title">ATTENDANCES</text>
+
+    <line x1="32" y1="28" x2="32" y2="236" class="col-divider" />
+    <line x1="140" y1="28" x2="140" y2="236" class="col-divider" />
+
+    <!-- id -->
+    <line x1="0" y1="54" x2="220" y2="54" class="row-divider" />
+    <text x="16" y="41" class="key-text">PK</text>
+    <text x="38" y="41" class="attr-text attr-pk">id</text>
+    <text x="146" y="41" class="type-text">BIGINT</text>
+
+    <!-- user_id -->
+    <line x1="0" y1="80" x2="220" y2="80" class="row-divider" />
+    <text x="16" y="67" class="key-text">FK</text>
+    <text x="38" y="67" class="attr-text">user_id</text>
+    <text x="146" y="67" class="type-text">BIGINT</text>
+
+    <!-- date -->
+    <line x1="0" y1="106" x2="220" y2="106" class="row-divider" />
+    <text x="38" y="93" class="attr-text">date</text>
+    <text x="146" y="93" class="type-text">DATE</text>
+
+    <!-- clock_in_time -->
+    <line x1="0" y1="132" x2="220" y2="132" class="row-divider" />
+    <text x="38" y="119" class="attr-text">clock_in_time</text>
+    <text x="146" y="119" class="type-text">TIME</text>
+
+    <!-- clock_out_time -->
+    <line x1="0" y1="158" x2="220" y2="158" class="row-divider" />
+    <text x="38" y="145" class="attr-text">clock_out_time</text>
+    <text x="146" y="145" class="type-text">TIME</text>
+
+    <!-- status -->
+    <line x1="0" y1="184" x2="220" y2="184" class="row-divider" />
+    <text x="38" y="171" class="attr-text">status</text>
+    <text x="146" y="171" class="type-text">ENUM</text>
+
+    <!-- leave_id -->
+    <line x1="0" y1="210" x2="220" y2="210" class="row-divider" />
+    <text x="16" y="197" class="key-text">FK</text>
+    <text x="38" y="197" class="attr-text">leave_id</text>
+    <text x="146" y="197" class="type-text">BIGINT</text>
+
+    <!-- remarks -->
+    <text x="38" y="223" class="attr-text">remarks</text>
+    <text x="146" y="223" class="type-text">VARCHAR</text>
+  </g>
+
+  <!-- ================= TABLE 4: LEAVES ================= -->
+  <!-- X: 290, Y: 360, W: 220, H: 262 -->
+  <g transform="translate(290, 360)">
+    <rect x="0" y="0" width="220" height="262" class="tbl-bg" />
+    <rect x="0" y="0" width="220" height="28" class="header-bg" />
+    <text x="110" y="14" class="header-title">LEAVES</text>
+
+    <line x1="32" y1="28" x2="32" y2="262" class="col-divider" />
+    <line x1="140" y1="28" x2="140" y2="262" class="col-divider" />
+
+    <!-- id -->
+    <line x1="0" y1="54" x2="220" y2="54" class="row-divider" />
+    <text x="16" y="41" class="key-text">PK</text>
+    <text x="38" y="41" class="attr-text attr-pk">id</text>
+    <text x="146" y="41" class="type-text">BIGINT</text>
+
+    <!-- user_id -->
+    <line x1="0" y1="80" x2="220" y2="80" class="row-divider" />
+    <text x="16" y="67" class="key-text">FK</text>
+    <text x="38" y="67" class="attr-text">user_id</text>
+    <text x="146" y="67" class="type-text">BIGINT</text>
+
+    <!-- leave_type -->
+    <line x1="0" y1="106" x2="220" y2="106" class="row-divider" />
+    <text x="38" y="93" class="attr-text">leave_type</text>
+    <text x="146" y="93" class="type-text">ENUM</text>
+
+    <!-- start_date -->
+    <line x1="0" y1="132" x2="220" y2="132" class="row-divider" />
+    <text x="38" y="119" class="attr-text">start_date</text>
+    <text x="146" y="119" class="type-text">DATE</text>
+
+    <!-- end_date -->
+    <line x1="0" y1="158" x2="220" y2="158" class="row-divider" />
+    <text x="38" y="145" class="attr-text">end_date</text>
+    <text x="146" y="145" class="type-text">DATE</text>
+
+    <!-- reason -->
+    <line x1="0" y1="184" x2="220" y2="184" class="row-divider" />
+    <text x="38" y="171" class="attr-text">reason</text>
+    <text x="146" y="171" class="type-text">TEXT</text>
+
+    <!-- attachment -->
+    <line x1="0" y1="210" x2="220" y2="210" class="row-divider" />
+    <text x="38" y="197" class="attr-text">attachment</text>
+    <text x="146" y="197" class="type-text">VARCHAR</text>
+
+    <!-- status -->
+    <line x1="0" y1="236" x2="220" y2="236" class="row-divider" />
+    <text x="38" y="223" class="attr-text">status</text>
+    <text x="146" y="223" class="type-text">ENUM</text>
+
+    <!-- admin_remarks -->
+    <text x="38" y="249" class="attr-text">admin_remarks</text>
+    <text x="146" y="249" class="type-text">TEXT</text>
+  </g>
+
+  <!-- ================= TABLE 5: PAYROLLS ================= -->
+  <!-- X: 570, Y: 360, W: 220, H: 288 -->
+  <g transform="translate(570, 360)">
+    <rect x="0" y="0" width="220" height="288" class="tbl-bg" />
+    <rect x="0" y="0" width="220" height="288" height="28" class="header-bg" />
+    <rect x="0" y="0" width="220" height="28" class="header-bg" />
+    <text x="110" y="14" class="header-title">PAYROLLS</text>
+
+    <line x1="32" y1="28" x2="32" y2="288" class="col-divider" />
+    <line x1="140" y1="28" x2="140" y2="288" class="col-divider" />
+
+    <!-- id -->
+    <line x1="0" y1="54" x2="220" y2="54" class="row-divider" />
+    <text x="16" y="41" class="key-text">PK</text>
+    <text x="38" y="41" class="attr-text attr-pk">id</text>
+    <text x="146" y="41" class="type-text">BIGINT</text>
+
+    <!-- staff_id -->
+    <line x1="0" y1="80" x2="220" y2="80" class="row-divider" />
+    <text x="16" y="67" class="key-text">FK</text>
+    <text x="38" y="67" class="attr-text">staff_id</text>
+    <text x="146" y="67" class="type-text">VARCHAR</text>
+
+    <!-- month_year -->
+    <line x1="0" y1="106" x2="220" y2="106" class="row-divider" />
+    <text x="38" y="93" class="attr-text">month_year</text>
+    <text x="146" y="93" class="type-text">VARCHAR</text>
+
+    <!-- basic_salary -->
+    <line x1="0" y1="132" x2="220" y2="132" class="row-divider" />
+    <text x="38" y="119" class="attr-text">basic_salary</text>
+    <text x="146" y="119" class="type-text">DECIMAL</text>
+
+    <!-- ot_hours -->
+    <line x1="0" y1="158" x2="220" y2="158" class="row-divider" />
+    <text x="38" y="145" class="attr-text">ot_hours</text>
+    <text x="146" y="145" class="type-text">DECIMAL</text>
+
+    <!-- ot_pay -->
+    <line x1="0" y1="184" x2="220" y2="184" class="row-divider" />
+    <text x="38" y="171" class="attr-text">ot_pay</text>
+    <text x="146" y="171" class="type-text">DECIMAL</text>
+
+    <!-- epf_deduction -->
+    <line x1="0" y1="210" x2="220" y2="210" class="row-divider" />
+    <text x="38" y="197" class="attr-text">epf_deduction</text>
+    <text x="146" y="197" class="type-text">DECIMAL</text>
+
+    <!-- socso_deduction -->
+    <line x1="0" y1="236" x2="220" y2="236" class="row-divider" />
+    <text x="38" y="223" class="attr-text">socso_deduction</text>
+    <text x="146" y="223" class="type-text">DECIMAL</text>
+
+    <!-- eis_deduction -->
+    <line x1="0" y1="262" x2="220" y2="262" class="row-divider" />
+    <text x="38" y="249" class="attr-text">eis_deduction</text>
+    <text x="146" y="249" class="type-text">DECIMAL</text>
+
+    <!-- net_salary -->
+    <text x="38" y="275" class="attr-text">net_salary</text>
+    <text x="146" y="275" class="type-text">DECIMAL</text>
+  </g>
+
+  <!-- ================= TABLE 6: AUDIT_LOGS ================= -->
+  <!-- X: 840, Y: 360, W: 220, H: 210 -->
+  <g transform="translate(840, 360)">
+    <rect x="0" y="0" width="220" height="210" class="tbl-bg" />
+    <rect x="0" y="0" width="220" height="28" class="header-bg" />
+    <text x="110" y="14" class="header-title">AUDIT_LOGS</text>
+
+    <line x1="32" y1="28" x2="32" y2="210" class="col-divider" />
+    <line x1="140" y1="28" x2="140" y2="210" class="col-divider" />
+
+    <!-- id -->
+    <line x1="0" y1="54" x2="220" y2="54" class="row-divider" />
+    <text x="16" y="41" class="key-text">PK</text>
+    <text x="38" y="41" class="attr-text attr-pk">id</text>
+    <text x="146" y="41" class="type-text">BIGINT</text>
+
+    <!-- user_id -->
+    <line x1="0" y1="80" x2="220" y2="80" class="row-divider" />
+    <text x="16" y="67" class="key-text">FK</text>
+    <text x="38" y="67" class="attr-text">user_id</text>
+    <text x="146" y="67" class="type-text">BIGINT</text>
+
+    <!-- event_type -->
+    <line x1="0" y1="106" x2="220" y2="106" class="row-divider" />
+    <text x="38" y="93" class="attr-text">event_type</text>
+    <text x="146" y="93" class="type-text">VARCHAR</text>
+
+    <!-- record_data -->
+    <line x1="0" y1="132" x2="220" y2="132" class="row-divider" />
+    <text x="38" y="119" class="attr-text">record_data</text>
+    <text x="146" y="119" class="type-text">TEXT</text>
+
+    <!-- previous_hash -->
+    <line x1="0" y1="158" x2="220" y2="158" class="row-divider" />
+    <text x="38" y="145" class="attr-text">previous_hash</text>
+    <text x="146" y="145" class="type-text">CHAR(64)</text>
+
+    <!-- current_hash -->
+    <line x1="0" y1="184" x2="220" y2="184" class="row-divider" />
+    <text x="38" y="171" class="attr-text">current_hash</text>
+    <text x="146" y="171" class="type-text">CHAR(64)</text>
+
+    <!-- ip_address -->
+    <text x="38" y="197" class="attr-text">ip_address</text>
+    <text x="146" y="197" class="type-text">VARCHAR</text>
+  </g>
+
+  <!-- ================= CAPTION ================= -->
+  <text x="570" y="665" class="caption-title">Figure 4.7 Entity Relationship Diagram (ERD) - LaundryStaff Pro</text>
+
+</svg>
