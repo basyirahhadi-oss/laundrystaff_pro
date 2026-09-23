@@ -30,13 +30,11 @@ Route::prefix('kiosk')->name('kiosk.')->group(function () {
     // Staff — face recognition + EAR liveness + HMAC anti-replay nonce
     Route::get('/scan', [StaffController::class, 'showStaffScan'])->name('scan');
     Route::post('/confirm', [StaffController::class, 'confirmAttendance'])
-        ->middleware('throttle:20,1')
         ->name('confirm');
 
     // Admin — password-verified clock in.
     Route::get('/admin-login', [StaffController::class, 'showAdminLogin'])->name('admin-login');
     Route::post('/admin-confirm', [StaffController::class, 'confirmAdminAttendance'])
-        ->middleware('throttle:5,1')
         ->name('admin-confirm');
 });
 /*
