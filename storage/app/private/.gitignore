@@ -1,2 +1,4 @@
 *
 !.gitignore
+!encrypted-attachments/
+!encrypted-attachments/**

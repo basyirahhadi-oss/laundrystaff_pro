@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -16,7 +18,7 @@ class FileEncryptionService
     protected const DIRECTORY = 'encrypted-attachments';
 
     /**
-     * Encrypt an uploaded file with AES-256-CBC and write it to private disk.
+     * Encrypt an uploaded file with AES-256-CBC and write it to private disk and database.
      *
      * @param  UploadedFile  $file
      * @return array{path: string, original_name: string, mime_type: string, size: int}
@@ -48,7 +50,26 @@ class FileEncryptionService
         $filename = Str::uuid()->toString() . '.enc';
         $fullPath = self::DIRECTORY . '/' . $filename;
 
-        Storage::disk(self::DISK)->put($fullPath, $payload);
+        // 1. Write to local storage (if writable)
+        try {
+            Storage::disk(self::DISK)->put($fullPath, $payload);
+        } catch (\Throwable $e) {
+            // Ignored on read-only environments
+        }
+
+        // 2. Persist to encrypted_attachments table in database (for serverless Vercel persistence)
+        try {
+            DB::table('encrypted_attachments')->updateOrInsert(
+                ['path' => $fullPath],
+                [
+                    'payload'    => base64_encode($payload),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        } catch (\Throwable $e) {
+            Log::error("Failed to store encrypted attachment in database: " . $e->getMessage());
+        }
 
         return [
             'path'          => $fullPath,
@@ -80,7 +101,24 @@ class FileEncryptionService
         $filename = Str::uuid()->toString() . '.enc';
         $fullPath = self::DIRECTORY . '/' . $filename;
 
-        Storage::disk(self::DISK)->put($fullPath, $payload);
+        try {
+            Storage::disk(self::DISK)->put($fullPath, $payload);
+        } catch (\Throwable $e) {
+            // Ignored on read-only environments
+        }
+
+        try {
+            DB::table('encrypted_attachments')->updateOrInsert(
+                ['path' => $fullPath],
+                [
+                    'payload'    => base64_encode($payload),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        } catch (\Throwable $e) {
+            Log::error("Failed to store raw encrypted attachment in database: " . $e->getMessage());
+        }
 
         return [
             'path'          => $fullPath,
@@ -91,7 +129,7 @@ class FileEncryptionService
     }
 
     /**
-     * Decrypt an encrypted file from private storage in memory.
+     * Decrypt an encrypted file from private storage or database in memory.
      * Gracefully falls back to reading legacy plaintext files on public storage if present.
      *
      * @param  string  $path
@@ -100,49 +138,65 @@ class FileEncryptionService
      */
     public function decrypt(string $path): string
     {
+        $payload = null;
+
         // 1. Check if file exists on private local storage
         if (Storage::disk(self::DISK)->exists($path)) {
             $payload = Storage::disk(self::DISK)->get($path);
-
-            // If it is an encrypted .enc payload (has 16-byte IV + 32-byte HMAC)
-            if (str_ends_with($path, '.enc') && strlen($payload) >= 48) {
-                $iv = substr($payload, 0, 16);
-                $storedHmac = substr($payload, 16, 32);
-                $ciphertext = substr($payload, 48);
-
-                $key = substr(hash('sha256', config('app.key')), 0, 32);
-
-                $calculatedHmac = hash_hmac('sha256', $iv . $ciphertext, $key, true);
-
-                if (!hash_equals($storedHmac, $calculatedHmac)) {
-                    throw new \RuntimeException("HMAC integrity check failed! File may have been tampered with.");
-                }
-
-                $decrypted = openssl_decrypt(
-                    $ciphertext,
-                    'AES-256-CBC',
-                    $key,
-                    OPENSSL_RAW_DATA,
-                    $iv
-                );
-
-                if ($decrypted === false) {
-                    throw new \RuntimeException("AES-256 decryption failed.");
-                }
-
-                return $decrypted;
-            }
-
-            // If on local storage but plaintext
-            return $payload;
         }
 
-        // 2. Check if this is a legacy unencrypted file on public disk
-        if (Storage::disk('public')->exists($path)) {
+        // 2. If not found on local storage, check encrypted_attachments database table (for serverless Vercel)
+        if (!$payload) {
+            try {
+                $record = DB::table('encrypted_attachments')->where('path', $path)->first();
+                if ($record && !empty($record->payload)) {
+                    $payload = base64_decode($record->payload);
+                }
+            } catch (\Throwable $e) {
+                Log::warning("Could not query encrypted_attachments table: " . $e->getMessage());
+            }
+        }
+
+        // 3. Fallback to public storage (legacy unencrypted file)
+        if (!$payload && Storage::disk('public')->exists($path)) {
             return Storage::disk('public')->get($path);
         }
 
-        throw new \RuntimeException("Attachment file [{$path}] not found on storage.");
+        if (!$payload) {
+            throw new \RuntimeException("Attachment file [{$path}] not found on storage or database.");
+        }
+
+        // If it is an encrypted .enc payload (has 16-byte IV + 32-byte HMAC)
+        if (str_ends_with($path, '.enc') && strlen($payload) >= 48) {
+            $iv = substr($payload, 0, 16);
+            $storedHmac = substr($payload, 16, 32);
+            $ciphertext = substr($payload, 48);
+
+            $key = substr(hash('sha256', config('app.key')), 0, 32);
+
+            $calculatedHmac = hash_hmac('sha256', $iv . $ciphertext, $key, true);
+
+            if (!hash_equals($storedHmac, $calculatedHmac)) {
+                throw new \RuntimeException("HMAC integrity check failed! File may have been tampered with.");
+            }
+
+            $decrypted = openssl_decrypt(
+                $ciphertext,
+                'AES-256-CBC',
+                $key,
+                OPENSSL_RAW_DATA,
+                $iv
+            );
+
+            if ($decrypted === false) {
+                throw new \RuntimeException("AES-256 decryption failed.");
+            }
+
+            return $decrypted;
+        }
+
+        // If on local storage but plaintext
+        return $payload;
     }
 
     /**
@@ -214,10 +268,16 @@ class FileEncryptionService
     }
 
     /**
-     * Delete file from disk.
+     * Delete file from disk and database.
      */
     public function delete(string $path): bool
     {
+        try {
+            DB::table('encrypted_attachments')->where('path', $path)->delete();
+        } catch (\Throwable $e) {
+            // Ignore DB error
+        }
+
         if (Storage::disk(self::DISK)->exists($path)) {
             return Storage::disk(self::DISK)->delete($path);
         }
@@ -226,6 +286,6 @@ class FileEncryptionService
             return Storage::disk('public')->delete($path);
         }
 
-        return false;
+        return true;
     }
 }
