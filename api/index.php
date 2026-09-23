@@ -56,6 +56,15 @@ $_ENV['SESSION_DRIVER'] = 'database';
 putenv('SESSION_LIFETIME=120');
 $_ENV['SESSION_LIFETIME'] = '120';
 
+putenv('BCRYPT_ROUNDS=12');
+$_ENV['BCRYPT_ROUNDS'] = '12';
+
+$sessDomain = getenv('SESSION_DOMAIN');
+if ($sessDomain === 'null' || $sessDomain === '' || empty($sessDomain)) {
+    putenv('SESSION_DOMAIN=');
+    unset($_ENV['SESSION_DOMAIN']);
+}
+
 $rawHost = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: '';
 if ($rawHost && str_contains($rawHost, ';')) {
     $cleanHost = explode(';', $rawHost)[0];
