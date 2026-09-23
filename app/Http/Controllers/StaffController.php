@@ -533,8 +533,8 @@ class StaffController extends Controller
             'signature' => $signature,
         ]));
 
-        // Store nonce in cache for 60 seconds (must be consumed only once)
-        Cache::put("kiosk_nonce:{$nonce}", true, 60);
+        // Store nonce in cache for 300 seconds (must be consumed only once)
+        Cache::put("kiosk_nonce:{$nonce}", true, 300);
 
         return view('staff.scan', [
             'staffList'  => $staffList,
@@ -561,8 +561,8 @@ class StaffController extends Controller
             return redirect()->route('kiosk.gateway')->with('error', 'Security error: Invalid cryptographic token format.');
         }
 
-        // Check token age (valid for 60 seconds)
-        if (abs(time() - (int)$decoded['timestamp']) > 60) {
+        // Check token age (valid for 300 seconds / 5 minutes)
+        if (abs(time() - (int)$decoded['timestamp']) > 300) {
             return redirect()->route('kiosk.gateway')->with('error', 'Security error: Scan session expired. Please scan again.');
         }
 

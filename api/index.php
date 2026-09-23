@@ -53,6 +53,9 @@ $_ENV['APP_NAME'] = 'LaundryStaff Pro';
 putenv('SESSION_DRIVER=database');
 $_ENV['SESSION_DRIVER'] = 'database';
 
+putenv('CACHE_STORE=database');
+$_ENV['CACHE_STORE'] = 'database';
+
 putenv('SESSION_LIFETIME=120');
 $_ENV['SESSION_LIFETIME'] = '120';
 

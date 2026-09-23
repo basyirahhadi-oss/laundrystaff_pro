@@ -149,13 +149,13 @@
                                 <span>Anti-Replay Nonce:</span>
                             </span>
                             <span class="text-[11px] font-mono-nums font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-1.5 py-0.5 rounded">
-                                HMAC-60s Valid
+                                HMAC Protected
                             </span>
                         </div>
                     </div>
 
                     {{-- CONFIRM PUNCH IN FORM --}}
-                    <form action="{{ route('kiosk.confirm') }}" method="POST">
+                    <form id="attendanceForm" action="{{ route('kiosk.confirm') }}" method="POST">
                         @csrf
                         <input type="hidden" name="verified_identity" id="verified_identity" value="">
                         <input type="hidden" name="face_matched" id="face_matched" value="">
@@ -421,6 +421,11 @@
             if (cameraReady && matcherReady) {
                 startDetectionLoop();
             }
+
+            document.getElementById('attendanceForm')?.addEventListener('submit', () => {
+                verifyBtn.disabled = true;
+                verifyBtnLabel.textContent = 'Recording Attendance...';
+            });
         });
 
         window.addEventListener('beforeunload', () => {

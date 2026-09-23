@@ -34,7 +34,7 @@
     "APP_ENV": "production",
     "APP_DEBUG": "false",
     "LARAVEL_STORAGE_PATH": "/tmp/storage",
-    "CACHE_STORE": "array",
+    "CACHE_STORE": "database",
     "SESSION_DRIVER": "database",
     "SESSION_LIFETIME": "120",
     "APP_NAME": "LaundryStaff Pro",
