@@ -12,6 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustProxies(at: '*');
+
         // Registers the `role:admin` / `role:staff` route middleware used
         // throughout routes/web.php for Role-Based Access Control (RBAC).
         // Laravel's built-in `auth` and `verified` aliases, plus the
