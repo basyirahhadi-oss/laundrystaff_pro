@@ -56,6 +56,13 @@ $_ENV['SESSION_DRIVER'] = 'database';
 putenv('SESSION_LIFETIME=120');
 $_ENV['SESSION_LIFETIME'] = '120';
 
+$rawHost = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: '';
+if ($rawHost && str_contains($rawHost, ';')) {
+    $cleanHost = explode(';', $rawHost)[0];
+    putenv("DB_HOST={$cleanHost}");
+    $_ENV['DB_HOST'] = $cleanHost;
+}
+
 putenv('LOG_CHANNEL=stderr');
 $_ENV['LOG_CHANNEL'] = 'stderr';
 
