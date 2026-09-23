@@ -47,6 +47,15 @@ $_ENV['APP_DEBUG'] = 'true';
 putenv('APP_MAINTENANCE_DRIVER=file');
 $_ENV['APP_MAINTENANCE_DRIVER'] = 'file';
 
+putenv('APP_NAME=LaundryStaff Pro');
+$_ENV['APP_NAME'] = 'LaundryStaff Pro';
+
+putenv('SESSION_DRIVER=database');
+$_ENV['SESSION_DRIVER'] = 'database';
+
+putenv('SESSION_LIFETIME=120');
+$_ENV['SESSION_LIFETIME'] = '120';
+
 putenv('LOG_CHANNEL=stderr');
 $_ENV['LOG_CHANNEL'] = 'stderr';
 
