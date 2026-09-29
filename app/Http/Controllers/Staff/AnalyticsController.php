@@ -21,11 +21,19 @@ class AnalyticsController extends Controller
         $selectedMonth = $request->input('month', Carbon::now()->format('Y-m'));
         $monthDate = Carbon::createFromFormat('Y-m', $selectedMonth);
 
-        // Fetch staff profile record (if linked)
+        // Fetch staff profile record (linked via user_id)
         $staffProfile = DB::table('staff')
             ->where('user_id', $user->id)
-            ->orWhere('email', $user->email)
             ->first();
+
+        // Fallback: If not linked by user_id, check if email prefix matches staff_id
+        if (!$staffProfile && !empty($user->email) && str_contains($user->email, '@')) {
+            $prefix = explode('@', $user->email)[0];
+            $staffProfile = DB::table('staff')
+                ->where('staff_id', strtoupper($prefix))
+                ->orWhere('staff_id', $prefix)
+                ->first();
+        }
 
         $staffId = $staffProfile->staff_id ?? null;
         $hourlyRate = $staffProfile->salary_rate ?? 10.00;
