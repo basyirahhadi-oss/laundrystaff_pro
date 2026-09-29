@@ -47,4 +47,40 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's staff profile picture (Base64 data URL or asset path).
+     */
+    public function getProfilePictureUrlAttribute(): ?string
+    {
+        $staff = \Illuminate\Support\Facades\DB::table('staff')
+            ->where('user_id', $this->id)
+            ->select('profile_picture')
+            ->first();
+
+        // Fallback: check by staff_id if email prefix matches
+        if (!$staff && !empty($this->email) && str_contains($this->email, '@')) {
+            $prefix = explode('@', $this->email)[0];
+            $staff = \Illuminate\Support\Facades\DB::table('staff')
+                ->where('staff_id', strtoupper($prefix))
+                ->orWhere('staff_id', $prefix)
+                ->select('profile_picture')
+                ->first();
+        }
+
+        if (!$staff || empty($staff->profile_picture)) {
+            return null;
+        }
+
+        $pic = $staff->profile_picture;
+        if (str_starts_with($pic, 'data:image') || str_starts_with($pic, 'http')) {
+            return $pic;
+        }
+
+        if (file_exists(public_path('uploads/staff/' . $pic))) {
+            return asset('uploads/staff/' . $pic);
+        }
+
+        return null;
+    }
 }

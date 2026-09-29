@@ -50,9 +50,15 @@
                 <x-dropdown align="right" width="56">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-800 text-sm font-medium focus:outline-none transition shadow-2xs">
-                            <div class="w-8 h-8 rounded-lg text-white flex items-center justify-center font-bold text-xs uppercase bg-[#0B1527] shadow-xs">
-                                {{ substr($user->name ?? 'A', 0, 1) }}
-                            </div>
+                            @if($user && $user->profile_picture_url)
+                                <img src="{{ $user->profile_picture_url }}" 
+                                     alt="{{ $user->name }}" 
+                                     class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0 shadow-xs">
+                            @else
+                                <div class="w-8 h-8 rounded-lg text-white flex items-center justify-center font-bold text-xs uppercase bg-[#0B1527] shadow-xs">
+                                    {{ substr($user->name ?? 'A', 0, 1) }}
+                                </div>
+                            @endif
                             <div class="text-left hidden sm:block">
                                 <div class="font-semibold text-slate-900 leading-tight text-xs">{{ $user->name ?? 'User' }}</div>
                                 <div class="text-[10px] text-slate-400 capitalize leading-tight">
@@ -64,12 +70,19 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-4 py-3 border-b border-slate-100 text-sm">
-                            <p class="font-bold text-slate-900 text-sm">{{ $user->name }}</p>
-                            <p class="text-slate-400 text-xs truncate">{{ $user->email }}</p>
-                            <span class="inline-block mt-1.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-600">
-                                Role: {{ $user->role }}
-                            </span>
+                        <div class="px-4 py-3 border-b border-slate-100 text-sm flex items-center gap-3">
+                            @if($user && $user->profile_picture_url)
+                                <img src="{{ $user->profile_picture_url }}" 
+                                     alt="{{ $user->name }}" 
+                                     class="w-10 h-10 rounded-xl object-cover border border-slate-200 shrink-0 shadow-xs">
+                            @endif
+                            <div class="min-w-0">
+                                <p class="font-bold text-slate-900 text-sm truncate">{{ $user->name }}</p>
+                                <p class="text-slate-400 text-xs truncate">{{ $user->email }}</p>
+                                <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-600">
+                                    Role: {{ $user->role }}
+                                </span>
+                            </div>
                         </div>
 
                         <x-dropdown-link :href="route('profile.edit')" class="flex items-center gap-2.5 text-sm text-slate-700 hover:bg-slate-50 py-2.5">

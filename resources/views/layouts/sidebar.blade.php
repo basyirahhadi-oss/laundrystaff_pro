@@ -72,9 +72,15 @@
                 <!-- Mobile User Footer -->
                 <div class="pt-4 mt-6 border-t border-slate-800/80">
                     <div class="flex items-center gap-3 px-2">
-                        <div class="w-9 h-9 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0">
-                            {{ substr($user->name ?? 'U', 0, 2) }}
-                        </div>
+                        @if($user && $user->profile_picture_url)
+                            <img src="{{ $user->profile_picture_url }}" 
+                                 alt="{{ $user->name }}" 
+                                 class="w-9 h-9 rounded-xl object-cover border border-white/10 shrink-0 shadow-xs">
+                        @else
+                            <div class="w-9 h-9 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0">
+                                {{ substr($user->name ?? 'U', 0, 2) }}
+                            </div>
+                        @endif
                         <div class="flex-1 min-w-0">
                             <p class="text-xs font-semibold text-white truncate">{{ $user->name ?? 'User' }}</p>
                             <p class="text-[10px] text-slate-400 capitalize">{{ $user->role ?? 'staff' }}</p>
@@ -129,9 +135,15 @@
             </div>
 
             <div class="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">
-                <div class="w-8 h-8 rounded-lg bg-[#4A154B] text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
-                    {{ substr($user->name ?? 'U', 0, 1) }}
-                </div>
+                @if($user && $user->profile_picture_url)
+                    <img src="{{ $user->profile_picture_url }}" 
+                         alt="{{ $user->name }}" 
+                         class="w-8 h-8 rounded-lg object-cover border border-white/10 shrink-0 shadow-xs">
+                @else
+                    <div class="w-8 h-8 rounded-lg bg-[#4A154B] text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
+                        {{ substr($user->name ?? 'U', 0, 1) }}
+                    </div>
+                @endif
                 <div class="flex-1 min-w-0">
                     <p class="text-xs font-semibold text-white truncate leading-tight">{{ $user->name ?? 'User' }}</p>
                     <p class="text-[10px] text-slate-400 capitalize leading-tight mt-0.5">{{ $user->role ?? 'staff' }}</p>
