@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Services\AuditLogService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\UploadedFile;
 
 class StaffController extends Controller
 {
@@ -30,69 +31,70 @@ class StaffController extends Controller
     /**
      * 2. Simpan Pendaftaran Staf Baru (Proses Borang Tambah Staf)
      */
-   public function store(Request $request)
-{
-    $request->validate([
-        'staff_id' => 'required|string|max:50|unique:staff,staff_id',
-        'full_name' => 'required|string|max:255',
-        'position' => 'required|string|max:255',
-        'phone_number' => 'required|string|max:30',
-        'salary_rate' => 'required|numeric|min:0',
-        'email' => 'nullable|email|max:255|unique:users,email',
-        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'staff_id' => 'required|string|max:50|unique:staff,staff_id',
+            'full_name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:30',
+            'salary_rate' => 'required|numeric|min:0',
+            'email' => 'nullable|email|max:255|unique:users,email',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
 
-    // Defence-in-depth: strip any stray HTML/script tags from free-text
-    // input before it's stored, even though Blade already escapes output
-    // on the way back out ({{ }} = htmlspecialchars).
-    $fullName = strip_tags($request->full_name);
-    $position = strip_tags($request->position);
+        $fullName = strip_tags($request->full_name);
+        $position = strip_tags($request->position);
 
-    // Auto-provision a login account so this staff member can use the
-    // user_id-based dashboard/leave system — no manual Staff ID typing.
-    $email = $request->email ?: strtolower($request->staff_id) . '@' . (parse_url(config('app.url'), PHP_URL_HOST) ?: 'laundrystaff.local');
+        $email = $request->email ?: strtolower($request->staff_id) . '@' . (parse_url(config('app.url'), PHP_URL_HOST) ?: 'laundrystaff.local');
 
-    $user = User::create([
-        'name' => $fullName,
-        'email' => $email,
-        'password' => \Illuminate\Support\Facades\Hash::make(str()->random(16)),
-        'role' => 'staff',
-    ]);
+        // Clean up orphaned user record if a previous attempt failed midway (e.g. before Vercel fix)
+        $existingUser = User::where('email', $email)->first();
+        if ($existingUser && !DB::table('staff')->where('user_id', $existingUser->id)->exists()) {
+            $existingUser->delete();
+        }
 
-    $insertData = [
-        'user_id' => $user->id,
-        'staff_id' => $request->staff_id,
-        'full_name' => $fullName,
-        'position' => $position,
-        'phone_number' => $request->phone_number,
-        'salary_rate' => $request->salary_rate,
-        'profile_picture' => null,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ];
+        $profilePicture = null;
+        if ($request->hasFile('profile_picture')) {
+            $profilePicture = $this->processProfilePicture($request->file('profile_picture'), $request->staff_id);
+        }
 
-    if ($request->hasFile('profile_picture')) {
-        $file = $request->file('profile_picture');
-        $filename = $request->staff_id . '_' . time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('uploads/staff'), $filename);
-        $insertData['profile_picture'] = $filename;
+        DB::transaction(function () use ($request, $fullName, $position, $email, $profilePicture, &$user) {
+            $user = User::create([
+                'name' => $fullName,
+                'email' => $email,
+                'password' => \Illuminate\Support\Facades\Hash::make(str()->random(16)),
+                'role' => 'staff',
+            ]);
+
+            $insertData = [
+                'user_id' => $user->id,
+                'staff_id' => $request->staff_id,
+                'full_name' => $fullName,
+                'position' => $position,
+                'phone_number' => $request->phone_number,
+                'salary_rate' => $request->salary_rate,
+                'profile_picture' => $profilePicture,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            DB::table('staff')->insert($insertData);
+
+            // Cryptographically Chained Audit Trail
+            $this->auditLogService->recordEvent('staff_created', $user->id, auth()->id(), [
+                'staff_id'    => $request->staff_id,
+                'full_name'   => $fullName,
+                'position'    => $position,
+                'salary_rate' => $request->salary_rate,
+            ]);
+        });
+
+        return redirect()->route('staff.index')->with(
+            'success',
+            "Staff member registered successfully! Login email: {$email} — ask them to use \"Forgot your password?\" to set their own password."
+        );
     }
-
-    DB::table('staff')->insert($insertData);
-
-    // Cryptographically Chained Audit Trail
-    $this->auditLogService->recordEvent('staff_created', $user->id, auth()->id(), [
-        'staff_id'    => $request->staff_id,
-        'full_name'   => $fullName,
-        'position'    => $position,
-        'salary_rate' => $request->salary_rate,
-    ]);
-
-    return redirect()->route('staff.index')->with(
-        'success',
-        "Staff member registered successfully! Login email: {$email} — ask them to use \"Forgot your password?\" to set their own password."
-    );
-}
     /**
      * 3. Papar Borang Edit Staf
      */
@@ -123,18 +125,12 @@ class StaffController extends Controller
 
     // 2. PROSES GAMBAR BARU (Jika ada muat naik)
     if ($request->hasFile('profile_picture')) {
-        $file = $request->file('profile_picture');
-        
-        // Buat nama fail unik menggunakan staff_id
-        $filename = $id . '_' . time() . '.' . $file->getClientOriginalExtension();
-        
-        // Simpan fizikal fail terus ke folder 'public/uploads/staff'
-        $file->move(public_path('uploads/staff'), $filename);
+        $filename = $this->processProfilePicture($request->file('profile_picture'), $id);
 
-        // [Opsional] Padam fail gambar lama dari folder supaya tidak penuh
-        if ($staff && !empty($staff->profile_picture)) {
+        // [Opsional] Padam fail gambar lama dari folder jika ia fail fizikal (bukan data URI)
+        if ($staff && !empty($staff->profile_picture) && !str_starts_with($staff->profile_picture, 'data:image')) {
             $oldImagePath = public_path('uploads/staff/' . $staff->profile_picture);
-            if (file_exists($oldImagePath)) {
+            if (file_exists($oldImagePath) && is_writable($oldImagePath)) {
                 @unlink($oldImagePath);
             }
         }
@@ -519,7 +515,9 @@ class StaffController extends Controller
                 'userId' => $s->user_id,
                 'name' => $s->full_name,
                 'role' => 'Staff (' . $s->position . ')',
-                'photoUrl' => asset('uploads/staff/' . $s->profile_picture),
+                'photoUrl' => (str_starts_with($s->profile_picture, 'data:image') || str_starts_with($s->profile_picture, 'http'))
+                    ? $s->profile_picture
+                    : asset('uploads/staff/' . $s->profile_picture),
             ]);
 
         // Generate Cryptographic One-Time Nonce Token (Anti-Replay)
@@ -740,5 +738,34 @@ class StaffController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Process uploaded staff profile picture safely for serverless (Vercel) & local environments.
+     * Generates a Base64 Data URL so the image is stored directly in the database and never lost
+     * when serverless function instances recycle or when the filesystem is strictly read-only.
+     */
+    protected function processProfilePicture(UploadedFile $file, string $staffId): string
+    {
+        $mime = $file->getMimeType() ?: 'image/jpeg';
+        $base64 = 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
+
+        // On local environments where public/uploads/staff is writable, optionally keep a local copy
+        $uploadDir = public_path('uploads/staff');
+        if (!isset($_ENV['VERCEL']) && !env('VERCEL') && !getenv('VERCEL')) {
+            try {
+                if (!is_dir($uploadDir)) {
+                    @mkdir($uploadDir, 0755, true);
+                }
+                if (is_dir($uploadDir) && is_writable($uploadDir)) {
+                    $filename = $staffId . '_' . time() . '.' . $file->getClientOriginalExtension();
+                    @copy($file->getRealPath(), $uploadDir . DIRECTORY_SEPARATOR . $filename);
+                }
+            } catch (\Throwable $e) {
+                // Ignore filesystem write errors
+            }
+        }
+
+        return $base64;
     }
 }

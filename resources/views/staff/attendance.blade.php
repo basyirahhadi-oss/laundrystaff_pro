@@ -55,10 +55,12 @@
         // Ambil data staf aktif berdasarkan selectedStaffId
         $currentStaff = isset($selectedStaffId) ? $staffList->firstWhere('staff_id', $selectedStaffId) : null;
         
-        // Sediakan URL gambar profil yang betul di folder uploads/staff/
+        // Sediakan URL gambar profil yang betul (menyokong Base64 Data URI & fail fizikal)
         $staffImageUrl = '';
         if ($currentStaff && !empty($currentStaff->profile_picture)) {
-            if (file_exists(public_path('uploads/staff/' . $currentStaff->profile_picture))) {
+            if (str_starts_with($currentStaff->profile_picture, 'data:image') || str_starts_with($currentStaff->profile_picture, 'http')) {
+                $staffImageUrl = $currentStaff->profile_picture;
+            } elseif (file_exists(public_path('uploads/staff/' . $currentStaff->profile_picture))) {
                 $staffImageUrl = asset('uploads/staff/' . $currentStaff->profile_picture);
             }
         }

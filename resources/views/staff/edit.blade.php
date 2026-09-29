@@ -41,8 +41,21 @@
                     <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/70">
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Biometric Facial Profile Photo</label>
                         <div class="flex items-center gap-4">
-                            @if(!empty($staff->profile_picture) && file_exists(public_path('uploads/staff/' . $staff->profile_picture)))
-                                <img src="{{ asset('uploads/staff/' . $staff->profile_picture) }}" alt="Profile"
+                            @php
+                                $hasPic = !empty($staff->profile_picture);
+                                $picSrc = '';
+                                if ($hasPic) {
+                                    if (str_starts_with($staff->profile_picture, 'data:image') || str_starts_with($staff->profile_picture, 'http')) {
+                                        $picSrc = $staff->profile_picture;
+                                    } elseif (file_exists(public_path('uploads/staff/' . $staff->profile_picture))) {
+                                        $picSrc = asset('uploads/staff/' . $staff->profile_picture);
+                                    } else {
+                                        $hasPic = false;
+                                    }
+                                }
+                            @endphp
+                            @if($hasPic)
+                                <img src="{{ $picSrc }}" alt="Profile"
                                      class="w-16 h-16 object-cover rounded-xl border-2 border-indigo-200 shadow-sm flex-shrink-0">
                             @else
                                 <div class="w-16 h-16 rounded-xl bg-indigo-100 text-indigo-700 font-black flex items-center justify-center text-base border-2 border-indigo-200 flex-shrink-0">
