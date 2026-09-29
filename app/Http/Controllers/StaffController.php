@@ -23,7 +23,10 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staffList = DB::table('staff')->orderBy('created_at', 'desc')->get();
+        $staffList = DB::table('staff')
+            ->select('id', 'user_id', 'staff_id', 'full_name', 'position', 'phone_number', 'salary_rate', 'profile_picture', 'created_at', 'updated_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('staff.index', compact('staffList'));
     }
 
