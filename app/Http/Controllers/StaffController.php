@@ -57,38 +57,42 @@ class StaffController extends Controller
         $profilePicture = null;
         if ($request->hasFile('profile_picture')) {
             $profilePicture = $this->processProfilePicture($request->file('profile_picture'), $request->staff_id);
+            $this->ensureProfilePictureColumnIsText();
         }
 
-        DB::transaction(function () use ($request, $fullName, $position, $email, $profilePicture, &$user) {
-            $user = User::create([
-                'name' => $fullName,
-                'email' => $email,
-                'password' => \Illuminate\Support\Facades\Hash::make(str()->random(16)),
-                'role' => 'staff',
-            ]);
+        $user = User::create([
+            'name' => $fullName,
+            'email' => $email,
+            'password' => \Illuminate\Support\Facades\Hash::make(str()->random(16)),
+            'role' => 'staff',
+        ]);
 
-            $insertData = [
-                'user_id' => $user->id,
-                'staff_id' => $request->staff_id,
-                'full_name' => $fullName,
-                'position' => $position,
-                'phone_number' => $request->phone_number,
-                'salary_rate' => $request->salary_rate,
-                'profile_picture' => $profilePicture,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+        $insertData = [
+            'user_id' => $user->id,
+            'staff_id' => $request->staff_id,
+            'full_name' => $fullName,
+            'position' => $position,
+            'phone_number' => $request->phone_number,
+            'salary_rate' => $request->salary_rate,
+            'profile_picture' => $profilePicture,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
 
+        try {
             DB::table('staff')->insert($insertData);
+        } catch (\Throwable $e) {
+            $user->delete();
+            throw $e;
+        }
 
-            // Cryptographically Chained Audit Trail
-            $this->auditLogService->recordEvent('staff_created', $user->id, auth()->id(), [
-                'staff_id'    => $request->staff_id,
-                'full_name'   => $fullName,
-                'position'    => $position,
-                'salary_rate' => $request->salary_rate,
-            ]);
-        });
+        // Cryptographically Chained Audit Trail
+        $this->auditLogService->recordEvent('staff_created', $user->id, auth()->id(), [
+            'staff_id'    => $request->staff_id,
+            'full_name'   => $fullName,
+            'position'    => $position,
+            'salary_rate' => $request->salary_rate,
+        ]);
 
         return redirect()->route('staff.index')->with(
             'success',
@@ -126,6 +130,7 @@ class StaffController extends Controller
     // 2. PROSES GAMBAR BARU (Jika ada muat naik)
     if ($request->hasFile('profile_picture')) {
         $filename = $this->processProfilePicture($request->file('profile_picture'), $id);
+        $this->ensureProfilePictureColumnIsText();
 
         // [Opsional] Padam fail gambar lama dari folder jika ia fail fizikal (bukan data URI)
         if ($staff && !empty($staff->profile_picture) && !str_starts_with($staff->profile_picture, 'data:image')) {
@@ -767,5 +772,26 @@ class StaffController extends Controller
         }
 
         return $base64;
+    }
+
+    /**
+     * Ensure staff.profile_picture column can store long Base64 strings.
+     * On PostgreSQL (Neon), auto-heals column from varchar(255) to TEXT if migration hasn't run yet.
+     */
+    protected function ensureProfilePictureColumnIsText(): void
+    {
+        static $executed = false;
+        if ($executed) {
+            return;
+        }
+        $executed = true;
+
+        try {
+            if (DB::connection()->getDriverName() === 'pgsql') {
+                DB::statement('ALTER TABLE staff ALTER COLUMN profile_picture TYPE TEXT');
+            }
+        } catch (\Throwable $e) {
+            // Silently continue if already TEXT or unprivileged
+        }
     }
 }

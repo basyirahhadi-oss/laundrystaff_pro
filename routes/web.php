@@ -24,6 +24,28 @@ Route::get('/', function () {
         : redirect()->route('login');
 });
 
+Route::get('/run-migration', function () {
+    $results = [];
+
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $results[] = "Migrations executed:\n" . \Illuminate\Support\Facades\Artisan::output();
+    } catch (\Throwable $e) {
+        $results[] = "Migration error: " . $e->getMessage();
+    }
+
+    try {
+        if (\Illuminate\Support\Facades\DB::connection()->getDriverName() === 'pgsql') {
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE staff ALTER COLUMN profile_picture TYPE TEXT;');
+            $results[] = "PostgreSQL 'staff.profile_picture' column altered to TEXT successfully.";
+        }
+    } catch (\Throwable $e) {
+        $results[] = "Alter column error: " . $e->getMessage();
+    }
+
+    return response('<pre style="font-family:monospace;padding:20px;background:#1e1e2e;color:#cdd6f4;border-radius:10px;">' . htmlspecialchars(implode("\n\n", $results)) . '</pre>');
+});
+
 Route::prefix('kiosk')->name('kiosk.')->group(function () {
     Route::get('/', [StaffController::class, 'attendanceGateway'])->name('gateway');
 
