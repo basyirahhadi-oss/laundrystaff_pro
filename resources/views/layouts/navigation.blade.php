@@ -46,21 +46,37 @@
                     <span>Kiosk</span>
                 </a>
 
+                <!-- Dark Mode / Night Mode Toggle Button (Pilihan Utama: Top Header Bar) -->
+                <button type="button" 
+                        onclick="window.toggleDarkMode()"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-amber-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer shadow-2xs focus:outline-none"
+                        title="Tukar Mod Malam / Siang (Toggle Dark / Light Mode)"
+                        aria-label="Toggle Dark Mode">
+                    <span class="dark:hidden inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-moon text-[#4A154B] text-xs"></i>
+                        <span>Mod Malam</span>
+                    </span>
+                    <span class="hidden dark:inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-sun text-amber-400 text-xs"></i>
+                        <span>Mod Siang</span>
+                    </span>
+                </button>
+
                 <!-- User Profile Dropdown Pill (Rahmah Style) -->
                 <x-dropdown align="right" width="56">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-800 text-sm font-medium focus:outline-none transition shadow-2xs">
+                        <button class="inline-flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm font-medium focus:outline-none transition shadow-2xs">
                             @if($user && $user->profile_picture_url)
                                 <img src="{{ $user->profile_picture_url }}" 
                                      alt="{{ $user->name }}" 
-                                     class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0 shadow-xs">
+                                     class="w-8 h-8 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-xs">
                             @else
                                 <div class="w-8 h-8 rounded-lg text-white flex items-center justify-center font-bold text-xs uppercase bg-[#0B1527] shadow-xs">
                                     {{ substr($user->name ?? 'A', 0, 1) }}
                                 </div>
                             @endif
                             <div class="text-left hidden sm:block">
-                                <div class="font-semibold text-slate-900 leading-tight text-xs">{{ $user->name ?? 'User' }}</div>
+                                <div class="font-semibold text-slate-900 dark:text-white leading-tight text-xs">{{ $user->name ?? 'User' }}</div>
                                 <div class="text-[10px] text-slate-400 capitalize leading-tight">
                                     {{ $isAdmin ? 'Administrator' : 'Staff Member' }}
                                 </div>
@@ -70,32 +86,44 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-4 py-3 border-b border-slate-100 text-sm flex items-center gap-3">
+                        <div class="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-sm flex items-center gap-3">
                             @if($user && $user->profile_picture_url)
                                 <img src="{{ $user->profile_picture_url }}" 
                                      alt="{{ $user->name }}" 
-                                     class="w-10 h-10 rounded-xl object-cover border border-slate-200 shrink-0 shadow-xs">
+                                     class="w-10 h-10 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-xs">
                             @endif
                             <div class="min-w-0">
-                                <p class="font-bold text-slate-900 text-sm truncate">{{ $user->name }}</p>
+                                <p class="font-bold text-slate-900 dark:text-white text-sm truncate">{{ $user->name }}</p>
                                 <p class="text-slate-400 text-xs truncate">{{ $user->email }}</p>
-                                <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-600">
+                                <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                                     Role: {{ $user->role }}
                                 </span>
                             </div>
                         </div>
 
-                        <x-dropdown-link :href="route('profile.edit')" class="flex items-center gap-2.5 text-sm text-slate-700 hover:bg-slate-50 py-2.5">
+                        <x-dropdown-link :href="route('profile.edit')" class="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/80 py-2.5">
                             <i class="fa-regular fa-user text-slate-400 text-xs"></i>
                             <span>{{ __('Profile Settings') }}</span>
                         </x-dropdown-link>
+
+                        <!-- Night Mode Toggle Item in Dropdown -->
+                        <button type="button" 
+                                onclick="window.toggleDarkMode()"
+                                class="w-full text-left flex items-center justify-between px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition border-t border-slate-100 dark:border-slate-800">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-moon text-slate-400 dark:text-amber-400 text-xs"></i>
+                                <span>Mod Malam (Dark Mode)</span>
+                            </div>
+                            <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 dark:hidden">OFF</span>
+                            <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 hidden dark:inline">ON</span>
+                        </button>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault(); this.closest('form').submit();"
-                                    class="flex items-center gap-2.5 text-sm text-rose-600 hover:bg-rose-50 font-medium py-2.5">
+                                    class="flex items-center gap-2.5 text-sm text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 font-medium py-2.5 border-t border-slate-100 dark:border-slate-800">
                                 <i class="fa-solid fa-arrow-right-from-bracket text-rose-400 text-xs"></i>
                                 <span>{{ __('Sign Out') }}</span>
                             </x-dropdown-link>

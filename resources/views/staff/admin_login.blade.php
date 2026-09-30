@@ -96,14 +96,14 @@
 
                 {{-- NOTIFICATIONS & ALERTS --}}
                 @if(session('error'))
-                    <div class="mb-5 rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-xs px-4 py-3 flex items-start gap-2.5 shadow-sm">
+                    <div class="mb-5 rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-sm px-4 py-3 flex items-start gap-2.5 shadow-sm">
                         <i class="fa-solid fa-circle-exclamation text-rose-400 text-sm mt-0.5 shrink-0"></i>
                         <span class="font-medium leading-relaxed">{{ session('error') }}</span>
                     </div>
                 @endif
 
                 @if($errors->any())
-                    <div class="mb-5 rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-xs px-4 py-3 flex items-start gap-2.5 shadow-sm">
+                    <div class="mb-5 rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-sm px-4 py-3 flex items-start gap-2.5 shadow-sm">
                         <i class="fa-solid fa-circle-exclamation text-rose-400 text-sm mt-0.5 shrink-0"></i>
                         <span class="font-medium leading-relaxed">{{ $errors->first() }}</span>
                     </div>

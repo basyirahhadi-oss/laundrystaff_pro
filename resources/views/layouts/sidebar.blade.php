@@ -86,6 +86,18 @@
                             <p class="text-[10px] text-slate-400 capitalize">{{ $user->role ?? 'staff' }}</p>
                         </div>
                     </div>
+                    <!-- Mobile Night Mode Toggle -->
+                    <button type="button" 
+                            onclick="window.toggleDarkMode()"
+                            class="mt-3 w-full flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5 text-xs text-slate-300 hover:text-amber-400 transition">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-moon dark:hidden text-slate-400"></i>
+                            <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+                            <span>Mod Paparan (Theme)</span>
+                        </span>
+                        <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/10 dark:hidden text-slate-300">Siang</span>
+                        <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 hidden dark:inline">Malam</span>
+                    </button>
                 </div>
 
             </div>
@@ -131,7 +143,15 @@
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span class="text-[11px] font-medium text-slate-400">Ledger Verified</span>
                 </div>
-                <span class="text-[10px] font-mono text-slate-500 font-medium">v2.4.0</span>
+                <button type="button" 
+                        onclick="window.toggleDarkMode()"
+                        class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-400 hover:text-amber-400 hover:bg-white/5 transition"
+                        title="Tukar Mod Malam / Siang">
+                    <i class="fa-solid fa-moon dark:hidden text-[10px]"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline text-amber-400 text-[10px]"></i>
+                    <span class="dark:hidden">Mod Malam</span>
+                    <span class="hidden dark:inline text-amber-400">Mod Siang</span>
+                </button>
             </div>
 
             <div class="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">

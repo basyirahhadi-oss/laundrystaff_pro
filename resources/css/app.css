@@ -14,3 +14,21 @@
     letter-spacing: normal;
   }
 }
+
+/* ========================================================================= */
+/* Standard System Notifications (Consistent Moderate 'Sederhana' 14px / text-sm) */
+/* ========================================================================= */
+.alert, [role="alert"] {
+  font-size: 0.875rem !important; /* 14px */
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+}
+
+.swal2-popup.swal2-toast,
+.swal2-popup.swal2-toast .swal2-title,
+.swal2-popup.swal2-toast .swal2-html-container,
+.swal2-popup.swal2-toast .swal2-content {
+  font-size: 0.875rem !important; /* 14px */
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}

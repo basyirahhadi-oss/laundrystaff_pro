@@ -57,13 +57,13 @@
             </div>
 
             @if(session('error'))
-                <div class="rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-xs px-4 py-3 text-left flex items-center gap-2.5 shadow-sm">
+                <div class="rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-300 text-sm px-4 py-3 text-left flex items-center gap-2.5 shadow-sm">
                     <i class="fa-solid fa-circle-exclamation text-rose-400"></i>
                     <span>{{ session('error') }}</span>
                 </div>
             @endif
             @if(session('info'))
-                <div class="rounded-2xl bg-sky-950/60 border border-sky-800/80 text-sky-300 text-xs px-4 py-3 text-left flex items-center gap-2.5 shadow-sm">
+                <div class="rounded-2xl bg-sky-950/60 border border-sky-800/80 text-sky-300 text-sm px-4 py-3 text-left flex items-center gap-2.5 shadow-sm">
                     <i class="fa-solid fa-circle-info text-sky-400"></i>
                     <span>{{ session('info') }}</span>
                 </div>

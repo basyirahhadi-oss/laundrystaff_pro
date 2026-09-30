@@ -15,10 +15,29 @@
         <!-- FontAwesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
+        <!-- Dark Mode Persistence & Initialization -->
+        <script>
+            (function() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            })();
+
+            window.toggleDarkMode = function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));
+            };
+        </script>
+
         <!-- Tailwind CSS CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
+                darkMode: 'class',
                 theme: {
                     extend: {
                         fontFamily: {
@@ -50,21 +69,60 @@
                 letter-spacing: -0.03em;
             }
             .font-mono-nums { font-family: 'JetBrains Mono', monospace; }
+
+            /* Guest Dark Mode */
+            html.dark body {
+                background: linear-gradient(135deg, #070D18 0%, #0A1122 50%, #160A18 100%) !important;
+                color: #F8FAFC !important;
+            }
+            html.dark .bg-white {
+                background-color: #0F172A !important;
+                border-color: #1E293B !important;
+                color: #F8FAFC !important;
+            }
+            html.dark input[type="text"],
+            html.dark input[type="email"],
+            html.dark input[type="password"] {
+                background-color: #070D18 !important;
+                border-color: #334155 !important;
+                color: #F8FAFC !important;
+            }
+            html.dark input::placeholder {
+                color: #64748B !important;
+            }
+            html.dark .text-slate-900,
+            html.dark .text-slate-800,
+            html.dark .text-slate-700 {
+                color: #F8FAFC !important;
+            }
+            html.dark .text-slate-600,
+            html.dark .text-slate-500 {
+                color: #94A3B8 !important;
+            }
         </style>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-50/30 text-slate-900 antialiased min-h-screen flex flex-col justify-between selection:bg-[#4A154B] selection:text-white">
+    <body class="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-50/30 dark:bg-gradient-to-br dark:from-[#070D18] dark:via-[#0A1122] dark:to-[#160A18] text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col justify-between selection:bg-[#4A154B] selection:text-white">
         
         <!-- Top Minimal Navbar -->
         <header class="w-full py-4 px-6 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
-                <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-8 h-8 rounded-xl object-contain bg-slate-950 p-1 shadow border border-slate-200">
-                <span class="font-extrabold text-sm text-slate-900 tracking-tight">LaundryStaff <span class="text-xs px-1.5 py-0.5 rounded text-white font-black" style="background-color: #4A154B;">PRO</span></span>
+                <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-8 h-8 rounded-xl object-contain bg-slate-950 p-1 shadow border border-slate-200 dark:border-slate-800">
+                <span class="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">LaundryStaff <span class="text-xs px-1.5 py-0.5 rounded text-white font-black" style="background-color: #4A154B;">PRO</span></span>
             </div>
-            <div class="text-[11px] text-slate-400 font-medium">
-                Zaujati Laundry Operations
+            <div class="flex items-center gap-3">
+                <button type="button" 
+                        onclick="window.toggleDarkMode()"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-xl border border-slate-200/90 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-2xs focus:outline-none"
+                        title="Tukar Mod Malam / Siang">
+                    <i class="fa-solid fa-moon text-xs dark:hidden"></i>
+                    <i class="fa-solid fa-sun text-xs text-amber-400 hidden dark:inline"></i>
+                </button>
+                <div class="text-[11px] text-slate-400 font-medium hidden sm:block">
+                    Zaujati Laundry Operations
+                </div>
             </div>
         </header>
 
