@@ -93,10 +93,10 @@
                         <span class="flex items-center gap-2">
                             <i class="fa-solid fa-moon dark:hidden text-slate-400"></i>
                             <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
-                            <span>Mod Paparan (Theme)</span>
+                            <span>Theme</span>
                         </span>
-                        <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/10 dark:hidden text-slate-300">Siang</span>
-                        <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 hidden dark:inline">Malam</span>
+                        <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/10 dark:hidden text-slate-300">Dark</span>
+                        <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 hidden dark:inline">Light</span>
                     </button>
                 </div>
 
@@ -146,11 +146,11 @@
                 <button type="button" 
                         onclick="window.toggleDarkMode()"
                         class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-400 hover:text-amber-400 hover:bg-white/5 transition"
-                        title="Tukar Mod Malam / Siang">
+                        title="Toggle Dark / Light Mode">
                     <i class="fa-solid fa-moon dark:hidden text-[10px]"></i>
                     <i class="fa-solid fa-sun hidden dark:inline text-amber-400 text-[10px]"></i>
-                    <span class="dark:hidden">Mod Malam</span>
-                    <span class="hidden dark:inline text-amber-400">Mod Siang</span>
+                    <span class="dark:hidden">Dark Mode</span>
+                    <span class="hidden dark:inline text-amber-400">Light Mode</span>
                 </button>
             </div>
 
