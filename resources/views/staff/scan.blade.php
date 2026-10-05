@@ -50,28 +50,28 @@
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
         }
 
-        /* 3D Elevated Button */
+        /* Sleek Compact 3D Elevated Button */
         .btn-3d-emerald {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
             color: #ffffff !important;
             box-shadow: 
-                0 12px 30px rgba(16, 185, 129, 0.55),
-                inset 0 1px 2px rgba(255, 255, 255, 0.5),
-                0 4px 0 #047857 !important;
+                0 4px 12px rgba(16, 185, 129, 0.35),
+                inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                0 2px 0 #047857 !important;
         }
         .btn-3d-emerald:hover {
             background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
             box-shadow: 
-                0 16px 36px rgba(16, 185, 129, 0.7),
-                inset 0 1px 2px rgba(255, 255, 255, 0.6),
-                0 4px 0 #047857 !important;
+                0 6px 16px rgba(16, 185, 129, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5),
+                0 2px 0 #047857 !important;
         }
         .btn-3d-emerald:active {
-            transform: translateY(3px) !important;
+            transform: translateY(2px) !important;
             box-shadow: 
-                0 4px 15px rgba(16, 185, 129, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.3),
-                0 1px 0 #047857 !important;
+                0 2px 6px rgba(16, 185, 129, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                0 0px 0 #047857 !important;
         }
 
         /* Background Tech Grid & Dots */
@@ -278,8 +278,8 @@
                         <input type="hidden" name="kiosk_token" id="kiosk_token" value="{{ $kioskToken ?? '' }}">
 
                         <button type="submit" id="verifyBtn" disabled
-                            class="w-full rounded-2xl bg-slate-800 text-slate-200 border-2 border-slate-600/80 font-extrabold text-xs sm:text-sm py-4 px-5 transition-all flex items-center justify-center gap-2.5 cursor-not-allowed shadow-inner">
-                            <i class="fa-solid fa-fingerprint text-base"></i>
+                            class="w-full rounded-xl bg-slate-800 text-slate-300 border border-slate-700/80 font-bold text-xs py-2.5 px-4 transition-all flex items-center justify-center gap-2 cursor-not-allowed shadow-inner">
+                            <i class="fa-solid fa-fingerprint text-xs"></i>
                             <span id="verifyBtnLabel" class="text-timbul">Waiting for facial alignment...</span>
                         </button>
                     </form>
@@ -390,15 +390,15 @@
 
             if (canSubmit) {
                 verifyBtnLabel.textContent = 'Authorize & Punch In Attendance';
-                verifyBtn.className = 'w-full rounded-2xl btn-3d-emerald text-white font-black text-sm sm:text-base py-4 px-6 transition-all flex items-center justify-center gap-2.5 cursor-pointer uppercase tracking-wider transform hover:scale-[1.02] active:scale-[0.98] shadow-2xl';
+                verifyBtn.className = 'w-full rounded-xl btn-3d-emerald text-white font-extrabold text-xs py-2.5 px-4 transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider transform hover:scale-[1.01] active:scale-[0.99] shadow-md';
                 setState('matched', 'Face Matched & Liveness Verified ✅');
             } else if (isMatch && !livenessVerified) {
                 verifyBtnLabel.textContent = 'Blink or Smile to Verify Liveness 👁️';
-                verifyBtn.className = 'w-full rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-xs sm:text-sm py-4 px-5 transition-all flex items-center justify-center gap-2 cursor-wait border-b-4 border-amber-700 shadow-[0_8px_25px_rgba(245,158,11,0.5)]';
+                verifyBtn.className = 'w-full rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-bold text-xs py-2.5 px-4 transition-all flex items-center justify-center gap-2 cursor-wait border-b-2 border-amber-700 shadow-sm';
                 setState('liveness', 'Face recognized! Now blink or smile to complete anti-spoof check 👁️😊');
             } else {
                 verifyBtnLabel.textContent = 'Waiting for facial alignment...';
-                verifyBtn.className = 'w-full rounded-2xl bg-slate-800 text-slate-200 border-2 border-slate-600/80 font-extrabold text-xs sm:text-sm py-4 px-5 transition-all flex items-center justify-center gap-2.5 cursor-not-allowed shadow-inner';
+                verifyBtn.className = 'w-full rounded-xl bg-slate-800 text-slate-300 border border-slate-700/80 font-bold text-xs py-2.5 px-4 transition-all flex items-center justify-center gap-2 cursor-not-allowed shadow-inner';
                 setState('scanning', 'Scanning camera feed...');
             }
 
@@ -551,7 +551,7 @@
             document.getElementById('attendanceForm')?.addEventListener('submit', () => {
                 verifyBtn.disabled = true;
                 verifyBtnLabel.textContent = 'Recording Attendance...';
-                verifyBtn.className = 'w-full rounded-2xl bg-emerald-600 text-white font-black text-sm py-4 px-6 flex items-center justify-center gap-2.5 cursor-wait opacity-90';
+                verifyBtn.className = 'w-full rounded-xl bg-emerald-600 text-white font-bold text-xs py-2.5 px-4 flex items-center justify-center gap-2 cursor-wait opacity-90';
             });
         });
 
