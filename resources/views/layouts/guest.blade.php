@@ -144,11 +144,11 @@
             <!-- Modern Header with Brand & Live Status -->
             <header class="w-full py-4 px-6 sm:px-10 flex items-center justify-between border-b border-white/10 bg-slate-950/40 backdrop-blur-md">
                 <div class="flex items-center gap-3.5">
-                    <!-- Brand Icon with Gradient Ring -->
+                    <!-- Brand Logo with Gradient Ring -->
                     <div class="relative group">
-                        <div class="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-lg shadow-[#E11D74]/20">
-                            <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-                                <i class="fa-solid fa-soap text-transparent bg-clip-text bg-gradient-to-r from-[#E11D74] to-[#00E5FF] text-base"></i>
+                        <div class="w-11 h-11 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-lg shadow-[#E11D74]/20">
+                            <div class="w-full h-full bg-black rounded-[14px] p-1 flex items-center justify-center overflow-hidden">
+                                <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
                             </div>
                         </div>
                         <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">

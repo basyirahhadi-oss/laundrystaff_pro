@@ -51,8 +51,8 @@
             <div class="text-center relative z-10 mb-6">
                 <!-- Official Zaujati Logo Badge -->
                 <div class="inline-block relative mb-3 group">
-                    <div class="w-24 h-24 mx-auto rounded-full p-1 bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-2xl shadow-[#E11D74]/35 transform group-hover:scale-105 transition-transform duration-300">
-                        <div class="w-full h-full rounded-full bg-slate-950 p-2.5 flex items-center justify-center overflow-hidden">
+                    <div class="w-28 h-28 mx-auto rounded-3xl p-1 bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-2xl shadow-[#E11D74]/40 transform group-hover:scale-105 transition-transform duration-300">
+                        <div class="w-full h-full rounded-[22px] bg-black p-2 flex items-center justify-center overflow-hidden">
                             <img src="{{ asset('images/zaujati-logo.png') }}" 
                                  alt="Zaujati Laundry" 
                                  class="w-full h-full object-contain">

@@ -64,8 +64,8 @@
         <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E11D74] to-[#00E5FF] shadow-sm">
-                    <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-                        <i class="fa-solid fa-soap text-transparent bg-clip-text bg-gradient-to-r from-[#E11D74] to-[#00E5FF] text-base"></i>
+                    <div class="w-full h-full bg-black rounded-[14px] p-1 flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
                     </div>
                 </div>
                 <div>

@@ -57,8 +57,8 @@
     <header class="bg-slate-950/80 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-cyan-500/20 border border-cyan-400/40 p-1 flex items-center justify-center shrink-0 shadow-sm text-cyan-400">
-                    <i class="fa-solid fa-soap text-lg"></i>
+                <div class="w-10 h-10 rounded-2xl bg-black border border-pink-500/30 p-1 flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+                    <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <div class="flex items-center gap-1.5">

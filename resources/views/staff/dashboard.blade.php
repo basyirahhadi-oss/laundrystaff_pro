@@ -44,19 +44,9 @@
                         </p>
                     </div>
 
-                    <!-- Official Zaujati Brand Logo & Floor Status -->
-                    <div class="flex items-center gap-4 shrink-0">
-                        <div class="relative group">
-                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-white/20 backdrop-blur-md border border-white/30 shadow-xl overflow-hidden group-hover:scale-105 transition-transform duration-300 bg-slate-950/80">
-                                <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain p-1">
-                            </div>
-                            <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-300 border-2 border-blue-600"></span>
-                            </span>
-                        </div>
-
-                        <div class="hidden sm:flex flex-col gap-2">
+                    <!-- Operational Status Indicators -->
+                    <div class="flex items-center gap-3 shrink-0">
+                        <div class="flex flex-col sm:flex-row items-end sm:items-center gap-2">
                             <div class="bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-xs">
                                 <div class="text-[10px] font-bold text-blue-200 uppercase tracking-wider">Floor Operations</div>
                                 <div class="font-bold text-white text-xs flex items-center gap-1.5">
