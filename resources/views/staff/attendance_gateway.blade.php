@@ -111,37 +111,37 @@
                 </div>
             @endif
 
-            <div class="space-y-3 pt-1">
+            <div class="space-y-4 pt-1">
                 <!-- STAFF BIOMETRIC SCAN OPTION -->
                 <a href="{{ route('kiosk.scan') }}"
-                   class="group block w-full bg-slate-900/90 hover:bg-slate-900 rounded-3xl border border-blue-500/30 hover:border-blue-500/70 shadow-xl transition-all p-5 text-left relative overflow-hidden backdrop-blur-md hover:scale-[1.01]">
+                   class="group block w-full bg-slate-900/95 hover:bg-slate-900 rounded-3xl border-2 border-cyan-400/50 hover:border-cyan-300 shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_25px_rgba(34,211,238,0.25)] transition-all p-5 text-left relative overflow-hidden backdrop-blur-md hover:scale-[1.02]">
                     <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 group-hover:bg-blue-600 text-blue-400 group-hover:text-white flex items-center justify-center text-xl transition-all flex-shrink-0">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/20 border-2 border-cyan-400/60 group-hover:bg-cyan-500 text-cyan-300 group-hover:text-slate-950 flex items-center justify-center text-2xl transition-all flex-shrink-0 shadow-[0_0_15px_rgba(34,211,238,0.4)]">
                             <i class="fa-solid fa-camera"></i>
                         </div>
                         <div class="flex-1">
                             <div class="flex items-center gap-2">
-                                <p class="font-extrabold text-white text-sm">Staff Biometric Scan</p>
-                                <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Face ID</span>
+                                <p class="font-black text-white text-base drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">Staff Biometric Scan</p>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/25 text-emerald-300 border border-emerald-400/60 shadow-sm">Face ID</span>
                             </div>
-                            <p class="text-xs text-slate-300 mt-1">Automatic landmark recognition &amp; EAR blink liveness check.</p>
+                            <p class="text-xs text-slate-200 font-medium mt-1">Automatic landmark recognition &amp; EAR blink liveness check.</p>
                         </div>
-                        <i class="fa-solid fa-arrow-right text-slate-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-cyan-400 group-hover:translate-x-1.5 transition-all text-base"></i>
                     </div>
                 </a>
 
                 <!-- ADMIN PASSCODE OPTION -->
                 <a href="{{ route('kiosk.admin-login') }}"
-                   class="group block w-full bg-slate-900/60 hover:bg-slate-900/90 rounded-3xl border border-white/10 hover:border-white/20 shadow-md transition-all p-4.5 text-left backdrop-blur-md">
+                   class="group block w-full bg-slate-900/80 hover:bg-slate-900/95 rounded-3xl border-2 border-white/20 hover:border-white/40 shadow-xl transition-all p-4.5 text-left backdrop-blur-md hover:scale-[1.01]">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white/10 text-slate-300 group-hover:text-white flex items-center justify-center text-base transition-colors flex-shrink-0">
-                            <i class="fa-solid fa-key"></i>
+                        <div class="w-12 h-12 rounded-2xl bg-white/15 border border-white/25 text-white group-hover:bg-white/25 flex items-center justify-center text-lg transition-colors flex-shrink-0 shadow-sm">
+                            <i class="fa-solid fa-key text-pink-300"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="font-bold text-slate-200 text-xs">Manager / Admin Passcode</p>
-                            <p class="text-[11px] text-slate-400 mt-0.5">Authenticate using authorized administrative credentials.</p>
+                            <p class="font-extrabold text-white text-sm drop-shadow-sm">Manager / Admin Passcode</p>
+                            <p class="text-xs text-slate-300 mt-0.5">Authenticate using authorized administrative credentials.</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white text-sm transition-transform group-hover:translate-x-1"></i>
                     </div>
                 </a>
             </div>
