@@ -31,14 +31,14 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <!-- 1. TOP 4 BENTO PERFORMANCE KPI CARDS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
                 <!-- KPI 1: Punctuality Score -->
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-semibold text-slate-500">Punctuality Score</span>
                         <div class="w-8 h-8 rounded-lg bg-{{ $performanceTier['color'] }}-50 text-{{ $performanceTier['color'] }}-600 flex items-center justify-center text-xs">
@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- KPI 2: Worked Hours -->
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-semibold text-slate-500">Shift Hours ({{ $monthDate->format('M Y') }})</span>
                         <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
@@ -75,7 +75,7 @@
                 </div>
 
                 <!-- KPI 3: Estimated Earnings -->
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-semibold text-slate-500">Est. Shift Earnings</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
@@ -90,7 +90,7 @@
                 </div>
 
                 <!-- KPI 4: Annual Leave Balance -->
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-semibold text-slate-500">Annual Leave (AL)</span>
                         <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-xs">
@@ -110,7 +110,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 <!-- Left 2 Cols: Monthly Shift Status Distribution -->
-                <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-5">
+                <div class="lg:col-span-2 portal-card p-6 shadow-sm space-y-5">
                     <div class="flex items-center justify-between">
                         <div>
                             <h2 class="text-base font-bold text-slate-900 tracking-tight">Monthly Shift Attendance Summary</h2>
@@ -172,7 +172,7 @@
                 </div>
 
                 <!-- Right 1 Col: Statutory Leave Allowance Card -->
-                <div class="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-4 flex flex-col justify-between">
+                <div class="portal-card p-6 shadow-sm space-y-4 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <h2 class="text-base font-bold text-slate-900 tracking-tight">Leave Entitlements ({{ $monthDate->year }})</h2>
@@ -231,7 +231,7 @@
             </div>
 
             <!-- 3. DAILY ATTENDANCE & SHIFT LOG (MONTHLY) -->
-            <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <div class="portal-card shadow-sm overflow-hidden">
                 <div class="p-6 border-b border-slate-100 flex items-center justify-between">
                     <div>
                         <h2 class="text-base font-bold text-slate-900 tracking-tight">Shift Log &amp; Worked Hours Detail</h2>
@@ -321,7 +321,7 @@
 
             <!-- 4. RECENT PAYROLL & STATUTORY COMPENSATION LEDGERS (IF AVAILABLE) -->
             @if($recentPayrolls->isNotEmpty())
-                <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="portal-card shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex items-center justify-between">
                         <div>
                             <h2 class="text-base font-bold text-slate-900 tracking-tight">Official Payroll Statements &amp; Statutory Ledgers</h2>

@@ -15,7 +15,7 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             {{-- STATUS FILTER TABS --}}
@@ -34,7 +34,7 @@
             {{-- LEAVE CARDS LIST --}}
             <div class="space-y-4">
                 @forelse ($leaves as $leave)
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm hover:shadow transition">
+                    <div class="portal-card p-6 shadow-sm hover:shadow transition">
                         <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                             <div class="flex items-start gap-4">
                                 <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 flex items-center justify-center font-bold text-sm flex-shrink-0">

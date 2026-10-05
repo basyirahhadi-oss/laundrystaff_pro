@@ -23,7 +23,7 @@
         </div>
     </x-slot>
 
-    <div class="py-6 sm:py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             {{-- 1. CLEAN & UNIFIED STAT CARDS (No Rainbow Borders) --}}
@@ -35,7 +35,7 @@
             @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {{-- CARD 1: NET PAY --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Net Disbursed</span>
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
@@ -49,7 +49,7 @@
                 </div>
 
                 {{-- CARD 2: OVERTIME --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Overtime Pay</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
@@ -63,7 +63,7 @@
                 </div>
 
                 {{-- CARD 3: STATUTORY --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Statutory Deductions</span>
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
@@ -77,7 +77,7 @@
                 </div>
 
                 {{-- CARD 4: AUDIT INTEGRITY --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Ledger Security</span>
                         <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
@@ -92,7 +92,7 @@
             </div>
 
             {{-- 2. PAYROLL TABLE --}}
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div class="portal-card shadow-xs overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                     <div>
                         <h2 class="text-base font-bold text-slate-900 tracking-tight">Generated Payslips</h2>

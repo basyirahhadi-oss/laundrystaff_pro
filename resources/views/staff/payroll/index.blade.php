@@ -116,7 +116,7 @@
                 {{-- 2. FINANCIAL STATS SUMMARY METRIC CARDS --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {{-- CARD 1: LATEST NET SALARY --}}
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                    <div class="portal-card p-5 shadow-xs">
                         <div class="flex items-center justify-between mb-2.5">
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Latest Net Salary</span>
                             <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
@@ -139,7 +139,7 @@
                     </div>
 
                     {{-- CARD 2: YTD TOTAL TAKE-HOME --}}
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                    <div class="portal-card p-5 shadow-xs">
                         <div class="flex items-center justify-between mb-2.5">
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Net Disbursed</span>
                             <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
@@ -155,7 +155,7 @@
                     </div>
 
                     {{-- CARD 3: TOTAL OVERTIME EARNED --}}
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                    <div class="portal-card p-5 shadow-xs">
                         <div class="flex items-center justify-between mb-2.5">
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Overtime (OT) Allowance</span>
                             <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
@@ -171,7 +171,7 @@
                     </div>
 
                     {{-- CARD 4: STATUTORY CONTRIBUTIONS ACCUMULATED --}}
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                    <div class="portal-card p-5 shadow-xs">
                         <div class="flex items-center justify-between mb-2.5">
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Statutory Deductions</span>
                             <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-xs">
@@ -188,7 +188,7 @@
                 </div>
 
                 {{-- 3. OFFICIAL PAYSLIPS TABLE --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+                <div class="portal-card shadow-xs overflow-hidden">
                     <div class="px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
                         <div>
                             <h2 class="text-base font-bold text-slate-900 tracking-tight">Official Salary Statements</h2>
@@ -278,7 +278,7 @@
                 </div>
 
                 {{-- 4. TRANSPARENCY & STATUTORY GUIDELINES INFO BOX --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+                <div class="portal-card p-6 shadow-xs">
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-sm font-bold text-slate-900 tracking-tight">Malaysian Statutory Deduction Guide</span>
                         <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">

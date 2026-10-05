@@ -23,10 +23,10 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-8 shadow-sm">
+            <div class="portal-card p-8 shadow-sm">
                 <form action="{{ route('staff.update', $staff->staff_id) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                     @csrf
                     @method('PUT')

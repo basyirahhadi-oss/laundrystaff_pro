@@ -15,13 +15,13 @@
         </div>
     </x-slot>
 
-    <div class="py-6 sm:py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <!-- 1. CLEAN 4 KPI STAT CARDS (Uniform & Uncluttered) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {{-- CARD 1: ATTENDANCE RATE --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Attendance Rate</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
@@ -36,7 +36,7 @@
                 </div>
 
                 {{-- CARD 2: APPROVED LEAVES --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Approved Leave</span>
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
@@ -51,7 +51,7 @@
                 </div>
 
                 {{-- CARD 3: PAYROLL PROCESSED --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Payroll Total</span>
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
@@ -66,7 +66,7 @@
                 </div>
 
                 {{-- CARD 4: LATE ARRIVALS --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Late Check-Ins</span>
                         <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
@@ -85,7 +85,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {{-- LEAVE BREAKDOWN --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6">
+                <div class="portal-card shadow-xs p-6">
                     <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
                         <div>
                             <h3 class="text-sm font-bold text-slate-900">Leave Distribution</h3>
@@ -111,7 +111,7 @@
                 </div>
 
                 {{-- ATTENDANCE OVERVIEW --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6">
+                <div class="portal-card shadow-xs p-6">
                     <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
                         <div>
                             <h3 class="text-sm font-bold text-slate-900">Attendance Status Breakdown</h3>
@@ -138,7 +138,7 @@
             </div>
 
             <!-- 3. PERSONNEL REQUIRING ATTENTION -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6">
+            <div class="portal-card shadow-xs p-6">
                 <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
                     <div>
                         <h3 class="text-sm font-bold text-slate-900">Personnel Compliance Review</h3>

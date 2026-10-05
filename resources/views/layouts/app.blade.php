@@ -428,12 +428,11 @@
         <div class="min-h-screen bg-[#070b14]/50 flex relative overflow-x-hidden">
             
             <!-- Highly Visible Aesthetic Modern Laundry Wallpaper Background -->
-            <div class="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat opacity-45 dark:opacity-40 scale-105" 
-                 style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); background-attachment: fixed; filter: brightness(0.85) contrast(1.05);"></div>
+            <div class="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat opacity-60 dark:opacity-50 scale-105" 
+                 style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); background-attachment: fixed; filter: brightness(0.9) contrast(1.1);"></div>
             
-            <!-- Atmospheric Layer Overlay -->
-            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-[#070b14]/85 via-[#070b14]/75 to-[#070b14]/90 dark:block hidden"></div>
-            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-white/80 via-slate-50/70 to-slate-100/85 dark:hidden"></div>
+            <!-- Atmospheric Layer Overlay (Rich & Balanced) -->
+            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-[#070b14]/75 via-[#070b14]/60 to-[#070b14]/80"></div>
 
             <!-- Tech Grid & Dot Pattern Overlay -->
             <div class="fixed inset-0 pointer-events-none z-0 bg-tech-grid opacity-30"></div>

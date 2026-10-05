@@ -37,12 +37,12 @@
         </div>
     </x-slot>
 
-    <div class="py-6 sm:py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <!-- 1. CLEAN STATUS BANNER (No Emojis, Calm Professional Design) -->
             @if ($integrity['is_valid'])
-                <div class="bg-white rounded-2xl border border-emerald-200/80 p-5 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="portal-card border-emerald-400/40 p-5 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base flex-shrink-0">
                             <i class="fa-solid fa-shield-check"></i>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             @else
-                <div class="bg-white rounded-2xl border border-rose-300 p-5 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="portal-card border-rose-400/40 p-5 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-base flex-shrink-0">
                             <i class="fa-solid fa-triangle-exclamation"></i>
@@ -94,7 +94,7 @@
 
             <!-- 2. UNIFORM SECURITY METRICS (No Rainbow Borders) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Chained Blocks</span>
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
@@ -105,7 +105,7 @@
                     <p class="text-xs text-slate-400 mt-1">Immutable audit events</p>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">File Encryption</span>
                         <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
@@ -116,7 +116,7 @@
                     <p class="text-xs text-slate-400 mt-1">Encrypted storage at-rest</p>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Biometric Liveness</span>
                         <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
@@ -127,7 +127,7 @@
                     <p class="text-xs text-slate-400 mt-1">Anti-spoofing verification</p>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+                <div class="portal-card p-5 shadow-xs">
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-xs font-semibold text-slate-500">Replay Protection</span>
                         <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-xs">
@@ -140,7 +140,7 @@
             </div>
 
             <!-- 3. CRYPTOGRAPHIC LEDGER TABLE (Clean Monospace Hashes with Ellipsis) -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div class="portal-card shadow-xs overflow-hidden">
                 <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                         <h2 class="text-base font-bold text-slate-900 tracking-tight">Cryptographic Event Stream</h2>

@@ -24,7 +24,7 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -32,7 +32,7 @@
                 {{-- REGISTER STAFF FORM (ADMIN ONLY) --}}
                 @if(auth()->user()->role === 'admin' || auth()->user()->email == 'admin@zaujati.com')
                 <div class="lg:col-span-4">
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm sticky top-24">
+                    <div class="portal-card p-6 sticky top-24">
                         <div class="flex items-center gap-3 pb-4 mb-4 border-b border-slate-100">
                             <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm font-bold">
                                 <i class="fa-solid fa-user-plus"></i>
@@ -104,7 +104,7 @@
 
                 {{-- STAFF DIRECTORY LIST --}}
                 <div class="{{ (auth()->user()->role === 'admin' || auth()->user()->email == 'admin@zaujati.com') ? 'lg:col-span-8' : 'lg:col-span-12' }}">
-                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div class="portal-card shadow-sm overflow-hidden">
                         <div class="px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                             <div>
                                 <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Active Staff Members</h2>

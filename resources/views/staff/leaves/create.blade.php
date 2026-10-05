@@ -23,10 +23,10 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-8 shadow-sm">
+            <div class="portal-card p-8 shadow-sm">
                 <!-- SECURITY CALLOUT -->
                 <div class="bg-purple-50/60 border border-purple-200/70 rounded-xl p-4 mb-6 flex items-start gap-3">
                     <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">

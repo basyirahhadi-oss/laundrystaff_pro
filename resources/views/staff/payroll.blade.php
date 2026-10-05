@@ -23,14 +23,14 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
                 {{-- LEFT: CALCULATION INPUTS --}}
                 <div class="lg:col-span-5 space-y-6">
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm">
+                    <div class="portal-card p-6 shadow-sm">
                         <div class="flex items-center gap-3 pb-4 mb-4 border-b border-slate-100">
                             <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm font-bold flex-shrink-0">
                                 <i class="fa-solid fa-money-bill-transfer"></i>
@@ -99,7 +99,7 @@
 
                 {{-- RIGHT: LIVE PAYSLIP VOUCHER PREVIEW --}}
                 <div class="lg:col-span-7">
-                    <div class="bg-white rounded-2xl border border-slate-200/80 p-8 shadow-sm">
+                    <div class="portal-card p-8 shadow-sm">
                         <!-- VOUCHER HEADER -->
                         <div class="flex items-start justify-between border-b border-slate-100 pb-5 mb-5">
                             <div>
