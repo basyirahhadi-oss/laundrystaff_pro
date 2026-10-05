@@ -7,10 +7,10 @@
 
         <title>{{ config('app.name', 'LaundryStaff Pro') }} · Enterprise HRMS &amp; Operations</title>
 
-        <!-- Google Fonts: Inter (Standard, clean, readable modern font) -->
+        <!-- Google Fonts: Inter & Plus Jakarta Sans (Modern, neat, aesthetic typography) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
         <!-- Font Awesome 6 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -41,15 +41,26 @@
                 theme: {
                     extend: {
                         fontFamily: {
-                            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                            sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                            display: ['"Plus Jakarta Sans"', 'sans-serif'],
                         },
                         colors: {
+                            portal: {
+                                blue: '#2563eb',
+                                cobalt: '#1d4ed8',
+                                cyan: '#0284c7',
+                                dark: '#0B1527',
+                            },
                             zaujati: {
                                 purple: '#4A154B',
                                 pink: '#E11D74',
                                 cyan: '#0284c7',
                                 slate: '#0B1527',
                             }
+                        },
+                        boxShadow: {
+                            'portal': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02)',
+                            'portal-hover': '0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03)',
                         }
                     }
                 }
@@ -63,10 +74,22 @@
         <style>
             [x-cloak] { display: none !important; }
             body {
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                 letter-spacing: normal;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
+            }
+            .portal-card {
+                background: #ffffff;
+                border-radius: 20px;
+                border: 1px solid rgba(226, 232, 240, 0.8);
+                box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            html.dark .portal-card {
+                background: #0B1324;
+                border-color: #1E293B;
+                box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
             }
             h1, h2, h3, h4, h5, h6 {
                 letter-spacing: normal;
@@ -387,14 +410,19 @@
             }
         </style>
     </head>
-    <body class="h-full bg-slate-50 dark:bg-[#070D18] text-slate-800 dark:text-slate-100 antialiased selection:bg-indigo-500 selection:text-white" x-data="{ sidebarOpen: false }">
-        <div class="min-h-screen bg-slate-50 dark:bg-[#070D18] flex">
+    <body class="h-full bg-[#f8fafc] dark:bg-[#070D18] text-slate-800 dark:text-slate-100 antialiased selection:bg-blue-600 selection:text-white" x-data="{ sidebarOpen: false }">
+        <div class="min-h-screen bg-[#f8fafc] dark:bg-[#070D18] flex relative overflow-x-hidden">
             
+            <!-- Ambient Laundry Wallpaper Background with Soft Atmospheric Overlay -->
+            <div class="fixed inset-0 pointer-events-none z-0 opacity-20 dark:opacity-10 bg-cover bg-center bg-no-repeat transition-opacity" 
+                 style="background-image: url('{{ asset('images/laundry-bg.jpg') }}'); background-attachment: fixed;"></div>
+            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-blue-50/20 via-transparent to-slate-100/40 dark:from-transparent dark:to-transparent"></div>
+
             <!-- 1. Left Dark Navy Sidebar (Desktop Fixed + Mobile Slide-out Drawer) -->
             @include('layouts.sidebar')
 
             <!-- 2. Right Canvas Area (Offset by md:pl-64) -->
-            <div class="md:pl-64 flex flex-col flex-1 min-w-0 min-h-screen">
+            <div class="md:pl-64 flex flex-col flex-1 min-w-0 min-h-screen relative z-10">
                 
                 <!-- Unified Single Top Bar (Page Header + User Profile) -->
                 @include('layouts.navigation')

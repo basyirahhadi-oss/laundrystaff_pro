@@ -46,42 +46,38 @@
                     <span>Kiosk</span>
                 </a>
 
-                <!-- Dark Mode / Night Mode Toggle Button (Primary: Top Header Bar) -->
+                <!-- Dark Mode / Night Mode Toggle Button (Minimal Icon like reference image) -->
                 <button type="button" 
                         onclick="window.toggleDarkMode()"
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-amber-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer shadow-2xs focus:outline-none"
+                        class="inline-flex items-center justify-center w-9 h-9 rounded-xl text-slate-500 hover:text-slate-800 dark:text-amber-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition active:scale-95 cursor-pointer focus:outline-none"
                         title="Toggle Dark / Light Mode"
                         aria-label="Toggle Dark Mode">
-                    <span class="dark:hidden inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-moon text-[#4A154B] text-xs"></i>
-                        <span>Dark Mode</span>
-                    </span>
-                    <span class="hidden dark:inline-flex items-center gap-1.5">
-                        <i class="fa-solid fa-sun text-amber-400 text-xs"></i>
-                        <span>Light Mode</span>
-                    </span>
+                    <i class="fa-solid fa-moon text-slate-600 dark:hidden text-sm"></i>
+                    <i class="fa-solid fa-sun text-amber-400 hidden dark:inline text-sm"></i>
                 </button>
 
-                <!-- User Profile Dropdown Pill (Rahmah Style) -->
+                <!-- User Profile Dropdown Pill (Exact SISWI HUB style from screenshot) -->
                 <x-dropdown align="right" width="56">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm font-medium focus:outline-none transition shadow-2xs">
+                        <button class="inline-flex items-center gap-3 p-1 sm:px-2.5 sm:py-1.5 rounded-2xl hover:bg-slate-100/80 dark:hover:bg-slate-800/80 text-slate-800 dark:text-slate-200 text-sm font-medium focus:outline-none transition group">
                             @if($user && $user->profile_picture_url)
                                 <img src="{{ $user->profile_picture_url }}" 
                                      alt="{{ $user->name }}" 
-                                     class="w-8 h-8 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0 shadow-xs">
+                                     class="w-9 h-9 rounded-full object-cover ring-2 ring-blue-500/20 dark:ring-blue-400/30 shrink-0 shadow-xs">
                             @else
-                                <div class="w-8 h-8 rounded-lg text-white flex items-center justify-center font-bold text-xs uppercase bg-[#0B1527] shadow-xs">
+                                <div class="w-9 h-9 rounded-full text-white flex items-center justify-center font-bold text-xs uppercase bg-gradient-to-tr from-blue-600 to-indigo-600 ring-2 ring-blue-500/20 shrink-0 shadow-xs">
                                     {{ substr($user->name ?? 'A', 0, 1) }}
                                 </div>
                             @endif
-                            <div class="text-left hidden sm:block">
-                                <div class="font-semibold text-slate-900 dark:text-white leading-tight text-xs">{{ $user->name ?? 'User' }}</div>
-                                <div class="text-[10px] text-slate-400 capitalize leading-tight">
-                                    {{ $isAdmin ? 'Administrator' : 'Staff Member' }}
+                            <div class="text-left hidden sm:flex flex-col items-start">
+                                <div class="font-extrabold text-slate-900 dark:text-white leading-tight text-xs tracking-tight group-hover:text-blue-600 transition-colors">
+                                    {{ strtoupper($user->name ?? 'User') }}
                                 </div>
+                                <span class="inline-block mt-0.5 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-950/80 dark:text-purple-300">
+                                    {{ $isAdmin ? 'ADMINISTRATOR' : 'STAFF' }}
+                                </span>
                             </div>
-                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 hidden sm:inline ml-0.5"></i>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 hidden sm:inline ml-0.5 group-hover:text-slate-600 transition-colors"></i>
                         </button>
                     </x-slot>
 

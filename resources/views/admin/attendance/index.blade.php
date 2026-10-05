@@ -15,85 +15,152 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            {{-- 1. CLEAN KPI STATS (Calm, Unified & Clutter-Free) --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {{-- CARD 1 --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-semibold text-slate-500">Monthly Records</span>
-                        <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
-                            <i class="fa-regular fa-calendar-check"></i>
-                        </div>
-                    </div>
-                    <div class="text-2xl font-bold text-slate-900 font-mono-nums">
-                        {{ $attendances->total() }}
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1">Logged for current period</p>
-                </div>
+            <!-- ================================================================= -->
+            <!-- 1. WELCOME HERO BANNER (Curved Blue Gradient Card with Waves)     -->
+            <!-- ================================================================= -->
+            <div class="relative overflow-hidden rounded-[24px] shadow-lg shadow-blue-500/10 text-white"
+                 style="background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #0284c7 100%);">
+                
+                <!-- Fluid Laundry Ripple / Bubble Texture Overlay -->
+                <div class="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none bg-cover bg-center"
+                     style="background-image: url('{{ asset('images/laundry-wave-banner.jpg') }}');"></div>
+                
+                <!-- Soft Glow Accents -->
+                <div class="absolute -right-10 -bottom-10 w-72 h-72 rounded-full bg-cyan-400/20 blur-3xl pointer-events-none"></div>
 
-                {{-- CARD 2 --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-semibold text-slate-500">Biometric Verification</span>
-                        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
-                            <i class="fa-regular fa-face-smile"></i>
-                        </div>
+                <div class="relative z-10 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="space-y-1.5 max-w-2xl">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+                            Welcome Back! {{ strtoupper(auth()->user()->name) }}
+                        </h2>
+                        <p class="text-xs sm:text-sm text-blue-100/90 font-medium flex flex-wrap items-center gap-2">
+                            <span>Zaujati Laundry Operations HQ</span>
+                            <span>•</span>
+                            <span>Administrator Control Terminal</span>
+                            <span>•</span>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-white text-[11px] font-semibold backdrop-blur-xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Attendance Engine Active
+                            </span>
+                        </p>
                     </div>
-                    <div class="text-lg font-bold text-slate-900">
-                        Liveness Active
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1">Blink &amp; EAR verification</p>
-                </div>
 
-                {{-- CARD 3 --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-semibold text-slate-500">Audit Security</span>
-                        <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-link"></i>
+                    <!-- 3D Smart Laundry Washer Illustration & Audit Status -->
+                    <div class="flex items-center gap-4 shrink-0">
+                        <div class="relative group">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl p-1 bg-white/20 backdrop-blur-md border border-white/30 shadow-xl overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('images/laundry-3d-washer.jpg') }}" alt="Laundry Operations" class="w-full h-full object-cover rounded-xl">
+                            </div>
+                            <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-300 border-2 border-blue-600"></span>
+                            </span>
                         </div>
-                    </div>
-                    <div class="text-lg font-bold text-slate-900 font-mono-nums">
-                        SHA-256 Ledger
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1">Cryptographic tamper detection</p>
-                </div>
 
-                {{-- CARD 4 --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-semibold text-slate-500">Replay Protection</span>
-                        <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-shield-halved"></i>
+                        <div class="hidden sm:flex flex-col gap-2">
+                            <div class="bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-xs">
+                                <div class="text-[10px] font-bold text-blue-200 uppercase tracking-wider">Audit Security</div>
+                                <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>SHA-256 Chained</span>
+                                </div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-xs text-white font-mono-nums font-semibold">
+                                <i class="fa-regular fa-clock text-[10px] text-blue-200 mr-1"></i>
+                                {{ now()->format('h:i A · d M Y') }}
+                            </div>
                         </div>
                     </div>
-                    <div class="text-lg font-bold text-slate-900 font-mono-nums">
-                        HMAC-60s
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1">Single-use nonce validation</p>
                 </div>
             </div>
 
+            <!-- ================================================================= -->
+            <!-- 2. FOUR METRIC / KPI STAT CARDS (Pastel Squircle Style)           -->
+            <!-- ================================================================= -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                
+                {{-- CARD 1: MONTHLY RECORDS (Purple Pastel Squircle) --}}
+                <div class="portal-card p-5 flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            TOTAL RECORDS
+                        </span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            {{ $attendances->total() }}
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 rounded-[16px] bg-[#f5f3ff] dark:bg-purple-950/50 text-[#7c3aed] dark:text-purple-300 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                </div>
+
+                {{-- CARD 2: ACTIVE SHIFTS (Amber Pastel Squircle) --}}
+                <div class="portal-card p-5 flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            ACTIVE NOW
+                        </span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            {{ $attendances->whereNull('clock_out_time')->count() }}
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 rounded-[16px] bg-[#fffbeb] dark:bg-amber-950/50 text-[#d97706] dark:text-amber-300 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                </div>
+
+                {{-- CARD 3: COMPLETED SHIFTS (Green Pastel Squircle) --}}
+                <div class="portal-card p-5 flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            COMPLETED
+                        </span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            {{ $attendances->whereNotNull('clock_out_time')->count() }}
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 rounded-[16px] bg-[#ecfdf5] dark:bg-emerald-950/50 text-[#059669] dark:text-emerald-300 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+
+                {{-- CARD 4: REPLAY PROTECTION (Rose Pastel Squircle) --}}
+                <div class="portal-card p-5 flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            SECURITY NONCE
+                        </span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            HMAC-60s
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 rounded-[16px] bg-[#fff1f2] dark:bg-rose-950/50 text-[#e11d48] dark:text-rose-300 flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                </div>
+
+            </div>
+
             {{-- 2. REFINED FILTER BAR --}}
-            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
+            <div class="portal-card p-5">
                 <form method="GET" class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-end gap-3.5">
                     <div class="flex-1 min-w-[160px]">
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
                             Month
                         </label>
                         <input type="month" name="month" value="{{ $month }}"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition">
+                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
                     </div>
 
                     <div class="flex-1 min-w-[220px]">
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
                             Staff Member
                         </label>
                         <select name="staff_id"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition">
+                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
                             <option value="">All Staff Members</option>
                             @foreach ($staffList as $staff)
                                 <option value="{{ $staff->id }}" {{ (string) $staffId === (string) $staff->id ? 'selected' : '' }}>
@@ -105,14 +172,14 @@
 
                     <div class="flex items-center gap-2 pt-1 sm:pt-0">
                         <button type="submit"
-                            class="inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-black text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-xs">
+                            class="inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
                             <i class="fa-solid fa-filter text-[10px]"></i>
                             <span>Apply Filter</span>
                         </button>
 
                         @if ($staffId || $month !== now()->format('Y-m'))
                             <a href="{{ route('admin.attendance.index') }}"
-                               class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">
+                               class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
                                 Reset
                             </a>
                         @endif
@@ -121,8 +188,8 @@
             </div>
 
             {{-- 3. CLEAN ATTENDANCE TABLE --}}
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-                <div class="px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div class="portal-card overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                     <div>
                         <h2 class="text-base font-bold text-slate-900 tracking-tight">Shift Logs</h2>
                         <p class="text-xs text-slate-400 mt-0.5">Records for {{ \Carbon\Carbon::createFromFormat('Y-m', $month)->format('F Y') }}</p>

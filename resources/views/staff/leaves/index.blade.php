@@ -15,7 +15,7 @@
 
             <div>
                 <a href="{{ route('staff.leaves.create') }}"
-                   class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-600/20 transition">
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-600/25 transition">
                     <i class="fa-solid fa-plus text-xs"></i>
                     <span>Apply for Leave</span>
                 </a>
@@ -23,10 +23,10 @@
         </div>
     </x-slot>
 
-    <div class="py-6 sm:py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div class="portal-card overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                     <div>
                         <h2 class="text-sm font-bold text-slate-900">Leave Applications Log</h2>

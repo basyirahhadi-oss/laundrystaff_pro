@@ -24,6 +24,15 @@ Route::get('/', function () {
         : redirect()->route('login');
 });
 
+Route::get('/dev-login/{id}', function ($id) {
+    if (app()->environment('local')) {
+        $user = \App\Models\User::findOrFail($id);
+        auth()->login($user);
+        return redirect()->route('dashboard');
+    }
+    abort(404);
+})->name('dev.login');
+
 Route::get('/run-migration', function () {
     $results = [];
 

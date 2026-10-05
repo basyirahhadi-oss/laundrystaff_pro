@@ -48,10 +48,8 @@
                 
                 <!-- Brand Header -->
                 <div class="flex items-center gap-3 px-2 pb-6 border-b border-slate-800/80">
-                    <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/60 p-1 flex items-center justify-center shrink-0 shadow-xs">
-                        <img src="{{ asset('images/zaujati-logo.png') }}" 
-                             alt="Zaujati Laundry" 
-                             class="w-full h-full object-contain">
+                    <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 p-1 flex items-center justify-center shrink-0 shadow-sm text-cyan-400">
+                        <i class="fa-solid fa-soap text-lg"></i>
                     </div>
                     <div class="flex flex-col min-w-0">
                         <div class="flex items-center gap-1.5">
@@ -64,10 +62,24 @@
                     </div>
                 </div>
 
-                <!-- Navigation List (Shared partial/loop) -->
+                <!-- Navigation List -->
                 <nav class="flex-1 space-y-6 mt-6">
                     @include('layouts.sidebar-links')
                 </nav>
+
+                <!-- Help / Support Card (Mobile) -->
+                <div class="mt-6 p-4 rounded-2xl bg-gradient-to-br from-slate-900/90 to-[#10223f] border border-blue-500/20 text-white relative overflow-hidden">
+                    <div class="flex items-start gap-2">
+                        <span class="text-blue-400 text-xs">✦</span>
+                        <div>
+                            <p class="text-[11px] font-semibold text-slate-300">Need help?</p>
+                            <a href="{{ route('kiosk.gateway') }}" target="_blank" class="text-xs font-bold text-white hover:text-blue-300 flex items-center gap-1.5 mt-0.5">
+                                <span>Contact Support</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-blue-400"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Mobile User Footer -->
                 <div class="pt-4 mt-6 border-t border-slate-800/80">
@@ -77,7 +89,7 @@
                                  alt="{{ $user->name }}" 
                                  class="w-9 h-9 rounded-xl object-cover border border-white/10 shrink-0 shadow-xs">
                         @else
-                            <div class="w-9 h-9 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0">
+                            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0">
                                 {{ substr($user->name ?? 'U', 0, 2) }}
                             </div>
                         @endif
@@ -108,15 +120,13 @@
 <!-- ========================================================================= -->
 <!-- 2. DESKTOP FIXED SIDEBAR (W-64 Dark Navy #0B1527)                         -->
 <!-- ========================================================================= -->
-<aside class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-40 bg-[#0B1527] border-r border-slate-800/80 select-none">
+<aside class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-40 bg-[#0B1527] border-r border-slate-800/80 select-none shadow-xl">
     
-    <!-- Brand Header -->
-    <div class="flex items-center gap-3 px-6 h-18 border-b border-slate-800/80 shrink-0">
+    <!-- Brand Header (Neat & Modern like SISWI HUB) -->
+    <div class="flex items-center gap-3 px-6 h-20 border-b border-slate-800/80 shrink-0">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group focus:outline-none w-full">
-            <div class="w-10 h-10 rounded-xl bg-slate-900/90 border border-slate-700/60 p-1.5 flex items-center justify-center shrink-0 shadow-sm group-hover:border-slate-500 transition-colors">
-                <img src="{{ asset('images/zaujati-logo.png') }}" 
-                     alt="Zaujati Laundry" 
-                     class="w-full h-full object-contain">
+            <div class="w-10 h-10 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 p-1.5 flex items-center justify-center shrink-0 shadow-sm text-cyan-400 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-soap text-lg"></i>
             </div>
             <div class="flex flex-col min-w-0">
                 <div class="flex items-center gap-1.5">
@@ -136,16 +146,36 @@
             @include('layouts.sidebar-links')
         </nav>
 
-        <!-- Bottom System Status & User Shortcut -->
+        <!-- Bottom Support Widget & User Section (Exact SISWI HUB style) -->
         <div class="pt-4 mt-6 border-t border-slate-800/80 space-y-3">
-            <div class="flex items-center justify-between px-2">
+            
+            <!-- Need Help? Contact Support Card -->
+            <div class="p-3.5 rounded-2xl bg-gradient-to-br from-slate-900/90 to-[#10223f] border border-blue-500/20 text-white relative overflow-hidden shadow-md">
+                <div class="flex items-start gap-2">
+                    <span class="text-blue-400 text-xs">✦</span>
+                    <div>
+                        <p class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Need help?</p>
+                        <a href="mailto:support@zaujati.com" class="text-xs font-bold text-white hover:text-blue-300 transition flex items-center gap-1.5 mt-0.5">
+                            <span>Contact Support</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-blue-400"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 mt-2.5 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Support Desk Online</span>
+                </div>
+            </div>
+
+            <!-- Ledger Status & Theme Toggle -->
+            <div class="flex items-center justify-between px-2 pt-1">
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span class="text-[11px] font-medium text-slate-400">Ledger Verified</span>
                 </div>
                 <button type="button" 
                         onclick="window.toggleDarkMode()"
-                        class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-400 hover:text-amber-400 hover:bg-white/5 transition"
+                        class="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-semibold text-slate-400 hover:text-amber-400 hover:bg-white/5 transition"
                         title="Toggle Dark / Light Mode">
                     <i class="fa-solid fa-moon dark:hidden text-[10px]"></i>
                     <i class="fa-solid fa-sun hidden dark:inline text-amber-400 text-[10px]"></i>
@@ -154,13 +184,14 @@
                 </button>
             </div>
 
+            <!-- User Shortcut Pill -->
             <div class="flex items-center gap-3 p-2 rounded-xl bg-white/5 border border-white/5">
                 @if($user && $user->profile_picture_url)
                     <img src="{{ $user->profile_picture_url }}" 
                          alt="{{ $user->name }}" 
                          class="w-8 h-8 rounded-lg object-cover border border-white/10 shrink-0 shadow-xs">
                 @else
-                    <div class="w-8 h-8 rounded-lg bg-[#4A154B] text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
                         {{ substr($user->name ?? 'U', 0, 1) }}
                     </div>
                 @endif

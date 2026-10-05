@@ -32,7 +32,12 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
+
+    <!-- Highly Visible Aesthetic Laundry Facility Wallpaper with Vignette Tint -->
+    <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none opacity-30 scale-105" 
+         style="background-image: url('{{ asset('images/laundry-bg.jpg') }}');"></div>
+    <div class="fixed inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-slate-900/70 backdrop-blur-xs pointer-events-none"></div>
 
     {{-- KIOSK HEADER --}}
     <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">

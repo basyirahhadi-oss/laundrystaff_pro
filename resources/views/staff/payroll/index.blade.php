@@ -43,18 +43,18 @@
         </div>
     </x-slot>
 
-    <div class="py-6 sm:py-8 bg-slate-50 min-h-screen">
+    <div class="py-6 sm:py-8 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             @if(!$staffProfile)
                 {{-- NOTICE IF USER IS NOT LINKED TO A STAFF PROFILE ROW --}}
-                <div class="bg-amber-50 border border-amber-200/80 rounded-2xl p-6 text-amber-900 shadow-xs flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 text-lg">
+                <div class="bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800 rounded-2xl p-6 text-amber-900 dark:text-amber-200 shadow-xs flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0 text-lg">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
                     <div>
                         <h3 class="font-bold text-sm">Staff Profile Not Linked</h3>
-                        <p class="text-xs text-amber-800 mt-1 leading-relaxed">
+                        <p class="text-xs text-amber-800 dark:text-amber-300 mt-1 leading-relaxed">
                             Your user account has not yet been linked to an employee profile in the system directory. Please contact an administrator to link your Staff ID so your salary statements can be displayed.
                         </p>
                     </div>
@@ -62,7 +62,7 @@
             @else
 
                 {{-- 1. EMPLOYEE COMPENSATION RATE HEADER CARD --}}
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="portal-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="flex items-center gap-3.5">
                         <div class="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-center justify-center font-bold text-base uppercase shrink-0 shadow-xs">
                             @if(!empty($staffProfile->profile_picture))
