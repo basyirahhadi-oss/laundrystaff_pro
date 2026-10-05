@@ -80,10 +80,12 @@
     <main class="flex-1 flex items-center justify-center px-4 sm:px-6 py-8 relative z-10">
         <div class="max-w-md w-full text-center space-y-6">
 
-            <!-- 3D LAUNDRY VISUAL HERO BADGE -->
+            <!-- OFFICIAL ZAUJATI LOGO HERO BADGE -->
             <div class="relative inline-block">
-                <div class="w-28 h-28 mx-auto rounded-3xl p-1 bg-gradient-to-tr from-blue-500 to-cyan-400 shadow-2xl shadow-blue-500/30">
-                    <img src="{{ asset('images/laundry-3d-washer.jpg') }}" alt="Zaujati Smart Laundry" class="w-full h-full object-cover rounded-[22px]">
+                <div class="w-28 h-28 mx-auto rounded-full p-1 bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-2xl shadow-[#E11D74]/35">
+                    <div class="w-full h-full rounded-full bg-slate-950 p-2.5 flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
+                    </div>
                 </div>
                 <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500 text-white shadow-md flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>

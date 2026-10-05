@@ -6,7 +6,7 @@
 <!-- ========================================================================= -->
 <!-- UNIFIED TOP HEADER BAR (Right Canvas Header - Rahmah SaaS Architecture)   -->
 <!-- ========================================================================= -->
-<header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xs">
+<header class="sticky top-0 z-30 bg-white/85 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800/80 shadow-2xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between min-h-[4.5rem] py-3 gap-4">
             

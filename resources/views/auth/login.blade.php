@@ -47,18 +47,17 @@
                 </svg>
             </div>
 
-            <!-- Header Section: 3D Washer, Brand & Portal Title -->
+            <!-- Header Section: Official Zaujati Brand Logo & Portal Title -->
             <div class="text-center relative z-10 mb-6">
-                <!-- 3D Brand Badge -->
+                <!-- Official Zaujati Logo Badge -->
                 <div class="inline-block relative mb-3 group">
-                    <div class="w-20 h-20 mx-auto rounded-3xl p-1 bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-2xl shadow-[#E11D74]/30 transform group-hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('images/laundry-3d-washer.jpg') }}" 
-                             alt="LaundryStaff Pro" 
-                             class="w-full h-full object-cover rounded-[20px]">
+                    <div class="w-24 h-24 mx-auto rounded-full p-1 bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-2xl shadow-[#E11D74]/35 transform group-hover:scale-105 transition-transform duration-300">
+                        <div class="w-full h-full rounded-full bg-slate-950 p-2.5 flex items-center justify-center overflow-hidden">
+                            <img src="{{ asset('images/zaujati-logo.png') }}" 
+                                 alt="Zaujati Laundry" 
+                                 class="w-full h-full object-contain">
+                        </div>
                     </div>
-                    <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider text-white shadow-md" style="background: linear-gradient(135deg, #4A154B 0%, #E11D74 100%);">
-                        Zaujati
-                    </span>
                 </div>
 
                 <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">

@@ -48,8 +48,8 @@
                 
                 <!-- Brand Header -->
                 <div class="flex items-center gap-3 px-2 pb-6 border-b border-slate-800/80">
-                    <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 p-1 flex items-center justify-center shrink-0 shadow-sm text-cyan-400">
-                        <i class="fa-solid fa-soap text-lg"></i>
+                    <div class="w-10 h-10 rounded-2xl bg-slate-900 border border-pink-500/30 p-1 flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+                        <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
                     </div>
                     <div class="flex flex-col min-w-0">
                         <div class="flex items-center gap-1.5">
@@ -125,8 +125,8 @@
     <!-- Brand Header (Neat & Modern like SISWI HUB) -->
     <div class="flex items-center gap-3 px-6 h-20 border-b border-slate-800/80 shrink-0">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group focus:outline-none w-full">
-            <div class="w-10 h-10 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 p-1.5 flex items-center justify-center shrink-0 shadow-sm text-cyan-400 group-hover:scale-105 transition-transform">
-                <i class="fa-solid fa-soap text-lg"></i>
+            <div class="w-10 h-10 rounded-2xl bg-slate-900 border border-pink-500/30 p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
             </div>
             <div class="flex flex-col min-w-0">
                 <div class="flex items-center gap-1.5">

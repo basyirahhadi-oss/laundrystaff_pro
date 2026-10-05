@@ -79,17 +79,31 @@
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
+            .bg-tech-grid {
+                background-image: 
+                    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+                background-size: 32px 32px;
+            }
+            .bg-tech-dots {
+                background-image: radial-gradient(rgba(225, 29, 116, 0.25) 1px, transparent 1px);
+                background-size: 24px 24px;
+            }
             .portal-card {
-                background: #ffffff;
+                background: rgba(255, 255, 255, 0.90);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
                 border-radius: 20px;
-                border: 1px solid rgba(226, 232, 240, 0.8);
+                border: 1px solid rgba(226, 232, 240, 0.9);
                 box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
                 transition: transform 0.2s ease, box-shadow 0.2s ease;
             }
             html.dark .portal-card {
-                background: #0B1324;
-                border-color: #1E293B;
-                box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+                background: rgba(11, 21, 39, 0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.45);
             }
             h1, h2, h3, h4, h5, h6 {
                 letter-spacing: normal;
@@ -410,13 +424,25 @@
             }
         </style>
     </head>
-    <body class="h-full bg-[#f8fafc] dark:bg-[#070D18] text-slate-800 dark:text-slate-100 antialiased selection:bg-blue-600 selection:text-white" x-data="{ sidebarOpen: false }">
-        <div class="min-h-screen bg-[#f8fafc] dark:bg-[#070D18] flex relative overflow-x-hidden">
+    <body class="h-full bg-[#070b14] text-slate-800 dark:text-slate-100 antialiased selection:bg-pink-600 selection:text-white" x-data="{ sidebarOpen: false }">
+        <div class="min-h-screen bg-[#070b14]/50 flex relative overflow-x-hidden">
             
-            <!-- Ambient Laundry Wallpaper Background with Soft Atmospheric Overlay -->
-            <div class="fixed inset-0 pointer-events-none z-0 opacity-20 dark:opacity-10 bg-cover bg-center bg-no-repeat transition-opacity" 
-                 style="background-image: url('{{ asset('images/laundry-bg.jpg') }}'); background-attachment: fixed;"></div>
-            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-blue-50/20 via-transparent to-slate-100/40 dark:from-transparent dark:to-transparent"></div>
+            <!-- Highly Visible Aesthetic Modern Laundry Wallpaper Background -->
+            <div class="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat opacity-45 dark:opacity-40 scale-105" 
+                 style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); background-attachment: fixed; filter: brightness(0.85) contrast(1.05);"></div>
+            
+            <!-- Atmospheric Layer Overlay -->
+            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-[#070b14]/85 via-[#070b14]/75 to-[#070b14]/90 dark:block hidden"></div>
+            <div class="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-white/80 via-slate-50/70 to-slate-100/85 dark:hidden"></div>
+
+            <!-- Tech Grid & Dot Pattern Overlay -->
+            <div class="fixed inset-0 pointer-events-none z-0 bg-tech-grid opacity-30"></div>
+            <div class="fixed inset-0 pointer-events-none z-0 bg-tech-dots opacity-40"></div>
+
+            <!-- Glowing Ambient Neon Orbs -->
+            <div class="fixed -top-32 -left-32 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-30 bg-[#E11D74]"></div>
+            <div class="fixed top-1/2 -right-32 w-[450px] h-[450px] rounded-full blur-[150px] pointer-events-none opacity-25 bg-[#4A154B]"></div>
+            <div class="fixed -bottom-32 left-1/3 w-[500px] h-[500px] rounded-full blur-[140px] pointer-events-none opacity-20 bg-[#0284c7]"></div>
 
             <!-- 1. Left Dark Navy Sidebar (Desktop Fixed + Mobile Slide-out Drawer) -->
             @include('layouts.sidebar')
