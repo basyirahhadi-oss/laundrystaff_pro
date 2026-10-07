@@ -168,7 +168,6 @@
         </td>
         <td class="text-end pe-4">
             <div class="d-flex justify-content-end gap-2">
-                
                 <!-- Force Clock Out Button (Only appears if not clocked out yet) -->
                 @if(!$log->clock_out)
                 <form action="{{ route('attendance.clockout', $log->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to clock out this staff member now?');">
@@ -178,19 +177,18 @@
                     </button>
                 </form>
                 @endif
-                            <td class="text-end pe-4">
-                                <!-- Destructive Delete Option -->
-                              <!-- Pastikan ia memanggil route('attendance.delete', $log->id) -->
-<!-- GANTIKAN DENGAN KOD FORM STANDAR INI -->
-<form action="{{ url('admin/attendance/purge/' . $log->id) }}" method="POST" onsubmit="return confirm('⚠️ WARNING: Are you sure you want to permanently delete this attendance record?');" style="display: inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-sm btn-outline-danger px-3">
-        <i class="fa-solid fa-trash-can me-1"></i> Purge Record
-    </button>
-</form>
-                            </td>
-                        </tr>
+
+                <!-- Purge Record Action -->
+                <form action="{{ url('admin/attendance/purge/' . $log->id) }}" method="POST" onsubmit="return confirm('⚠️ WARNING: Are you sure you want to permanently delete this attendance record?');" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-outline-danger px-3">
+                        <i class="fa-solid fa-trash-can me-1"></i> Purge Record
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
                         @empty
                         <tr>
                             <td colspan="5" class="text-center py-5 text-muted">

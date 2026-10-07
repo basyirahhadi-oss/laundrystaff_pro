@@ -114,44 +114,41 @@ public function destroy($id)
 
 public function forceClockOut($id)
 {
-    // 1. 🔒 Sekatan Keselamatan Admin sahaja
+    // 1. 🔒 Security restriction: Admin only
     if (!auth()->check() || auth()->user()->email !== 'admin@zaujati.com') {
-        return redirect('/attendance')->with('error', 'Tindakan tidak dibenarkan!');
+        return redirect('/attendance')->with('error', 'Unauthorized action!');
     }
 
     try {
         $log = AttendanceLog::find($id);
 
         if (!$log) {
-            return redirect()->route('attendance.history')->with('error', 'Rekod tidak dijumpai.');
+            return redirect()->route('attendance.history')->with('error', 'Record not found.');
         }
 
-        // Jika sudah clock out, halang daripada clock out sekali lagi
+        // If already clocked out, prevent duplicate clock out
         if ($log->clock_out !== null) {
-            return redirect()->route('attendance.history')->with('error', 'Staff ini sudah pun clock out sebelum ini.');
+            return redirect()->route('attendance.history')->with('error', 'This staff member has already clocked out.');
         }
 
         $now = now();
-        $clockInTime = Carbon::parse($log->date->format('Y-m-d') . ' ' . $log->raw_clock_in_time_placeholder_or_direct_format_here);
-        
-        // Ataupun cara paling selamat untuk baca nilai waktu tersimpan:
         $clockInTime = Carbon::createFromFormat('Y-m-d H:i:s', $log->date->format('Y-m-d') . ' ' . Carbon::parse($log->clock_in)->format('H:i:s'));
         $clockOutTime = $now;
 
-        // Kira perbezaan jam bekerja (hours_worked)
+        // Calculate hours worked
         $hoursWorked = round($clockInTime->diffInMinutes($clockOutTime) / 60, 2);
 
-        // Kemaskini rekod di database
+        // Update record in database
         $log->update([
             'clock_out'    => $clockOutTime->toTimeString(),
             'status'       => 'Completed',
             'hours_worked' => $hoursWorked
         ]);
 
-        return redirect()->route('attendance.history')->with('success', "Berjaya clock out. Jumlah jam bekerja: {$hoursWorked} jam.");
+        return redirect()->route('attendance.history')->with('success', "Clock out successful. Total hours worked: {$hoursWorked} hours.");
 
     } catch (\Exception $e) {
-        return redirect()->route('attendance.history')->with('error', 'Ralat sistem: Gagal melakukan clock out. ' . $e->getMessage());
+        return redirect()->route('attendance.history')->with('error', 'System error: Failed to process clock out. ' . $e->getMessage());
     }
 }
 

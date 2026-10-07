@@ -48,10 +48,10 @@
                         <select name="leave_type" required
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-medium text-slate-800 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition">
                             <option value="">-- Select Leave Category --</option>
-                            <option value="annual" {{ old('leave_type') === 'annual' ? 'selected' : '' }}>Annual Leave (Cuti Tahunan)</option>
-                            <option value="mc" {{ old('leave_type') === 'mc' ? 'selected' : '' }}>Medical Leave (Cuti Sakit / MC)</option>
-                            <option value="emergency" {{ old('leave_type') === 'emergency' ? 'selected' : '' }}>Emergency Leave (Cuti Kecemasan)</option>
-                            <option value="unpaid" {{ old('leave_type') === 'unpaid' ? 'selected' : '' }}>Unpaid Leave (Cuti Tanpa Gaji)</option>
+                            <option value="annual" {{ old('leave_type') === 'annual' ? 'selected' : '' }}>Annual Leave</option>
+                            <option value="mc" {{ old('leave_type') === 'mc' ? 'selected' : '' }}>Medical Leave (MC)</option>
+                            <option value="emergency" {{ old('leave_type') === 'emergency' ? 'selected' : '' }}>Emergency Leave</option>
+                            <option value="unpaid" {{ old('leave_type') === 'unpaid' ? 'selected' : '' }}>Unpaid Leave</option>
                         </select>
                     </div>
 

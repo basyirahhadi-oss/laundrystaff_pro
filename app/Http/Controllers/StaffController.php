@@ -322,7 +322,7 @@ class StaffController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Rekod slip gaji berjaya dipadam.');
+        return redirect()->back()->with('success', 'Payslip record deleted successfully.');
     }
 
     /**
