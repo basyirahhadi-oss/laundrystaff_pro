@@ -92,16 +92,7 @@
     <!-- Highly Visible Aesthetic Modern Laundry Wallpaper -->
     <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none scale-105" 
          style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.85) contrast(1.05);"></div>
-    <div class="fixed inset-0 z-0 bg-gradient-to-t from-[#070b14]/92 via-[#070b14]/80 to-[#070b14]/70 backdrop-blur-xs pointer-events-none"></div>
-
-    <!-- Tech Grid & Dot Overlay -->
-    <div class="fixed inset-0 z-0 bg-tech-grid opacity-35 pointer-events-none"></div>
-    <div class="fixed inset-0 z-0 bg-tech-dots opacity-45 pointer-events-none"></div>
-
-    <!-- Ambient Glowing Orbs -->
-    <div class="absolute -top-40 -right-40 w-96 h-96 bg-[#4A154B]/40 rounded-full blur-[130px] pointer-events-none"></div>
-    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-[#E11D74]/30 rounded-full blur-[130px] pointer-events-none"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-950/20 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#090d16]/95 via-[#090d16]/85 to-[#090d16] pointer-events-none"></div>
 
     {{-- KIOSK HEADER --}}
     <header class="bg-slate-950/85 backdrop-blur-md border-b border-white/15 sticky top-0 z-50">

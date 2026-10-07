@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'LaundryStaff Pro') }} — Zaujati Laundry Portal</title>
+        <title>{{ config('app.name', 'LaundryStaff Pro') }} — Enterprise Portal</title>
 
-        <!-- Google Fonts: Inter, Plus Jakarta Sans & JetBrains Mono -->
+        <!-- Google Fonts: Inter & Plus Jakarta Sans -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
         
         <!-- FontAwesome 6 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -28,34 +28,19 @@
                             mono: ['"JetBrains Mono"', 'monospace'],
                         },
                         colors: {
+                            brand: {
+                                50: '#eef2ff',
+                                100: '#e0e7ff',
+                                500: '#6366f1',
+                                600: '#4f46e5',
+                                700: '#4338ca',
+                                800: '#3730a3',
+                                900: '#312e81',
+                            },
                             zaujati: {
                                 purple: '#4A154B',
                                 pink: '#E11D74',
-                                dark: '#1e0520',
-                                light: '#FDF2F8',
-                                cyan: '#00E5FF',
-                            }
-                        },
-                        animation: {
-                            'float-slow': 'float 6s ease-in-out infinite',
-                            'float-delayed': 'float 7s ease-in-out 2s infinite',
-                            'float-reverse': 'floatRev 8s ease-in-out infinite',
-                            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                            'spin-very-slow': 'spin 20s linear infinite',
-                            'shimmer': 'shimmer 2.5s infinite linear',
-                        },
-                        keyframes: {
-                            float: {
-                                '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                                '50%': { transform: 'translateY(-12px) rotate(2deg)' },
-                            },
-                            floatRev: {
-                                '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                                '50%': { transform: 'translateY(14px) rotate(-2deg)' },
-                            },
-                            shimmer: {
-                                '0%': { backgroundPosition: '-200% 0' },
-                                '100%': { backgroundPosition: '200% 0' },
+                                dark: '#0b1120',
                             }
                         }
                     }
@@ -66,121 +51,76 @@
         <style>
             body { 
                 font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                letter-spacing: -0.015em;
+                letter-spacing: -0.011em;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
             .font-mono-nums { font-family: 'JetBrains Mono', monospace; }
             
-            /* Glassmorphism effects */
-            .glass-card {
-                background: rgba(15, 23, 42, 0.78);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 
-                            0 0 45px -10px rgba(225, 29, 116, 0.25),
-                            inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
-            }
-            
-            .glow-pink {
-                box-shadow: 0 0 35px -5px rgba(225, 29, 116, 0.5);
-            }
-
-            .glow-cyan {
-                box-shadow: 0 0 35px -5px rgba(0, 229, 255, 0.4);
-            }
-
-            /* Tech grid pattern */
-            .bg-tech-grid {
-                background-image: 
-                    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-                background-size: 32px 32px;
-            }
-
-            /* Tech dots pattern */
-            .bg-tech-dots {
-                background-image: radial-gradient(rgba(225, 29, 116, 0.2) 1px, transparent 1px);
-                background-size: 24px 24px;
+            /* Professional Enterprise Card Surface */
+            .corporate-card {
+                background: rgba(15, 23, 42, 0.88);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
+                            0 0 0 1px rgba(255, 255, 255, 0.05),
+                            inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
             }
         </style>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="min-h-screen flex flex-col justify-between text-slate-100 antialiased selection:bg-pink-600 selection:text-white bg-[#070b14] relative overflow-x-hidden">
+    <body class="min-h-screen flex flex-col justify-between text-slate-100 antialiased selection:bg-indigo-600 selection:text-white bg-[#090d16] relative overflow-x-hidden">
         
         <!-- ========================================== -->
-        <!-- HIGH-FIDELITY BACKGROUND WALLPAPER & FX   -->
+        <!-- EXECUTIVE ARCHITECTURAL BACKDROP           -->
         <!-- ========================================== -->
-        <!-- Photo Realistic Modern Laundromat Wallpaper -->
-        <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none scale-105 transition-transform duration-1000" 
-             style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.85) contrast(1.05);"></div>
+        <!-- Subdued Real Modern Laundromat Architectural Background -->
+        <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none opacity-25" 
+             style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.6) contrast(1.15);"></div>
         
-        <!-- Multi-layer Vignette & Cyberpunk Ambience Overlay -->
-        <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#070b14]/75 via-[#070b14]/60 to-[#070b14]/90 pointer-events-none"></div>
-        <div class="fixed inset-0 z-0 bg-gradient-to-r from-[#070b14]/80 via-transparent to-[#070b14]/80 pointer-events-none"></div>
-        
-        <!-- Tech Dot Matrix & Grid Pattern Overlay (Corak & Bentuk) -->
-        <div class="fixed inset-0 z-0 bg-tech-grid opacity-40 pointer-events-none"></div>
-        <div class="fixed inset-0 z-0 bg-tech-dots opacity-50 pointer-events-none"></div>
-
-        <!-- Atmospheric Glowing Neon Orbs -->
-        <div class="fixed -top-32 -left-32 w-96 h-96 rounded-full blur-[120px] pointer-events-none opacity-50" style="background: radial-gradient(circle, #E11D74 0%, transparent 70%);"></div>
-        <div class="fixed top-1/3 -right-32 w-[450px] h-[450px] rounded-full blur-[140px] pointer-events-none opacity-45" style="background: radial-gradient(circle, #4A154B 0%, #00E5FF 100%);"></div>
-        <div class="fixed -bottom-32 left-1/3 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none opacity-35" style="background: radial-gradient(circle, #0284c7 0%, transparent 70%);"></div>
-
-        <!-- Floating Geometric Decorative Shapes (Bentuk Geometrik) -->
-        <div class="fixed top-24 left-[10%] w-16 h-16 rounded-2xl border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-md animate-float-slow hidden md:block pointer-events-none"></div>
-        <div class="fixed bottom-32 left-[12%] w-12 h-12 rounded-full border border-pink-500/30 bg-pink-500/10 backdrop-blur-md animate-float-delayed hidden md:block pointer-events-none"></div>
-        <div class="fixed top-36 right-[12%] w-20 h-20 rounded-3xl border border-purple-500/30 bg-purple-500/10 backdrop-blur-md animate-float-reverse hidden md:block pointer-events-none"></div>
-        <div class="fixed bottom-24 right-[10%] w-14 h-14 rounded-2xl rotate-45 border border-cyan-400/25 bg-cyan-400/10 backdrop-blur-md animate-float-slow hidden md:block pointer-events-none"></div>
+        <!-- Deep Corporate Slate Gradient Overlays -->
+        <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#090d16]/95 via-[#090d16]/85 to-[#090d16] pointer-events-none"></div>
+        <div class="fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/20 via-transparent to-transparent pointer-events-none"></div>
 
         <!-- ========================================== -->
         <!-- FOREGROUND CONTENT                         -->
         <!-- ========================================== -->
         <div class="relative z-10 flex flex-col min-h-screen justify-between">
             
-            <!-- Modern Header with Brand & Live Status -->
-            <header class="w-full py-4 px-6 sm:px-10 flex items-center justify-between border-b border-white/10 bg-slate-950/40 backdrop-blur-md">
+            <!-- Professional Executive Header -->
+            <header class="w-full py-3.5 px-6 sm:px-12 flex items-center justify-between border-b border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
                 <div class="flex items-center gap-3.5">
-                    <!-- Brand Logo with Gradient Ring -->
-                    <div class="relative group">
-                        <div class="w-11 h-11 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E11D74] via-[#4A154B] to-[#00E5FF] shadow-lg shadow-[#E11D74]/20">
-                            <div class="w-full h-full bg-black rounded-[14px] p-1 flex items-center justify-center overflow-hidden">
-                                <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
-                            </div>
-                        </div>
-                        <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                        </span>
+                    <!-- Clean Corporate Brand Badge -->
+                    <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center shadow-sm">
+                        <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati" class="w-full h-full object-contain">
                     </div>
 
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="font-extrabold text-base tracking-tight text-white">LaundryStaff</span>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black tracking-wider uppercase text-white shadow-sm" style="background: linear-gradient(135deg, #4A154B 0%, #E11D74 100%);">
-                                PRO
+                            <span class="font-bold text-sm sm:text-base tracking-tight text-white">LaundryStaff</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase text-slate-300 bg-slate-800 border border-slate-700">
+                                Enterprise
                             </span>
                         </div>
-                        <p class="text-[11px] text-slate-300 font-medium">Zaujati Laundry Operations HQ</p>
+                        <p class="text-[11px] text-slate-400 font-normal">Zaujati Laundry Operations HQ</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3 text-xs">
-                    <!-- Live Operational Status Badge -->
-                    <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 shadow-xs text-slate-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span class="text-[11px] font-medium font-mono-nums">Terminal Ready</span>
+                <div class="flex items-center gap-3">
+                    <!-- Operational Status Indicator -->
+                    <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300 text-xs">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-[11px] font-medium text-slate-300">System Operational</span>
                     </div>
 
-                    <!-- Kiosk Quick Access Link -->
+                    <!-- Kiosk Gateway Link -->
                     <a href="{{ route('kiosk.gateway') }}" 
-                       class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition shadow-sm hover:scale-[1.02] active:scale-[0.98]">
-                        <i class="fa-solid fa-camera text-cyan-400 text-xs"></i>
-                        <span class="hidden sm:inline">Face Kiosk</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70"></i>
+                       class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800/90 hover:bg-slate-700/90 text-slate-200 border border-slate-700/80 transition shadow-sm">
+                        <i class="fa-solid fa-camera text-slate-400 text-xs"></i>
+                        <span>Face Kiosk</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
                     </a>
                 </div>
             </header>
@@ -190,20 +130,21 @@
                 {{ $slot }}
             </main>
 
-            <!-- Clean Modern Footer -->
-            <footer class="py-4 px-6 text-center text-xs text-slate-400/90 border-t border-white/5 bg-slate-950/40 backdrop-blur-md">
-                <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-                    <p class="text-[11px] font-medium">
-                        &copy; {{ date('Y') }} <span class="text-white font-semibold">LaundryStaff PRO</span> &bull; Zaujati Laundry Management Ecosystem
+            <!-- Formal Corporate Footer -->
+            <footer class="py-4 px-6 text-center text-xs text-slate-500 border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
+                <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                    <p class="text-[11px] text-slate-400 font-normal">
+                        &copy; {{ date('Y') }} <span class="text-slate-300 font-medium">Zaujati Laundry Operations</span>. All rights reserved.
                     </p>
-                    <div class="flex items-center gap-4 text-[11px]">
-                        <span class="inline-flex items-center gap-1.5 text-slate-400">
-                            <i class="fa-solid fa-shield-halved text-emerald-400 text-[10px]"></i>
-                            <span>SHA-256 Vault Verified</span>
+                    <div class="flex items-center gap-4 text-[11px] text-slate-400">
+                        <span class="inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-halved text-slate-400 text-[10px]"></i>
+                            <span>Enterprise Access Control</span>
                         </span>
-                        <span class="inline-flex items-center gap-1.5 text-slate-400">
-                            <i class="fa-solid fa-bolt text-amber-400 text-[10px]"></i>
-                            <span>Cloud V2.4</span>
+                        <span class="text-slate-600">&bull;</span>
+                        <span class="inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-lock text-slate-400 text-[10px]"></i>
+                            <span>TLS 1.3 Encrypted</span>
                         </span>
                     </div>
                 </div>

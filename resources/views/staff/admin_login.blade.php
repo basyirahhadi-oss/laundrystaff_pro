@@ -3,93 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Clock In — LaundryStaff Pro</title>
+    <title>Admin Clock In — LaundryStaff Enterprise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            letter-spacing: -0.015em;
+            letter-spacing: -0.011em;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         .font-mono-nums { font-family: 'JetBrains Mono', monospace; }
-        .glow-purple {
-            box-shadow: 0 0 50px -10px rgba(225, 29, 116, 0.35);
-        }
-        .bg-tech-grid {
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
-        .bg-tech-dots {
-            background-image: radial-gradient(rgba(225, 29, 116, 0.25) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-        @keyframes floatSlow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-        .animate-float-slow {
-            animation: floatSlow 6s ease-in-out infinite;
+        
+        .corporate-card {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
+                        0 0 0 1px rgba(255, 255, 255, 0.05),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="bg-[#070b14] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-pink-600 selection:text-white relative overflow-x-hidden">
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-600 selection:text-white relative overflow-x-hidden">
 
-    <!-- Highly Visible Aesthetic Modern Laundry Wallpaper -->
-    <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none scale-105" 
-         style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.85) contrast(1.05);"></div>
-    <div class="fixed inset-0 z-0 bg-gradient-to-t from-[#070b14]/90 via-[#070b14]/75 to-[#070b14]/65 backdrop-blur-xs pointer-events-none"></div>
-
-    <!-- Tech Grid & Dot Overlay (Corak & Bentuk) -->
-    <div class="fixed inset-0 z-0 bg-tech-grid opacity-35 pointer-events-none"></div>
-    <div class="fixed inset-0 z-0 bg-tech-dots opacity-45 pointer-events-none"></div>
-
-    {{-- AMBIENT SYSTEM COLOR GLOWS --}}
-    <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-[120px] pointer-events-none opacity-45" style="background: #4A154B;"></div>
-    <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full blur-[120px] pointer-events-none opacity-40" style="background: #E11D74;"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-950/25 rounded-full blur-[140px] pointer-events-none"></div>
-
-    {{-- FLOATING GEOMETRIC SHAPES (Bentuk Tambahan) --}}
-    <div class="fixed top-28 left-[8%] w-14 h-14 rounded-2xl border border-pink-500/30 bg-pink-500/10 backdrop-blur-md animate-float-slow hidden lg:block pointer-events-none"></div>
-    <div class="fixed bottom-28 right-[8%] w-16 h-16 rounded-3xl border border-cyan-400/30 bg-cyan-400/10 backdrop-blur-md animate-float-slow hidden lg:block pointer-events-none"></div>
+    <!-- Subdued Architectural Background -->
+    <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none opacity-25" 
+         style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.6) contrast(1.15);"></div>
+    <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#090d16]/95 via-[#090d16]/85 to-[#090d16] pointer-events-none"></div>
 
     {{-- TOP NAVIGATION HEADER --}}
-    <header class="bg-slate-950/70 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
+    <header class="bg-slate-950/60 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E11D74] to-[#00E5FF] shadow-sm">
-                    <div class="w-full h-full bg-black rounded-[14px] p-1 flex items-center justify-center overflow-hidden">
-                        <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati Laundry" class="w-full h-full object-contain">
-                    </div>
+                <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center shadow-sm">
+                    <img src="{{ asset('images/zaujati-logo.png') }}" alt="Zaujati" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-extrabold text-sm text-white tracking-tight">LaundryStaff</span>
-                        <span class="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase text-white tracking-wide" style="background: linear-gradient(135deg, #4A154B 0%, #E11D74 100%);">PRO</span>
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E11D74]/15 text-[#E11D74] border border-[#E11D74]/30">
-                            ADMIN CHECK-IN
+                        <span class="font-bold text-sm text-white tracking-tight">LaundryStaff</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider text-slate-300 bg-slate-800 border border-slate-700">Enterprise</span>
+                        <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded text-indigo-300 bg-indigo-950/80 border border-indigo-800/60">
+                            Admin Punch Gateway
                         </span>
                     </div>
-                    <p class="text-[11px] text-slate-300 font-mono-nums">Terminal MY-KUL-01 · Authorized Punch Gateway</p>
+                    <p class="text-[11px] text-slate-400 font-mono-nums">Terminal MY-KUL-01 · Authorized Verification</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
                 <a href="{{ route('login') }}" 
-                   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition border border-white/10 shadow-xs">
-                    <i class="fa-solid fa-arrow-left text-[11px]"></i>
-                    <span>Portal Login</span>
+                   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 transition border border-slate-700/80 shadow-xs">
+                    <i class="fa-solid fa-arrow-left text-[11px] text-slate-400"></i>
+                    <span>Portal Sign In</span>
                 </a>
                 <a href="{{ route('kiosk.gateway') }}" 
-                   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white transition border border-slate-700/80 shadow-xs group">
-                    <i class="fa-solid fa-camera text-[11px] text-cyan-400"></i>
-                    <span>Kiosk Gateway</span>
+                   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 transition border border-slate-700/80 shadow-xs">
+                    <i class="fa-solid fa-camera text-[11px] text-slate-400"></i>
+                    <span>Face Kiosk</span>
                 </a>
             </div>
         </div>
@@ -100,68 +75,59 @@
         <div class="max-w-md w-full">
 
             {{-- LIVE TIME BANNER --}}
-            <div class="mb-5 flex items-center justify-between px-2 text-xs">
-                <div class="flex items-center gap-2 text-slate-300">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="font-medium">System Terminal Ready</span>
+            <div class="mb-4 flex items-center justify-between px-2 text-xs">
+                <div class="flex items-center gap-2 text-slate-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span class="font-medium text-slate-300">Terminal Ready</span>
                 </div>
-                <div id="live-clock" class="font-mono-nums font-bold text-slate-200 tracking-wider">
+                <div id="live-clock" class="font-mono-nums font-semibold text-slate-300 tracking-wider text-xs">
                     --:--:-- --
                 </div>
             </div>
 
-            {{-- GLASSMORPHISM CARD --}}
-            <div class="bg-slate-950/80 backdrop-blur-2xl rounded-3xl border border-white/15 shadow-2xl p-6 sm:p-8 relative overflow-hidden glow-purple">
-
-                {{-- TOP CORNER ACCENT GRADIENT & GEOMETRIC SHAPE --}}
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#E11D74]/25 via-[#4A154B]/15 to-transparent rounded-bl-full pointer-events-none"></div>
-                <div class="absolute top-2 right-2 text-cyan-400/30 pointer-events-none">
-                    <svg class="w-8 h-8" viewBox="0 0 40 40" fill="none">
-                        <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
-                        <circle cx="20" cy="20" r="6" fill="#E11D74" opacity="0.6"/>
-                    </svg>
-                </div>
+            {{-- CORPORATE CARD --}}
+            <div class="corporate-card rounded-2xl p-7 sm:p-9 relative">
 
                 {{-- CARD HEADER WITH SHIELD BADGE --}}
-                <div class="flex items-start gap-4 mb-6 relative z-10">
-                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-lg" style="background: linear-gradient(135deg, #4A154B 0%, #E11D74 100%); border: 1px solid rgba(255, 255, 255, 0.2);">
-                        <i class="fa-solid fa-shield-halved text-xl text-white"></i>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="fa-solid fa-shield-halved text-lg text-indigo-400"></i>
                     </div>
                     <div>
-                        <h1 class="text-lg sm:text-xl font-bold text-white tracking-tight">Admin Shift Check-In</h1>
-                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                            Verify your administrator credentials to record today's shift punch and access management tools.
+                        <h1 class="text-xl font-bold text-white tracking-tight">Admin Shift Check-In</h1>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                            Verify your administrator credentials to record attendance and access operational controls.
                         </p>
                     </div>
                 </div>
 
                 {{-- NOTIFICATIONS & ALERTS --}}
                 @if(session('error'))
-                    <div class="mb-5 rounded-2xl bg-rose-950/70 border border-rose-800/80 text-rose-300 text-sm px-4 py-3 flex items-start gap-2.5 shadow-sm">
-                        <i class="fa-solid fa-circle-exclamation text-rose-400 text-sm mt-0.5 shrink-0"></i>
+                    <div class="mb-4 rounded-xl bg-rose-950/70 border border-rose-800/80 text-rose-300 text-xs px-3.5 py-2.5 flex items-start gap-2.5">
+                        <i class="fa-solid fa-circle-exclamation text-rose-400 text-xs mt-0.5 shrink-0"></i>
                         <span class="font-medium leading-relaxed">{{ session('error') }}</span>
                     </div>
                 @endif
 
                 @if($errors->any())
-                    <div class="mb-5 rounded-2xl bg-rose-950/70 border border-rose-800/80 text-rose-300 text-sm px-4 py-3 flex items-start gap-2.5 shadow-sm">
-                        <i class="fa-solid fa-circle-exclamation text-rose-400 text-sm mt-0.5 shrink-0"></i>
+                    <div class="mb-4 rounded-xl bg-rose-950/70 border border-rose-800/80 text-rose-300 text-xs px-3.5 py-2.5 flex items-start gap-2.5">
+                        <i class="fa-solid fa-circle-exclamation text-rose-400 text-xs mt-0.5 shrink-0"></i>
                         <span class="font-medium leading-relaxed">{{ $errors->first() }}</span>
                     </div>
                 @endif
 
                 {{-- LOGIN FORM --}}
-                <form action="{{ route('kiosk.admin-confirm') }}" method="POST" class="space-y-4 relative z-10">
+                <form action="{{ route('kiosk.admin-confirm') }}" method="POST" class="space-y-4">
                     @csrf
 
                     {{-- EMAIL FIELD --}}
                     <div>
-                        <label for="email" class="block text-[11px] font-bold uppercase tracking-wider text-slate-200 mb-1.5 flex items-center justify-between">
+                        <label for="email" class="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center justify-between">
                             <span>Admin Email</span>
-                            <span class="text-[10px] text-slate-400 lowercase">e.g. admin@zaujati.com</span>
+                            <span class="text-[11px] text-slate-500 font-normal">e.g. admin@zaujati.com</span>
                         </label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-pink-400 transition-colors">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 group-focus-within:text-slate-300 transition-colors">
                                 <i class="fa-regular fa-envelope text-xs"></i>
                             </div>
                             <input type="email" 
@@ -172,19 +138,19 @@
                                    autofocus 
                                    autocomplete="email"
                                    placeholder="name@company.com"
-                                   class="w-full bg-slate-900/90 border border-slate-700/80 hover:border-slate-600 rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#E11D74] focus:ring-2 focus:ring-[#E11D74]/25 transition shadow-inner">
+                                   class="w-full bg-slate-950/80 border border-slate-800 hover:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/40 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder:text-slate-500 transition shadow-xs outline-none">
                         </div>
                     </div>
 
                     {{-- PASSWORD FIELD WITH TOGGLE --}}
                     <div>
-                        <label for="password" class="block text-[11px] font-bold uppercase tracking-wider text-slate-200 mb-1.5 flex items-center justify-between">
-                            <span>Password</span>
-                            <span class="text-[10px] text-slate-400">Verified via Bcrypt</span>
+                        <label for="password" class="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center justify-between">
+                            <span>Security Password</span>
+                            <span class="text-[11px] text-slate-500 font-normal">Bcrypt Verified</span>
                         </label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-cyan-400 transition-colors">
-                                <i class="fa-solid fa-lock text-xs"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 group-focus-within:text-slate-300 transition-colors">
+                                <i class="fa-regular fa-lock text-xs"></i>
                             </div>
                             <input type="password" 
                                    name="password" 
@@ -192,10 +158,10 @@
                                    required 
                                    autocomplete="current-password"
                                    placeholder="••••••••••••"
-                                   class="w-full bg-slate-900/90 border border-slate-700/80 hover:border-slate-600 rounded-xl pl-9 pr-10 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#E11D74] focus:ring-2 focus:ring-[#E11D74]/25 transition shadow-inner font-mono-nums">
+                                   class="w-full bg-slate-950/80 border border-slate-800 hover:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/40 rounded-xl pl-10 pr-10 py-2.5 text-xs text-white placeholder:text-slate-500 transition shadow-xs outline-none font-mono-nums">
                             <button type="button" 
                                     id="toggle-password" 
-                                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition"
+                                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 transition"
                                     title="Toggle password visibility">
                                 <i class="fa-regular fa-eye text-xs" id="eye-icon"></i>
                             </button>
@@ -205,41 +171,40 @@
                     {{-- ACTION BUTTON --}}
                     <div class="pt-2">
                         <button type="submit" 
-                                class="w-full text-white font-bold text-xs py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 group cursor-pointer"
-                                style="background: linear-gradient(135deg, #4A154B 0%, #E11D74 50%, #7B1FA2 100%); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 25px rgba(225, 29, 116, 0.4);">
-                            <i class="fa-solid fa-fingerprint text-sm text-cyan-300 group-hover:scale-110 transition-transform"></i>
+                                class="w-full text-white font-semibold text-xs py-2.5 rounded-xl shadow-md shadow-indigo-600/20 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 transition-all flex items-center justify-center gap-2 cursor-pointer group">
+                            <i class="fa-solid fa-fingerprint text-xs"></i>
                             <span>Verify Identity &amp; Clock In</span>
-                            <i class="fa-solid fa-arrow-right text-[11px] opacity-70 group-hover:translate-x-1 transition-transform ml-1"></i>
+                            <i class="fa-solid fa-arrow-right text-[11px] group-hover:translate-x-0.5 transition-transform"></i>
                         </button>
                     </div>
                 </form>
 
                 {{-- SECURITY BADGES ROW --}}
-                <div class="mt-6 pt-5 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-[10px] text-slate-300">
-                    <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80 flex flex-col items-center gap-1">
-                        <i class="fa-solid fa-link text-[#E11D74] text-xs"></i>
-                        <span class="font-medium">SHA-256 Ledger</span>
+                <div class="mt-6 pt-5 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-[10px] text-slate-400">
+                    <div class="p-2 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-col items-center gap-1">
+                        <i class="fa-solid fa-link text-slate-400 text-xs"></i>
+                        <span class="font-medium">Audit Ledger</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80 flex flex-col items-center gap-1">
-                        <i class="fa-solid fa-shield-virus text-emerald-400 text-xs"></i>
-                        <span class="font-medium">Rate Throttled</span>
+                    <div class="p-2 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-col items-center gap-1">
+                        <i class="fa-solid fa-shield text-emerald-500 text-xs"></i>
+                        <span class="font-medium">Rate Protected</span>
                     </div>
-                    <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80 flex flex-col items-center gap-1">
-                        <i class="fa-solid fa-clock text-amber-400 text-xs"></i>
-                        <span class="font-medium">Auto Punch In/Out</span>
+                    <div class="p-2 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-col items-center gap-1">
+                        <i class="fa-solid fa-clock text-slate-400 text-xs"></i>
+                        <span class="font-medium">Auto Timestamp</span>
                     </div>
                 </div>
 
-                <p class="text-[11px] text-slate-400 mt-4 text-center leading-relaxed">
-                    Recording attendance registers your shift time into the tamper-evident security audit log and automatically redirects you to the administrator dashboard.
+                <p class="text-[11px] text-slate-500 mt-4 text-center leading-relaxed">
+                    Recording attendance registers your shift time into the security audit log and redirects to the management dashboard.
                 </p>
 
             </div>
 
             {{-- FOOTER HELP --}}
             <div class="mt-6 text-center">
-                <a href="{{ route('kiosk.scan') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition">
-                    <i class="fa-solid fa-camera text-cyan-400 text-[11px]"></i>
+                <a href="{{ route('kiosk.scan') }}" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-200 transition">
+                    <i class="fa-solid fa-camera text-[11px]"></i>
                     <span>Switch to Staff Facial Recognition Scanner &rarr;</span>
                 </a>
             </div>
