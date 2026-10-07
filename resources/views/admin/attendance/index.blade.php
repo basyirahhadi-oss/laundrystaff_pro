@@ -135,44 +135,82 @@
             </div>
 
             {{-- 2. REFINED FILTER BAR --}}
+            {{-- 2. REFINED FILTER BAR WITH MULTI-STAFF SELECTION, DELETE ALL & PANGKAH (✕) CHIPS --}}
             <div class="portal-card p-5">
-                <form method="GET" class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-end gap-3.5">
-                    <div class="flex-1 min-w-[160px]">
-                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
-                            Month
-                        </label>
-                        <input type="month" name="month" value="{{ $month }}"
-                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
+                <form method="GET" action="{{ route('admin.attendance.index') }}" class="flex flex-col gap-3.5" id="attendance-filter-form">
+                    <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-end gap-3.5">
+                        <div class="w-full sm:w-auto min-w-[170px]">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
+                                Month
+                            </label>
+                            <input type="month" name="month" value="{{ $month }}"
+                                class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
+                        </div>
+
+                        <div class="flex-1 min-w-[260px]">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                                    <span>Staff Member</span>
+                                    <span id="staff-count-badge" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 hidden"></span>
+                                </label>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="selectAllStaff()"
+                                        class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 inline-flex items-center gap-1 cursor-pointer transition">
+                                        <i class="fa-solid fa-check-double text-[10px]"></i>
+                                        <span>Select All</span>
+                                    </button>
+                                    <span class="text-slate-300 dark:text-slate-700">&bull;</span>
+                                    <button type="button" onclick="deleteAllStaff()"
+                                        class="text-[11px] font-semibold text-rose-500 hover:text-rose-600 inline-flex items-center gap-1 cursor-pointer transition"
+                                        title="Padam semua pilihan staf">
+                                        <i class="fa-solid fa-trash-can text-[10px]"></i>
+                                        <span>Delete All</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <select id="staff-select-picker" onchange="handleStaffSelectChange(this)"
+                                class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition cursor-pointer">
+                                <option value="" disabled selected>+ Select staff to add to filter...</option>
+                                <option value="ALL">👥 Select All Staff Members</option>
+                                @foreach ($staffList as $staff)
+                                    <option value="{{ $staff->id }}">
+                                        {{ $staff->name }} ({{ ucfirst($staff->role) }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="flex items-center gap-2 pt-1 sm:pt-0">
+                            <button type="submit"
+                                class="inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm cursor-pointer">
+                                <i class="fa-solid fa-filter text-[10px]"></i>
+                                <span>Apply Filter</span>
+                            </button>
+
+                            @if (!empty($selectedStaffIds) || $month !== now()->format('Y-m'))
+                                <a href="{{ route('admin.attendance.index') }}"
+                                   class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                                    Reset
+                                </a>
+                            @endif
+                        </div>
                     </div>
 
-                    <div class="flex-1 min-w-[220px]">
-                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
-                            Staff Member
-                        </label>
-                        <select name="staff_id"
-                            class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
-                            <option value="">All Staff Members</option>
-                            @foreach ($staffList as $staff)
-                                <option value="{{ $staff->id }}" {{ (string) $staffId === (string) $staff->id ? 'selected' : '' }}>
-                                    {{ $staff->name }} ({{ ucfirst($staff->role) }})
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <!-- Hidden inputs container for form submission -->
+                    <div id="staff-hidden-inputs"></div>
 
-                    <div class="flex items-center gap-2 pt-1 sm:pt-0">
-                        <button type="submit"
-                            class="inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
-                            <i class="fa-solid fa-filter text-[10px]"></i>
-                            <span>Apply Filter</span>
-                        </button>
-
-                        @if ($staffId || $month !== now()->format('Y-m'))
-                            <a href="{{ route('admin.attendance.index') }}"
-                               class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-                                Reset
-                            </a>
-                        @endif
+                    <!-- Selected Staff Badge Pills (Click 'x' to pangkah) -->
+                    <div class="pt-2.5 border-t border-slate-100 dark:border-slate-800/80">
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                            <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-users-viewfinder text-[10px] text-blue-500"></i>
+                                <span>Filtered Staff (Click <span class="font-bold text-rose-500">✕</span> to remove / pangkah nama):</span>
+                            </span>
+                            <span id="staff-tags-status" class="text-[11px] text-slate-400"></span>
+                        </div>
+                        <div id="staff-tags-container" class="flex flex-wrap items-center gap-1.5 min-h-[28px]">
+                            <!-- Rendered dynamically via JavaScript -->
+                        </div>
                     </div>
                 </form>
             </div>
@@ -361,4 +399,123 @@
         </div>
     </div>
     @include('partials.flash-alerts')
+
+    {{-- INTERACTIVE STAFF FILTER WITH DELETE ALL & PANGKAH (✕) CHIPS --}}
+    <script>
+        const allStaffData = @json($staffList->map(fn($s) => [
+            'id' => (int) $s->id,
+            'name' => $s->name,
+            'role' => ucfirst($s->role)
+        ]));
+
+        let selectedStaffSet = new Set(@json(array_map('intval', $selectedStaffIds ?? [])));
+
+        function renderStaffTags() {
+            const container = document.getElementById('staff-tags-container');
+            const hiddenInputsContainer = document.getElementById('staff-hidden-inputs');
+            const countBadge = document.getElementById('staff-count-badge');
+            const statusEl = document.getElementById('staff-tags-status');
+
+            if (!container || !hiddenInputsContainer) return;
+
+            container.innerHTML = '';
+            hiddenInputsContainer.innerHTML = '';
+
+            if (selectedStaffSet.size === 0) {
+                if (countBadge) countBadge.classList.add('hidden');
+                if (statusEl) statusEl.textContent = 'Showing records for ALL staff members';
+                container.innerHTML = `
+                    <div class="text-xs text-slate-400 dark:text-slate-500 italic py-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info text-[11px] text-blue-500/70"></i>
+                        <span>Semua staf dipilih secara lalai. Pilih dari senarai atau klik <strong>Select All</strong> untuk mula memangkah (✕) nama yang tidak dikehendaki.</span>
+                    </div>
+                `;
+                return;
+            }
+
+            if (countBadge) {
+                countBadge.classList.remove('hidden');
+                countBadge.textContent = `${selectedStaffSet.size} selected`;
+            }
+
+            if (statusEl) {
+                statusEl.textContent = `${selectedStaffSet.size} of ${allStaffData.length} staff selected`;
+            }
+
+            selectedStaffSet.forEach(staffId => {
+                const staff = allStaffData.find(s => s.id === staffId);
+                if (!staff) return;
+
+                // Hidden input for GET form submission
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'staff_ids[]';
+                input.value = staff.id;
+                hiddenInputsContainer.appendChild(input);
+
+                // Badge Pill with 'x' (pangkah) button
+                const pill = document.createElement('span');
+                pill.className = 'inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shadow-2xs transition-all hover:bg-blue-100 dark:hover:bg-blue-900/80';
+                pill.innerHTML = `
+                    <i class="fa-regular fa-user text-[10px] text-blue-500 dark:text-blue-400"></i>
+                    <span>${escapeHtml(staff.name)}</span>
+                    <span class="text-[10px] text-blue-600/70 dark:text-blue-400/60 font-normal">(${escapeHtml(staff.role)})</span>
+                    <button type="button" 
+                            onclick="removeStaff(${staff.id})" 
+                            class="ml-0.5 w-4 h-4 rounded flex items-center justify-center text-blue-400 hover:text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition cursor-pointer" 
+                            title="Pangkah / Buang ${escapeHtml(staff.name)} dari senarai tapisan">
+                        <i class="fa-solid fa-xmark text-[11px]"></i>
+                    </button>
+                `;
+                container.appendChild(pill);
+            });
+
+            if (selectedStaffSet.size > 1) {
+                const clearBtn = document.createElement('button');
+                clearBtn.type = 'button';
+                clearBtn.onclick = deleteAllStaff;
+                clearBtn.className = 'text-[11px] font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 px-2 py-1 rounded-lg inline-flex items-center gap-1 cursor-pointer transition ml-1 hover:underline';
+                clearBtn.innerHTML = '<i class="fa-solid fa-trash-can text-[10px]"></i> <span>Clear All</span>';
+                container.appendChild(clearBtn);
+            }
+        }
+
+        function removeStaff(staffId) {
+            selectedStaffSet.delete(staffId);
+            renderStaffTags();
+        }
+
+        function addStaff(staffId) {
+            selectedStaffSet.add(staffId);
+            renderStaffTags();
+        }
+
+        function selectAllStaff() {
+            allStaffData.forEach(s => selectedStaffSet.add(s.id));
+            renderStaffTags();
+        }
+
+        function deleteAllStaff() {
+            selectedStaffSet.clear();
+            renderStaffTags();
+        }
+
+        function handleStaffSelectChange(selectEl) {
+            const val = selectEl.value;
+            if (val === 'ALL') {
+                selectAllStaff();
+            } else if (val) {
+                addStaff(parseInt(val, 10));
+            }
+            selectEl.selectedIndex = 0;
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderStaffTags();
+        });
+    </script>
 </x-app-layout>

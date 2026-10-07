@@ -24,6 +24,18 @@ class AttendanceController extends Controller
     {
         $month = $request->input('month', Carbon::now()->format('Y-m'));
         $staffId = $request->input('staff_id');
+        $rawStaffIds = $request->input('staff_ids', []);
+
+        $selectedStaffIds = [];
+        if (is_array($rawStaffIds)) {
+            $selectedStaffIds = array_values(array_filter(array_map('intval', $rawStaffIds)));
+        } elseif (is_string($rawStaffIds) && trim($rawStaffIds) !== '') {
+            $selectedStaffIds = array_values(array_filter(array_map('intval', explode(',', $rawStaffIds))));
+        }
+
+        if ($staffId && empty($selectedStaffIds)) {
+            $selectedStaffIds = [(int)$staffId];
+        }
 
         $range = Carbon::createFromFormat('Y-m', $month);
 
@@ -34,15 +46,15 @@ class AttendanceController extends Controller
             )
             ->orderByDesc('date');
 
-        if ($staffId) {
-            $query->forUser($staffId);
+        if (!empty($selectedStaffIds)) {
+            $query->whereIn('user_id', $selectedStaffIds);
         }
 
         $attendances = $query->paginate(20)->withQueryString();
 
         $staffList = User::where('role', 'staff')->orderBy('name')->get();
 
-        return view('admin.attendance.index', compact('attendances', 'staffList', 'month', 'staffId'));
+        return view('admin.attendance.index', compact('attendances', 'staffList', 'month', 'staffId', 'selectedStaffIds'));
     }
 
     /**
