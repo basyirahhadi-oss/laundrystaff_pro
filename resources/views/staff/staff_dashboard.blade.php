@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <span class="navbar-brand fw-bold"><i class="fa-solid fa-shirt me-2"></i>LaundryStaff Pro</span>
             <div class="d-flex">
-                <!-- 🎯 Butang untuk kembali ke Dashboard Utama Admin -->
+                <!-- Return to Admin Dashboard -->
                  @auth
                     @if(auth()->user()->email === 'admin@zaujati.com')
                         <a href="{{ route('dashboard') }}" class="btn btn-sm btn-outline-light rounded-pill px-3">

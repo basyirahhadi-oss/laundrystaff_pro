@@ -19,7 +19,7 @@ class StaffController extends Controller
     ) {}
 
     /**
-     * 1. Papar Senarai Utama Staf
+     * 1. Display Staff Directory
      */
     public function index()
     {
@@ -32,7 +32,7 @@ class StaffController extends Controller
 
 
     /**
-     * 2. Simpan Pendaftaran Staf Baru (Proses Borang Tambah Staf)
+     * 2. Store New Staff Registration (Process New Staff Form)
      */
     public function store(Request $request)
     {
@@ -103,7 +103,7 @@ class StaffController extends Controller
         );
     }
     /**
-     * 3. Papar Borang Edit Staf
+     * 3. Display Staff Edit Form
      */
     public function edit($id)
     {
@@ -112,7 +112,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 4. Simpan Perubahan Edit Staf
+     * 4. Save Staff Profile Updates
      */
   public function update(Request $request, $id)
 {
@@ -124,18 +124,18 @@ class StaffController extends Controller
         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
     ]);
 
-    // 1. Ambil rekod staff lama untuk tahu nama gambar asal
+    // 1. Fetch existing staff record to check previous picture filename
     $staff = DB::table('staff')->where('staff_id', $id)->first();
     
-    // Default kekalkan nama gambar lama jika tiada gambar baru di-upload
+    // Default: preserve existing photo if no new image uploaded
     $filename = isset($staff->profile_picture) ? $staff->profile_picture : null;
 
-    // 2. PROSES GAMBAR BARU (Jika ada muat naik)
+    // 2. Process new profile picture upload
     if ($request->hasFile('profile_picture')) {
         $filename = $this->processProfilePicture($request->file('profile_picture'), $id);
         $this->ensureProfilePictureColumnIsText();
 
-        // [Opsional] Padam fail gambar lama dari folder jika ia fail fizikal (bukan data URI)
+        // Delete old physical image file from storage if applicable (non-Data URI)
         if ($staff && !empty($staff->profile_picture) && !str_starts_with($staff->profile_picture, 'data:image')) {
             $oldImagePath = public_path('uploads/staff/' . $staff->profile_picture);
             if (file_exists($oldImagePath) && is_writable($oldImagePath)) {
@@ -144,13 +144,13 @@ class StaffController extends Controller
         }
     }
 
-    // 3. Kemaskini maklumat ke dalam database
+    // 3. Update staff details in database
     DB::table('staff')->where('staff_id', $id)->update([
         'full_name' => $request->full_name,
         'position' => $request->position,
         'phone_number' => $request->phone_number,
         'salary_rate' => $request->salary_rate,
-        'profile_picture' => $filename, // Menyimpan nama fail sahaja, selari dengan fungsi store!
+        'profile_picture' => $filename,
         'updated_at' => now(), 
     ]);
 
@@ -165,7 +165,7 @@ class StaffController extends Controller
     return redirect()->route('staff.index')->with('success', 'Staff updated successfully!');
 }
     /**
-     * 5. Padam Rekod Staf
+     * 5. Delete Staff Record
      */
     public function destroy($id)
     {
@@ -183,7 +183,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 6. Cetak Profil Staf
+     * 6. Print Staff Profile
      */
     public function print($id)
     {
@@ -192,26 +192,26 @@ class StaffController extends Controller
     }
 
     /**
-     * 7. 🎯 Papar Borang Pengiraan Gaji Staf (Dipanggil oleh Button Salary)
+     * 7. Display Staff Payroll Calculation Form
      */
     public function payrollCreate(Request $request)
     {
-        // Ambil id daripada URL query (?id=STF01)
+        // Get staff ID from URL query (?id=STF01)
         $id = $request->query('id'); 
 
-        // Cari data staf menggunakan Query Builder DB agar selari dengan fungsi lain
+        // Fetch staff profile using Query Builder
         $staff = DB::table('staff')->where('staff_id', $id)->first();
 
         if (!$staff) {
             abort(404, 'Staff not found.');
         }
 
-        // Pulangkan ke fail view payroll gabungan yang telah kita buat
+        // Return combined payroll view
         return view('staff.payroll', compact('staff'));
     }              
 
     /**
-     * 8. 💾 Proses Formula & Simpan Rekod Gaji Semasa Ke Database
+     * 8. Process Payroll Formula & Save Statement to Database
      */
     public function payrollStore(Request $request, $id)
     {
@@ -224,11 +224,11 @@ class StaffController extends Controller
         $ot_hours = $request->input('ot_hours', 0);
         $month_year = $request->input('month') . ' ' . $request->input('year');
 
-        // A. FORMULA OT
+        // A. OVERTIME FORMULA
         $hourly_rate = ($basic_salary / 26) / 8;
         $ot_pay = $hourly_rate * 1.5 * $ot_hours;
 
-        // B. POTONGAN STATUTORI MALAYSIA
+        // B. MALAYSIAN STATUTORY DEDUCTIONS
         $epf_deduction = $basic_salary * 0.11;
         $eis_deduction = $basic_salary * 0.002;
         
@@ -237,10 +237,10 @@ class StaffController extends Controller
             $socso_deduction = 24.75;
         }
 
-        // C. KIRA GAJI BERSIH
+        // C. COMPUTE NET SALARY
         $net_salary = ($basic_salary + $ot_pay) - ($epf_deduction + $socso_deduction + $eis_deduction);
 
-        // Simpan ke jadual payrolls
+        // Save to payrolls ledger
         $payrollId = DB::table('payrolls')->insertGetId([
             'staff_id' => $id,
             'month_year' => $month_year,
@@ -268,12 +268,12 @@ class StaffController extends Controller
             'net_salary'    => round($net_salary, 2),
         ]);
 
-        // Tukar kepada route sejarah gaji anda (contohnya: staff.payroll.history)
+        // Redirect to payroll records ledger
         return redirect()->route('staff.payroll.history')->with('success', 'Payroll calculated and saved successfully for ' . $staff->full_name);
     }
 
     /**
-     * 9. Papar Sejarah Pengiraan Gaji Semua Staf
+     * 9. Display All Processed Payroll Records
      */
     public function payrollHistory()
     {
@@ -287,7 +287,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 10. Cetak Slip Gaji Rasmi Dari Sejarah
+     * 10. Print Official Salary Voucher
      */
     public function payrollPrint($id)
     {
@@ -305,7 +305,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 11. Padam Rekod Slip Gaji Dari Sejarah
+     * 11. Delete Payslip Record from Ledger
      */
     public function payrollDestroy($id)
     {
@@ -326,7 +326,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 12. Papar Halaman Kehadiran Staf
+     * 12. Display Staff Attendance Terminal
      */
     public function attendanceIndex(Request $request)
     {
@@ -349,7 +349,7 @@ class StaffController extends Controller
     }
     
     /**
-     * 13. Proses Masuk Kerja (Clock In)
+     * 13. Process Staff Clock In
      */
   
     public function clockIn(Request $request)
@@ -388,7 +388,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 14. Proses Keluar Kerja (Clock Out)
+     * 14. Process Staff Clock Out
      */
   public function clockOut(Request $request)
     {
@@ -432,7 +432,7 @@ class StaffController extends Controller
     }
 
     /**
-     * 15. Padam Rekod Kehadiran
+     * 15. Delete Attendance Record
      */
     public function deleteAttendance($id)
     {
@@ -453,7 +453,7 @@ class StaffController extends Controller
 
 
     /**
-     * 16. Laporan Dashboard Kehadiran Admin
+     * 16. Admin Attendance Report & Dashboard
      */
     public function adminAttendanceDashboard(Request $request)
     {

@@ -1,9 +1,8 @@
 <x-app-layout>
-    <!-- SKRIP CDN FACE-APIJS (WAJIB ADA) -->
+    <!-- FACE-API.JS CDN SCRIPT -->
     <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
 
-    <!-- HEADER UTAMA -->
-   <!-- HEADER UTAMA -->
+    <!-- MAIN HEADER -->
 <x-slot name="header">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
         <div>
@@ -38,24 +37,20 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
-                <!-- Kiri & Tengah: Kamera Pentas Utama -->
+                <!-- Left & Center: Main Camera Stage -->
                 <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm text-center">
                     <h3 class="text-lg font-medium text-gray-900 mb-2" style="color: #4A154B;">
                         📷 Staff Attendance Camera
                     </h3>
                     <p class="text-sm text-gray-600 mb-4">Please select your name, look at the camera, and wait for facial verification.</p>
                     
-                    <!-- Dropdown Nama Staf -->
-                   <!-- KOD BARU: Menggantikan dropdown lama yang semak -->
-<!-- Dropdown Nama Staf -->
-<!-- Dropdown Nama Staf -->
-<!-- KOD BARU: Menggantikan dropdown lama yang semak & Membaiki path gambar AI -->
+                    <!-- Staff Name Selection -->
 <div class="mb-6 max-w-xs mx-auto">
     @php 
-        // Ambil data staf aktif berdasarkan selectedStaffId
+        // Retrieve active staff profile based on selectedStaffId
         $currentStaff = isset($selectedStaffId) ? $staffList->firstWhere('staff_id', $selectedStaffId) : null;
         
-        // Sediakan URL gambar profil yang betul (menyokong Base64 Data URI & fail fizikal)
+        // Prepare profile photo URL (supports Base64 Data URI & local assets)
         $staffImageUrl = '';
         if ($currentStaff && !empty($currentStaff->profile_picture)) {
             if (str_starts_with($currentStaff->profile_picture, 'data:image') || str_starts_with($currentStaff->profile_picture, 'http')) {
@@ -66,10 +61,10 @@
         }
     @endphp
 
-    <!-- 🌟 Input tersorok yang telah diperbaiki datanya (Menghala ke uploads/staff/) -->
+    <!-- Hidden input for reference image matching -->
     <input type="hidden" id="staff_id" value="{{ $selectedStaffId ?? '' }}" data-image="{{ $staffImageUrl }}">
 
-    <!-- Kad Paparan Nama Bersih -->
+    <!-- Clean Staff Identity Display Card -->
     <div class="max-w-xs mx-auto p-2 bg-purple-100 border border-purple-100 rounded-xl text-center shadow-sm">
         <p class="text-xs font-semibold uppercase tracking-wider text-purple-600">👤 Staff Verification</p>
         <p class="text-lg font-bold text-gray-700 mt-0.5">
@@ -82,14 +77,14 @@
     </div>
 </div>
 
-                    <!-- Kotak Windows Kamera Live Webcam -->
+                    <!-- Live Webcam Viewport Window -->
                     <div class="relative flex justify-center bg-black rounded-lg overflow-hidden border-4 border-purple-900" style="height: 350px; max-width: 450px; margin: 0 auto;">
                         <video id="webcam" autoplay muted playsinline class="w-full h-full object-cover"></video>
-                        <!-- Canvas bertindih di atas video untuk kesan visual kotak pengesan muka (Jika perlu) -->
+                        <!-- Canvas overlay for face bounding box -->
                         <canvas id="overlay" class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"></canvas>
                     </div>
 
-                    <!-- Butang Tindakan (Disekat/Disabled sehingga muka disahkan sama) -->
+                    <!-- Action Punch Buttons (Locked until face matched) -->
                     <div class="mt-4 flex justify-center gap-4">
                         <button id="btn-clockin" onclick="processAttendance('clock-in')" disabled class="bg-gray-400 text-white font-bold py-2 px-6 rounded-lg shadow cursor-not-allowed opacity-50 transition">
                             🔒 Clock In
@@ -99,14 +94,13 @@
                         </button>
                     </div>
 
-                    <!-- Notifikasi Status Nyata -->
+                    <!-- Real-time Status Alert -->
                     <div id="scan-status" class="mt-4 p-2 text-sm font-semibold text-purple-700 bg-purple-50 rounded-lg animate-pulse">
                         ⏳ Loading AI Face Recognition Models... Please wait.
                     </div>
                 </div>
 
-                <!-- Kanan: Log Rekod Kehadiran Hari Ini -->
-              <!-- Kanan: Log Rekod Kehadiran Hari Ini -->
+                <!-- Right: Today's Attendance Logs -->
 <div class="bg-white p-6 rounded-lg shadow-sm">
     <h3 class="text-lg font-medium text-gray-900 mb-4" style="color: #4A154B;">
         📋 Today's Attendance Log
@@ -127,8 +121,8 @@
                     </div>
                 </div>
                 
-                <!-- BUTANG PADAM (DELETE) -->
-                {{-- 🛠️ SEKATAN DI SINI: Butang delete hanya muncul kalau TIADA staff_id di URL (Mod Admin) --}}
+                <!-- Delete Button (Admin Only) -->
+                {{-- Restriction: Delete action only available when in admin mode --}}
                @if(auth()->user()->email == 'admin@zaujati.com')
                     <div>
                         <button onclick="deleteAttendance('{{ $log->id }}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-full transition" title="Delete Log">
@@ -155,9 +149,7 @@
         </div>
     </div>
 
-    <!-- LOGIK JAVASCRIPT AWESOMENESS -->
-     <!-- LOGIK JAVASCRIPT AWESOMENESS (VERSI BERSIH & AUTO-SCAN) -->
-    <!-- LOGIK JAVASCRIPT AWESOMENESS (VERSI AUTO-SCAN DARI URL) -->
+    <!-- JAVASCRIPT SCANNER LOGIC -->
     <script>
         const video = document.getElementById('webcam');
         const statusBox = document.getElementById('scan-status');
@@ -167,7 +159,7 @@
         let faceMatcher = null;
         let faceDetectionInterval = null;
 
-        // 1. Jalankan kamera & terus mulakan imbasan imej rujukan dari URL
+        // 1. Initialize camera & reference face matching on load
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
@@ -178,10 +170,10 @@
                 statusBox.innerHTML = "✅ AI Models Loaded.";
                 statusBox.className = "mt-4 p-2 text-sm font-semibold text-green-700 bg-green-50 rounded-lg";
                 
-                // Hidupkan Kamera Webcam
+                // Initialize Webcam
                 await startCamera();
 
-                // Ambil ID & Gambar rujukan terus dari input tersorok yang kita jana dari URL
+                // Retrieve ID & reference image from hidden input
                 const staffInput = document.getElementById('staff_id');
                 if (staffInput && staffInput.value !== "") {
                     const imageUrl = staffInput.getAttribute('data-image');
@@ -196,7 +188,7 @@
             }
         });
 
-        // 2. Hidupkan Aliran Kamera Webcam
+        // 2. Start Webcam Media Stream
         function startCamera() {
             return new Promise((resolve, reject) => {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -216,7 +208,7 @@
             });
         }
 
-        // 3. Fungsi Memproses Gambar Rujukan & Memulakan Gelung Kamera
+        // 3. Process Reference Photo & Start Camera Loop
         async function initiateFaceScanning(imageUrl) {
             if (!imageUrl) {
                 statusBox.innerHTML = "⚠️ No reference picture uploaded for this staff. Please contact Admin.";
@@ -240,7 +232,7 @@
                 statusBox.innerHTML = "🔍 Looking for your face... Please look directly at the camera.";
                 statusBox.className = "mt-4 p-2 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg";
 
-                // Mulakan gelung imbasan live webcam
+                // Start live webcam matching loop
                 startLiveFaceMatching();
 
             } catch (err) {
@@ -249,7 +241,7 @@
             }
         }
 
-        // 4. Gelung Imbasan Live Webcam Perbandingan Wajah
+        // 4. Live Webcam Facial Comparison Loop
         function startLiveFaceMatching() {
             faceDetectionInterval = setInterval(async () => {
                 if (!faceMatcher) return;
@@ -275,7 +267,7 @@
             }, 1000);
         }
 
-        // 5. Kemas Kini Keadaan Butang Kehadiran
+        // 5. Update Attendance Button States
         function enableAttendanceButtons() {
             btnClockIn.disabled = false;
             btnClockIn.className = "bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition transform hover:scale-105";
@@ -296,7 +288,7 @@
             btnClockOut.innerHTML = "🔒 Clock Out";
         }
 
-        // 6. Mengendalikan Penghantaran Data AJAX Ke Hadiran Laravel Controller
+        // 6. Handle AJAX Punch Submission to Laravel Controller
         async function processAttendance(type) {
             const staffId = document.getElementById('staff_id').value;
             if (!staffId) return;
@@ -330,7 +322,7 @@
             }
         }
 
-        // 7. Fungsi Padam Rekod Kehadiran Hari Ini
+        // 7. Delete Attendance Record
         async function deleteAttendance(id) {
             if (!confirm("Are you sure you want to delete this attendance record?")) {
                 return;

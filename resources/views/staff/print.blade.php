@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salary Slip - {{ $staff->full_name }}</title>
-    <!-- Guna Tailwind untuk hiasan ringkas -->
+    <!-- Tailwind CSS v4 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Sembunyikan butang cetak apabila kertas dicetak keluar */
+        /* Hide print button during printing */
         @media print {
             .no-print { display: none; }
             body { background: white; padding: 0; }
@@ -16,7 +16,7 @@
 </head>
 <body class="bg-gray-100 font-sans p-8">
 
-    <!-- Butang Kawalan Di Atas Skrin (no-print) -->
+    <!-- Top Action Controls (no-print) -->
     <div class="max-w-2xl mx-auto mb-6 flex justify-between items-center no-print">
         <a href="javascript:window.close();" class="text-sm font-semibold text-gray-600 hover:text-gray-900">← Close Window</a>
         <button onclick="window.print();" class="px-5 py-2 bg-purple-800 text-white font-medium rounded-md shadow hover:bg-purple-900 transition cursor-pointer">
@@ -24,17 +24,17 @@
         </button>
     </div>
 
-    <!-- Kotak Slip Gaji / Profil Rasmi -->
+    <!-- Official Salary Voucher Container -->
     <div class="max-w-2xl mx-auto bg-white border border-gray-300 p-8 shadow-sm rounded-lg">
         
-        <!-- Header Kedai -->
+        <!-- Header -->
         <div class="text-center border-b pb-4 mb-6">
             <h1 class="text-2xl font-bold tracking-wide" style="color: #4A154B;">ZAUJATI LAUNDRY</h1>
             <p class="text-xs text-gray-500 mt-1">Premium Cleaning & Fabric Care Services</p>
             <p class="text-xs text-gray-400">Automated Staff Statement & Salary Voucher</p>
         </div>
 
-        <!-- Maklumat Utama Slip -->
+        <!-- Voucher Details Header -->
         <div class="mb-6 bg-gray-50 p-4 rounded-md border border-gray-100 flex justify-between items-center">
             <div>
                 <p class="text-xs uppercase tracking-wider text-gray-400 font-bold">Statement For</p>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <!-- Jadual Perincian Maklumat -->
+        <!-- Itemized Statement Table -->
         <div class="border border-gray-200 rounded-md overflow-hidden mb-8">
             <table class="w-full text-left border-collapse">
                 <thead>
@@ -78,7 +78,7 @@
             </table>
         </div>
 
-        <!-- Ruangan Tandatangan Pengesahan -->
+        <!-- Signature Verification Section -->
         <div class="mt-16 flex justify-between text-center">
             <div class="w-48">
                 <div class="border-b border-gray-400 h-12"></div>
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <!-- Footer Notis -->
+        <!-- Footer Disclaimer Notice -->
         <div class="text-center text-[10px] text-gray-400 mt-12 pt-4 border-t border-gray-100">
             This is a computer-generated voucher. No signature is required for electronic validation.
         </div>

@@ -9,10 +9,10 @@ class AdminAttendance extends Model
 {
     use HasFactory;
 
-    // Sila pastikan nama table adalah betul
+    // Explicit table specification
     protected $table = 'admin_attendances';
 
-    // 🌟 TAMBAH BARIS INI: Kebenaran untuk mass assignment
+    // Mass-assignable attributes
     protected $fillable = [
         'user_id',
         'date',

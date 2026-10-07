@@ -1,5 +1,5 @@
 <x-app-layout>
-    <!-- Bootstrap 5 & FontAwesome Icons (Diperlukan untuk reka bentuk anda) -->
+    <!-- Bootstrap 5 & FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -12,7 +12,7 @@
 
     <div class="container py-5">
         
-        <!-- Notifikasi Mesej Sukses / Ralat -->
+        <!-- Flash Success / Error Notifications -->
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm mb-4" role="alert">
                 <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
@@ -48,7 +48,7 @@
                     <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-camera text-secondary me-2"></i>Terminal Kiosk</h5>
                     <p class="small text-muted">Enter Staff ID or scan barcode to initialize the Face Verification camera system.</p>
                     
-                    <!-- Form menghantar Staff ID ke halaman scan -->
+                    <!-- Send Staff ID to Scan Page Form -->
                     <form action="{{ route('staff.dashboard') }}" method="GET" class="mt-3">
                         <div class="mb-3">
                             <label for="staff_id" class="form-label small fw-semibold text-secondary">Staff Identification ID</label>

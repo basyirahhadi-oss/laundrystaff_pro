@@ -56,7 +56,7 @@ public function confirmAttendance(Request $request)
         return redirect('/attendance')->with('error', 'Verification Failed: Identity not recognized.');
     }
 
-    // Masukkan data mengikut struktur jadual 'admin_attendances' yang baru
+    // Insert attendance record into ledger
     AttendanceLog::create([
         'user_id'      => $user->id,
         'user_type'    => 'Staff', 
@@ -92,7 +92,7 @@ public function confirmAttendance(Request $request)
     }
 
    /**
- * Memadam rekod kehadiran dari pangkalan data (Admin Only)
+ * Delete attendance record from database (Admin Only)
  */
 public function destroy($id)
 {
@@ -108,7 +108,7 @@ public function destroy($id)
 
     $log->delete();
 
-    // Sila pastikan baris ini tepat untuk meluncur kembali ke dashboard history
+    // Redirect back to attendance history ledger
     return redirect()->route('attendance.history')->with('success', 'The attendance record has been successfully deleted.');
 }
 
