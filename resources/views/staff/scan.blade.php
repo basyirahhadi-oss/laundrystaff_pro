@@ -92,7 +92,8 @@
     <!-- Highly Visible Aesthetic Modern Laundry Wallpaper -->
     <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none scale-105" 
          style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.85) contrast(1.05);"></div>
-    <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#090d16]/95 via-[#090d16]/85 to-[#090d16] pointer-events-none"></div>
+    <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#070b14]/75 via-[#070b14]/55 to-[#070b14]/85 pointer-events-none"></div>
+    <div class="fixed inset-0 z-0 bg-gradient-to-r from-[#070b14]/70 via-transparent to-[#070b14]/70 pointer-events-none"></div>
 
     {{-- KIOSK HEADER --}}
     <header class="bg-slate-950/85 backdrop-blur-md border-b border-white/15 sticky top-0 z-50">

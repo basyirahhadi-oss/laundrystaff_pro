@@ -74,15 +74,15 @@
     <body class="min-h-screen flex flex-col justify-between text-slate-100 antialiased selection:bg-indigo-600 selection:text-white bg-[#090d16] relative overflow-x-hidden">
         
         <!-- ========================================== -->
-        <!-- EXECUTIVE ARCHITECTURAL BACKDROP           -->
+        <!-- HIGH-FIDELITY MODERN LAUNDROMAT WALLPAPER  -->
         <!-- ========================================== -->
-        <!-- Subdued Real Modern Laundromat Architectural Background -->
-        <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none opacity-25" 
-             style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.6) contrast(1.15);"></div>
+        <!-- Highly Visible Aesthetic Modern Laundry Wallpaper -->
+        <div class="fixed inset-0 z-0 bg-cover bg-center pointer-events-none scale-105 transition-transform duration-1000" 
+             style="background-image: url('{{ asset('images/laundry-modern-bg.jpg') }}'); filter: brightness(0.85) contrast(1.05);"></div>
         
-        <!-- Deep Corporate Slate Gradient Overlays -->
-        <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#090d16]/95 via-[#090d16]/85 to-[#090d16] pointer-events-none"></div>
-        <div class="fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/20 via-transparent to-transparent pointer-events-none"></div>
+        <!-- Multi-layer Vignette Overlay (Keeps wallpaper clearly visible) -->
+        <div class="fixed inset-0 z-0 bg-gradient-to-b from-[#070b14]/75 via-[#070b14]/55 to-[#070b14]/85 pointer-events-none"></div>
+        <div class="fixed inset-0 z-0 bg-gradient-to-r from-[#070b14]/70 via-transparent to-[#070b14]/70 pointer-events-none"></div>
 
         <!-- ========================================== -->
         <!-- FOREGROUND CONTENT                         -->
