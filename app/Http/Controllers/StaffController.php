@@ -517,15 +517,13 @@ class StaffController extends Controller
         $staffList = DB::table('staff')
             ->whereNotNull('user_id')
             ->whereNotNull('profile_picture')
-            ->select('user_id', 'full_name', 'position', 'profile_picture')
+            ->select('user_id', 'staff_id', 'full_name', 'position', 'profile_picture')
             ->get()
             ->map(fn ($s) => [
                 'userId' => $s->user_id,
                 'name' => $s->full_name,
                 'role' => 'Staff (' . $s->position . ')',
-                'photoUrl' => (str_starts_with($s->profile_picture, 'data:image') || str_starts_with($s->profile_picture, 'http'))
-                    ? $s->profile_picture
-                    : asset('uploads/staff/' . $s->profile_picture),
+                'photoUrl' => route('staff.avatar', $s->staff_id),
             ]);
 
         // Generate Cryptographic One-Time Nonce Token (Anti-Replay)
@@ -749,14 +747,161 @@ class StaffController extends Controller
     }
 
     /**
+     * Stream staff avatar image with HTTP caching.
+     * Prevents Base64 payload inflation in serverless functions (Vercel 4.5MB payload limit).
+     */
+    public function avatar(string $staffId)
+    {
+        $staff = DB::table('staff')->where('staff_id', $staffId)->first();
+        if (!$staff || empty($staff->profile_picture)) {
+            return $this->fallbackAvatar($staff ? $staff->full_name : 'Staff');
+        }
+
+        return $this->streamAvatarResponse($staff->profile_picture, $staff->full_name);
+    }
+
+    /**
+     * Stream user avatar image with HTTP caching.
+     */
+    public function userAvatar($userId)
+    {
+        $user = DB::table('users')->where('id', $userId)->first();
+        if (!$user) {
+            return $this->fallbackAvatar('User');
+        }
+
+        $staff = DB::table('staff')->where('user_id', $userId)->first();
+        if (!$staff && !empty($user->email) && str_contains($user->email, '@')) {
+            $prefix = explode('@', $user->email)[0];
+            $staff = DB::table('staff')
+                ->where('staff_id', strtoupper($prefix))
+                ->orWhere('staff_id', $prefix)
+                ->first();
+        }
+
+        if ($staff && !empty($staff->profile_picture)) {
+            return $this->streamAvatarResponse($staff->profile_picture, $user->name);
+        }
+
+        return $this->fallbackAvatar($user->name);
+    }
+
+    /**
+     * Stream avatar image from Base64, disk, or remote URL.
+     */
+    protected function streamAvatarResponse(string $pictureData, string $fallbackName)
+    {
+        // 1. Data URL (Base64)
+        if (str_starts_with($pictureData, 'data:image')) {
+            if (preg_match('/^data:(image\/[a-zA-Z0-9\+\-\.]+);base64,(.+)$/', $pictureData, $matches)) {
+                $mimeType = $matches[1];
+                $binary = base64_decode($matches[2]);
+                $etag = md5($binary);
+
+                if (request()->header('If-None-Match') === '"' . $etag . '"') {
+                    return response('', 304);
+                }
+
+                return response($binary, 200, [
+                    'Content-Type'   => $mimeType,
+                    'Content-Length' => strlen($binary),
+                    'Cache-Control'  => 'public, max-age=86400, stale-while-revalidate=604800',
+                    'ETag'           => '"' . $etag . '"',
+                ]);
+            }
+        }
+
+        // 2. Direct remote URL
+        if (str_starts_with($pictureData, 'http://') || str_starts_with($pictureData, 'https://')) {
+            return redirect()->away($pictureData);
+        }
+
+        // 3. Local file path on disk
+        $localPath = public_path('uploads/staff/' . $pictureData);
+        if (file_exists($localPath) && is_file($localPath)) {
+            return response()->file($localPath, [
+                'Cache-Control' => 'public, max-age=86400, stale-while-revalidate=604800',
+            ]);
+        }
+
+        return $this->fallbackAvatar($fallbackName);
+    }
+
+    /**
+     * Generate inline SVG fallback avatar.
+     */
+    protected function fallbackAvatar(string $name)
+    {
+        $initial = strtoupper(substr(trim($name ?: 'U'), 0, 1));
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">'
+            . '<rect width="128" height="128" rx="64" fill="#4f46e5"/>'
+            . '<text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700">' . htmlspecialchars($initial) . '</text>'
+            . '</svg>';
+
+        return response($svg, 200, [
+            'Content-Type'  => 'image/svg+xml',
+            'Cache-Control' => 'public, max-age=86400, stale-while-revalidate=604800',
+        ]);
+    }
+
+    /**
      * Process uploaded staff profile picture safely for serverless (Vercel) & local environments.
+     * Compresses/downscales images to max 400x400 to keep Base64 payload under 50KB.
      * Generates a Base64 Data URL so the image is stored directly in the database and never lost
      * when serverless function instances recycle or when the filesystem is strictly read-only.
      */
     protected function processProfilePicture(UploadedFile $file, string $staffId): string
     {
+        $realPath = $file->getRealPath();
         $mime = $file->getMimeType() ?: 'image/jpeg';
-        $base64 = 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
+        $compressedData = null;
+
+        // Downscale & compress via GD if available to keep database payload tiny (<50KB)
+        if (extension_loaded('gd') && function_exists('imagecreatefromstring')) {
+            try {
+                $raw = file_get_contents($realPath);
+                $img = @imagecreatefromstring($raw);
+                if ($img !== false) {
+                    $width = imagesx($img);
+                    $height = imagesy($img);
+                    $maxDim = 400;
+
+                    if ($width > $maxDim || $height > $maxDim) {
+                        $ratio = min($maxDim / $width, $maxDim / $height);
+                        $newW = max(1, (int)round($width * $ratio));
+                        $newH = max(1, (int)round($height * $ratio));
+                        $resized = imagecreatetruecolor($newW, $newH);
+
+                        if ($mime === 'image/png') {
+                            imagealphablending($resized, false);
+                            imagesavealpha($resized, true);
+                        }
+
+                        imagecopyresampled($resized, $img, 0, 0, 0, 0, $newW, $newH, $width, $height);
+                        imagedestroy($img);
+                        $img = $resized;
+                    }
+
+                    ob_start();
+                    if ($mime === 'image/png') {
+                        imagepng($img, null, 7);
+                    } else {
+                        imagejpeg($img, null, 80);
+                        $mime = 'image/jpeg';
+                    }
+                    $compressedData = ob_get_clean();
+                    imagedestroy($img);
+                }
+            } catch (\Throwable $e) {
+                $compressedData = null;
+            }
+        }
+
+        if (!$compressedData) {
+            $compressedData = file_get_contents($realPath);
+        }
+
+        $base64 = 'data:' . $mime . ';base64,' . base64_encode($compressedData);
 
         // On local environments where public/uploads/staff is writable, optionally keep a local copy
         $uploadDir = public_path('uploads/staff');
@@ -766,8 +911,8 @@ class StaffController extends Controller
                     @mkdir($uploadDir, 0755, true);
                 }
                 if (is_dir($uploadDir) && is_writable($uploadDir)) {
-                    $filename = $staffId . '_' . time() . '.' . $file->getClientOriginalExtension();
-                    @copy($file->getRealPath(), $uploadDir . DIRECTORY_SEPARATOR . $filename);
+                    $filename = $staffId . '_' . time() . '.' . ($mime === 'image/png' ? 'png' : 'jpg');
+                    @file_put_contents($uploadDir . DIRECTORY_SEPARATOR . $filename, $compressedData);
                 }
             } catch (\Throwable $e) {
                 // Ignore filesystem write errors

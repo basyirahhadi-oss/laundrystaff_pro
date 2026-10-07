@@ -24,6 +24,10 @@ Route::get('/', function () {
         : redirect()->route('login');
 });
 
+// Dedicated Public Avatar Streaming Routes (Prevents huge Base64 payloads from inflating HTML beyond Vercel limits)
+Route::get('/avatar/staff/{staffId}', [StaffController::class, 'avatar'])->name('staff.avatar');
+Route::get('/avatar/user/{userId}', [StaffController::class, 'userAvatar'])->name('user.avatar');
+
 Route::get('/dev-login/{id}', function ($id) {
     if (app()->environment('local')) {
         $user = \App\Models\User::findOrFail($id);

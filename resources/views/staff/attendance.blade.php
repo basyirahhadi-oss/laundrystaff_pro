@@ -50,14 +50,10 @@
         // Retrieve active staff profile based on selectedStaffId
         $currentStaff = isset($selectedStaffId) ? $staffList->firstWhere('staff_id', $selectedStaffId) : null;
         
-        // Prepare profile photo URL (supports Base64 Data URI & local assets)
+        // Prepare profile photo URL via dedicated cached streaming endpoint
         $staffImageUrl = '';
         if ($currentStaff && !empty($currentStaff->profile_picture)) {
-            if (str_starts_with($currentStaff->profile_picture, 'data:image') || str_starts_with($currentStaff->profile_picture, 'http')) {
-                $staffImageUrl = $currentStaff->profile_picture;
-            } elseif (file_exists(public_path('uploads/staff/' . $currentStaff->profile_picture))) {
-                $staffImageUrl = asset('uploads/staff/' . $currentStaff->profile_picture);
-            }
+            $staffImageUrl = route('staff.avatar', $currentStaff->staff_id);
         }
     @endphp
 

@@ -66,13 +66,9 @@
                     <div class="flex items-center gap-3.5">
                         <div class="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-center justify-center font-bold text-base uppercase shrink-0 shadow-xs">
                             @if(!empty($staffProfile->profile_picture))
-                                @php
-                                    $payrollPicSrc = (str_starts_with($staffProfile->profile_picture, 'data:image') || str_starts_with($staffProfile->profile_picture, 'http'))
-                                        ? $staffProfile->profile_picture
-                                        : asset('uploads/staff/' . $staffProfile->profile_picture);
-                                @endphp
-                                <img src="{{ $payrollPicSrc }}" 
+                                <img src="{{ route('staff.avatar', $staffProfile->staff_id) }}" 
                                      alt="{{ $staffProfile->full_name }}" 
+                                     loading="lazy"
                                      class="w-full h-full object-cover rounded-2xl">
                             @else
                                 {{ substr($staffProfile->full_name, 0, 2) }}

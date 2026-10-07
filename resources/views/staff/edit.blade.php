@@ -43,19 +43,11 @@
                         <div class="flex items-center gap-4">
                             @php
                                 $hasPic = !empty($staff->profile_picture);
-                                $picSrc = '';
-                                if ($hasPic) {
-                                    if (str_starts_with($staff->profile_picture, 'data:image') || str_starts_with($staff->profile_picture, 'http')) {
-                                        $picSrc = $staff->profile_picture;
-                                    } elseif (file_exists(public_path('uploads/staff/' . $staff->profile_picture))) {
-                                        $picSrc = asset('uploads/staff/' . $staff->profile_picture);
-                                    } else {
-                                        $hasPic = false;
-                                    }
-                                }
+                                $picSrc = $hasPic ? route('staff.avatar', $staff->staff_id) : '';
                             @endphp
                             @if($hasPic)
                                 <img src="{{ $picSrc }}" alt="Profile"
+                                     loading="lazy"
                                      class="w-16 h-16 object-cover rounded-xl border-2 border-indigo-200 shadow-sm flex-shrink-0">
                             @else
                                 <div class="w-16 h-16 rounded-xl bg-indigo-100 text-indigo-700 font-black flex items-center justify-center text-base border-2 border-indigo-200 flex-shrink-0">

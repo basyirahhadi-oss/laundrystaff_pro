@@ -72,15 +72,6 @@ class User extends Authenticatable
             return null;
         }
 
-        $pic = $staff->profile_picture;
-        if (str_starts_with($pic, 'data:image') || str_starts_with($pic, 'http')) {
-            return $pic;
-        }
-
-        if (file_exists(public_path('uploads/staff/' . $pic))) {
-            return asset('uploads/staff/' . $pic);
-        }
-
-        return null;
+        return route('user.avatar', $this->id);
     }
 }

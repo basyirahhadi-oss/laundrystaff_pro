@@ -140,19 +140,11 @@
                                                 <div class="flex items-center gap-3">
                                                     @php
                                                         $hasPic = !empty($staff->profile_picture);
-                                                        $picSrc = '';
-                                                        if ($hasPic) {
-                                                            if (str_starts_with($staff->profile_picture, 'data:image') || str_starts_with($staff->profile_picture, 'http')) {
-                                                                $picSrc = $staff->profile_picture;
-                                                            } elseif (file_exists(public_path('uploads/staff/' . $staff->profile_picture))) {
-                                                                $picSrc = asset('uploads/staff/' . $staff->profile_picture);
-                                                            } else {
-                                                                $hasPic = false;
-                                                            }
-                                                        }
+                                                        $picSrc = $hasPic ? route('staff.avatar', $staff->staff_id) : '';
                                                     @endphp
                                                     @if($hasPic)
                                                         <img src="{{ $picSrc }}" alt="Profile"
+                                                             loading="lazy"
                                                              class="w-9 h-9 rounded-xl object-cover border border-slate-200 shadow-sm flex-shrink-0">
                                                     @else
                                                         <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 font-black flex items-center justify-center text-xs flex-shrink-0 border border-slate-200">
