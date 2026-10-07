@@ -162,7 +162,7 @@
                                     <span class="text-slate-300 dark:text-slate-700">&bull;</span>
                                     <button type="button" onclick="deleteAllStaff()"
                                         class="text-[11px] font-semibold text-rose-500 hover:text-rose-600 inline-flex items-center gap-1 cursor-pointer transition"
-                                        title="Padam semua pilihan staf">
+                                        title="Clear all selected staff members">
                                         <i class="fa-solid fa-trash-can text-[10px]"></i>
                                         <span>Delete All</span>
                                     </button>
@@ -199,12 +199,12 @@
                     <!-- Hidden inputs container for form submission -->
                     <div id="staff-hidden-inputs"></div>
 
-                    <!-- Selected Staff Badge Pills (Click 'x' to pangkah) -->
+                    <!-- Selected Staff Badge Pills (Click 'x' to remove) -->
                     <div class="pt-2.5 border-t border-slate-100 dark:border-slate-800/80">
                         <div class="flex items-center justify-between gap-2 mb-1.5">
                             <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                 <i class="fa-solid fa-users-viewfinder text-[10px] text-blue-500"></i>
-                                <span>Filtered Staff (Click <span class="font-bold text-rose-500">✕</span> to remove / pangkah nama):</span>
+                                <span>Filtered Staff Members (Click <span class="font-bold text-rose-500">✕</span> to remove):</span>
                             </span>
                             <span id="staff-tags-status" class="text-[11px] text-slate-400"></span>
                         </div>
@@ -427,7 +427,7 @@
                 container.innerHTML = `
                     <div class="text-xs text-slate-400 dark:text-slate-500 italic py-0.5 flex items-center gap-1.5">
                         <i class="fa-solid fa-circle-info text-[11px] text-blue-500/70"></i>
-                        <span>Semua staf dipilih secara lalai. Pilih dari senarai atau klik <strong>Select All</strong> untuk mula memangkah (✕) nama yang tidak dikehendaki.</span>
+                        <span>All staff members are currently included. Select from the dropdown or click <strong>Select All</strong> to start excluding / crossing out names.</span>
                     </div>
                 `;
                 return;
@@ -453,7 +453,7 @@
                 input.value = staff.id;
                 hiddenInputsContainer.appendChild(input);
 
-                // Badge Pill with 'x' (pangkah) button
+                // Badge Pill with 'x' button
                 const pill = document.createElement('span');
                 pill.className = 'inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shadow-2xs transition-all hover:bg-blue-100 dark:hover:bg-blue-900/80';
                 pill.innerHTML = `
@@ -463,7 +463,7 @@
                     <button type="button" 
                             onclick="removeStaff(${staff.id})" 
                             class="ml-0.5 w-4 h-4 rounded flex items-center justify-center text-blue-400 hover:text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition cursor-pointer" 
-                            title="Pangkah / Buang ${escapeHtml(staff.name)} dari senarai tapisan">
+                            title="Remove ${escapeHtml(staff.name)} from filter">
                         <i class="fa-solid fa-xmark text-[11px]"></i>
                     </button>
                 `;
